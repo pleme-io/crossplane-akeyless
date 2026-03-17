@@ -1,0 +1,115 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: gatewayallowedaccesss.akeyless.crossplane.io
+spec:
+  group: akeyless.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - akeyless
+    kind: GatewayAllowedAccess
+    plural: gatewayallowedaccesss
+    singular: gatewayallowedaccess
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        properties:
+          spec:
+            properties:
+              forProvider:
+                properties:
+                  SubClaimsCaseInsensitive:
+                    type: boolean
+                  access_id:
+                    description: The access ID to attach to this allowed access
+                    type: string
+                  case_sensitive:
+                    description: Treat sub claims as case-sensitive [true/false]
+                    type: string
+                  description:
+                    description: Allowed access description
+                    type: string
+                  name:
+                    description: Allowed access name (immutable)
+                    type: string
+                  permissions:
+                    description: 'Comma-separated list of permissions: defaults, targets, classic_keys, automatic_migration, ldap_auth, dynamic_secret, k8s_auth, log_forwarding, zero_knowledge_encryption, rotated_secret, caching, event_forwarding, admin, kmip, general, rotate_secret_value'
+                    type: string
+                  sub_claims:
+                    additionalProperties:
+                      type: string
+                    description: Key/val of sub claims, e.g. group=admins,developers
+                    type: object
+                required:
+                - access_id
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            properties:
+              atProvider:
+                properties:
+                  SubClaimsCaseInsensitive:
+                    type: boolean
+                  access_id:
+                    description: The access ID to attach to this allowed access
+                    type: string
+                  case_sensitive:
+                    description: Treat sub claims as case-sensitive [true/false]
+                    type: string
+                  description:
+                    description: Allowed access description
+                    type: string
+                  name:
+                    description: Allowed access name
+                    type: string
+                  permissions:
+                    description: 'Comma-separated list of permissions: defaults, targets, classic_keys, automatic_migration, ldap_auth, dynamic_secret, k8s_auth, log_forwarding, zero_knowledge_encryption, rotated_secret, caching, event_forwarding, admin, kmip, general, rotate_secret_value'
+                    type: string
+                  sub_claims:
+                    additionalProperties:
+                      type: string
+                    description: Key/val of sub claims, e.g. group=admins,developers
+                    type: object
+                type: object
+              conditions:
+                items:
+                  properties:
+                    lastTransitionTime:
+                      format: date-time
+                      type: string
+                    message:
+                      type: string
+                    reason:
+                      type: string
+                    status:
+                      type: string
+                    type:
+                      type: string
+                  required:
+                  - type
+                  - status
+                  type: object
+                type: array
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

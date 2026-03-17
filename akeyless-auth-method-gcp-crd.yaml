@@ -1,0 +1,246 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: authmethodgcps.akeyless.crossplane.io
+spec:
+  group: akeyless.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - akeyless
+    kind: AuthMethodGcp
+    plural: authmethodgcps
+    singular: authmethodgcp
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        properties:
+          spec:
+            properties:
+              forProvider:
+                properties:
+                  access_expires:
+                    description: Access expiration in Unix time (0 = no expiry)
+                    format: int64
+                    type: integer
+                  allowed_client_type:
+                    description: limit the auth method usage for specific client types [cli,ui,gateway-admin,sdk,mobile,extension]
+                    items:
+                      type: string
+                    type: array
+                  audience:
+                    description: GCP audience for IAM auth
+                    type: string
+                  audit_logs_claims:
+                    description: Subclaims to include in audit logs, e.g "--audit-logs-claims email --audit-logs-claims username"
+                    items:
+                      type: string
+                    type: array
+                  bound_ips:
+                    description: CIDR whitelist for access
+                    items:
+                      type: string
+                    type: array
+                  bound_labels:
+                    description: GCP labels to restrict access (GCE type)
+                    items:
+                      type: string
+                    type: array
+                  bound_projects:
+                    description: GCP project IDs to restrict access
+                    items:
+                      type: string
+                    type: array
+                  bound_regions:
+                    description: GCP regions to restrict access (GCE type)
+                    items:
+                      type: string
+                    type: array
+                  bound_service_accounts:
+                    description: GCP service account emails to restrict access
+                    items:
+                      type: string
+                    type: array
+                  bound_zones:
+                    description: GCP zones to restrict access (GCE type)
+                    items:
+                      type: string
+                    type: array
+                  delete_protection:
+                    description: Enable delete protection
+                    type: boolean
+                  description:
+                    description: Auth Method description
+                    type: string
+                  expiration_event_in:
+                    description: How many days before the expiration of the auth method would you like to be notified.
+                    items:
+                      type: string
+                    type: array
+                  force_sub_claims:
+                    description: Force sub-claims enforcement
+                    type: boolean
+                  gw_bound_ips:
+                    description: Gateway CIDR whitelist
+                    items:
+                      type: string
+                    type: array
+                  jwt_ttl:
+                    description: JWT TTL in seconds
+                    format: int64
+                    type: integer
+                  name:
+                    description: Auth Method name (immutable)
+                    type: string
+                  product_type:
+                    description: Choose the relevant product type for the auth method [sm, sra, pm, dp, ca]
+                    items:
+                      type: string
+                    type: array
+                  service_account_creds_data:
+                    description: GCP service account credentials JSON [sensitive]
+                    type: string
+                  type:
+                    description: 'GCP auth type: gce or iam'
+                    type: string
+                  unique_identifier:
+                    description: A unique identifier (ID) value which is a "sub claim" name that contains details uniquely identifying that resource. This "sub claim" is used to distinguish between different identities.
+                    type: string
+                required:
+                - audience
+                - name
+                - type
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            properties:
+              atProvider:
+                properties:
+                  access_expires:
+                    description: Access expiration in Unix time (0 = no expiry)
+                    format: int64
+                    type: integer
+                  allowed_client_type:
+                    description: limit the auth method usage for specific client types [cli,ui,gateway-admin,sdk,mobile,extension]
+                    items:
+                      type: string
+                    type: array
+                  audience:
+                    description: GCP audience for IAM auth
+                    type: string
+                  audit_logs_claims:
+                    description: Subclaims to include in audit logs, e.g "--audit-logs-claims email --audit-logs-claims username"
+                    items:
+                      type: string
+                    type: array
+                  bound_ips:
+                    description: CIDR whitelist for access
+                    items:
+                      type: string
+                    type: array
+                  bound_labels:
+                    description: GCP labels to restrict access (GCE type)
+                    items:
+                      type: string
+                    type: array
+                  bound_projects:
+                    description: GCP project IDs to restrict access
+                    items:
+                      type: string
+                    type: array
+                  bound_regions:
+                    description: GCP regions to restrict access (GCE type)
+                    items:
+                      type: string
+                    type: array
+                  bound_service_accounts:
+                    description: GCP service account emails to restrict access
+                    items:
+                      type: string
+                    type: array
+                  bound_zones:
+                    description: GCP zones to restrict access (GCE type)
+                    items:
+                      type: string
+                    type: array
+                  delete_protection:
+                    description: Enable delete protection
+                    type: boolean
+                  description:
+                    description: Auth Method description
+                    type: string
+                  expiration_event_in:
+                    description: How many days before the expiration of the auth method would you like to be notified.
+                    items:
+                      type: string
+                    type: array
+                  force_sub_claims:
+                    description: Force sub-claims enforcement
+                    type: boolean
+                  gw_bound_ips:
+                    description: Gateway CIDR whitelist
+                    items:
+                      type: string
+                    type: array
+                  jwt_ttl:
+                    description: JWT TTL in seconds
+                    format: int64
+                    type: integer
+                  name:
+                    description: Auth Method name
+                    type: string
+                  product_type:
+                    description: Choose the relevant product type for the auth method [sm, sra, pm, dp, ca]
+                    items:
+                      type: string
+                    type: array
+                  service_account_creds_data:
+                    description: GCP service account credentials JSON
+                    type: string
+                  type:
+                    description: 'GCP auth type: gce or iam'
+                    type: string
+                  unique_identifier:
+                    description: A unique identifier (ID) value which is a "sub claim" name that contains details uniquely identifying that resource. This "sub claim" is used to distinguish between different identities.
+                    type: string
+                type: object
+              conditions:
+                items:
+                  properties:
+                    lastTransitionTime:
+                      format: date-time
+                      type: string
+                    message:
+                      type: string
+                    reason:
+                      type: string
+                    status:
+                      type: string
+                    type:
+                      type: string
+                  required:
+                  - type
+                  - status
+                  type: object
+                type: array
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

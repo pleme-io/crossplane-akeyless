@@ -1,0 +1,135 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: targetglobalsigns.akeyless.crossplane.io
+spec:
+  group: akeyless.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - akeyless
+    kind: TargetGlobalsign
+    plural: targetglobalsigns
+    singular: targetglobalsign
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        properties:
+          spec:
+            properties:
+              forProvider:
+                properties:
+                  contact_email:
+                    description: Contact email
+                    type: string
+                  contact_first_name:
+                    description: Contact first name
+                    type: string
+                  contact_last_name:
+                    description: Contact last name
+                    type: string
+                  contact_phone:
+                    description: Contact phone number
+                    type: string
+                  description:
+                    description: Target description
+                    type: string
+                  key:
+                    description: The name of a key that used to encrypt the target secret value (if empty, the account default protectionKey key will be used)
+                    type: string
+                  max_versions:
+                    description: Set the maximum number of versions, limited by the account settings defaults.
+                    type: string
+                  name:
+                    description: Target name (immutable)
+                    type: string
+                  profile_id:
+                    description: GlobalSign profile ID
+                    type: string
+                  timeout:
+                    description: Timeout waiting for certificate validation in Duration format (1h - 1 Hour, 20m - 20 Minutes, 33m3s - 33 Minutes and 3 Seconds), maximum 1h.
+                    type: string
+                required:
+                - contact_email
+                - contact_first_name
+                - contact_last_name
+                - contact_phone
+                - name
+                - profile_id
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            properties:
+              atProvider:
+                properties:
+                  contact_email:
+                    description: Contact email
+                    type: string
+                  contact_first_name:
+                    description: Contact first name
+                    type: string
+                  contact_last_name:
+                    description: Contact last name
+                    type: string
+                  contact_phone:
+                    description: Contact phone number
+                    type: string
+                  description:
+                    description: Target description
+                    type: string
+                  key:
+                    description: The name of a key that used to encrypt the target secret value (if empty, the account default protectionKey key will be used)
+                    type: string
+                  max_versions:
+                    description: Set the maximum number of versions, limited by the account settings defaults.
+                    type: string
+                  name:
+                    description: Target name
+                    type: string
+                  profile_id:
+                    description: GlobalSign profile ID
+                    type: string
+                  timeout:
+                    description: Timeout waiting for certificate validation in Duration format (1h - 1 Hour, 20m - 20 Minutes, 33m3s - 33 Minutes and 3 Seconds), maximum 1h.
+                    type: string
+                type: object
+              conditions:
+                items:
+                  properties:
+                    lastTransitionTime:
+                      format: date-time
+                      type: string
+                    message:
+                      type: string
+                    reason:
+                      type: string
+                    status:
+                      type: string
+                    type:
+                      type: string
+                  required:
+                  - type
+                  - status
+                  type: object
+                type: array
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

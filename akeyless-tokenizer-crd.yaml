@@ -1,0 +1,158 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: tokenizers.akeyless.crossplane.io
+spec:
+  group: akeyless.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - akeyless
+    kind: Tokenizer
+    plural: tokenizers
+    singular: tokenizer
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        properties:
+          spec:
+            properties:
+              forProvider:
+                properties:
+                  alphabet:
+                    description: Alphabet to use in regexp vaultless tokenization
+                    type: string
+                  decoding_template:
+                    description: The Decoding output template to use in regexp vaultless tokenization
+                    type: string
+                  delete_protection:
+                    description: Protection from accidental deletion of this object [true/false]
+                    type: string
+                  description:
+                    description: Description of the object
+                    type: string
+                  encoding_template:
+                    description: The Encoding output template to use in regexp vaultless tokenization
+                    type: string
+                  encryption_key_name:
+                    description: AES key name to use in vaultless tokenization
+                    type: string
+                  item_custom_fields:
+                    additionalProperties:
+                      type: string
+                    description: Additional custom fields to associate with the item
+                    type: object
+                  name:
+                    description: Tokenizer name (immutable)
+                    type: string
+                  pattern:
+                    description: Pattern to use in regexp vaultless tokenization
+                    type: string
+                  tag:
+                    description: List of the tags attached to this key
+                    items:
+                      type: string
+                    type: array
+                  template_type:
+                    description: Which template type this tokenizer is used for [SSN,CreditCard,USPhoneNumber,Email,Regexp]
+                    type: string
+                  tokenizer_type:
+                    description: Tokenizer type
+                    type: string
+                  tweak_type:
+                    description: The tweak type to use in vaultless tokenization [Supplied, Generated, Internal, Masking]
+                    type: string
+                required:
+                - name
+                - template_type
+                - tokenizer_type
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            properties:
+              atProvider:
+                properties:
+                  alphabet:
+                    description: Alphabet to use in regexp vaultless tokenization
+                    type: string
+                  decoding_template:
+                    description: The Decoding output template to use in regexp vaultless tokenization
+                    type: string
+                  delete_protection:
+                    description: Protection from accidental deletion of this object [true/false]
+                    type: string
+                  description:
+                    description: Description of the object
+                    type: string
+                  encoding_template:
+                    description: The Encoding output template to use in regexp vaultless tokenization
+                    type: string
+                  encryption_key_name:
+                    description: AES key name to use in vaultless tokenization
+                    type: string
+                  item_custom_fields:
+                    additionalProperties:
+                      type: string
+                    description: Additional custom fields to associate with the item
+                    type: object
+                  name:
+                    description: Tokenizer name
+                    type: string
+                  pattern:
+                    description: Pattern to use in regexp vaultless tokenization
+                    type: string
+                  tag:
+                    description: List of the tags attached to this key
+                    items:
+                      type: string
+                    type: array
+                  template_type:
+                    description: Which template type this tokenizer is used for [SSN,CreditCard,USPhoneNumber,Email,Regexp]
+                    type: string
+                  tokenizer_type:
+                    description: Tokenizer type
+                    type: string
+                  tweak_type:
+                    description: The tweak type to use in vaultless tokenization [Supplied, Generated, Internal, Masking]
+                    type: string
+                type: object
+              conditions:
+                items:
+                  properties:
+                    lastTransitionTime:
+                      format: date-time
+                      type: string
+                    message:
+                      type: string
+                    reason:
+                      type: string
+                    status:
+                      type: string
+                    type:
+                      type: string
+                  required:
+                  - type
+                  - status
+                  type: object
+                type: array
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

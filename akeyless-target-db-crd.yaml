@@ -1,0 +1,282 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: targetdbs.akeyless.crossplane.io
+spec:
+  group: akeyless.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - akeyless
+    kind: TargetDb
+    plural: targetdbs
+    singular: targetdb
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        properties:
+          spec:
+            properties:
+              forProvider:
+                properties:
+                  azure_client_id:
+                    description: (Optional) Client id (relevant for "cloud-service-provider" only)
+                    type: string
+                  azure_client_secret:
+                    description: (Optional) Client secret (relevant for "cloud-service-provider" only)
+                    type: string
+                  azure_tenant_id:
+                    description: (Optional) Tenant id (relevant for "cloud-service-provider" only)
+                    type: string
+                  cloud_service_provider:
+                    description: (Optional) Cloud service provider (currently only supports Azure)
+                    type: string
+                  cluster_mode:
+                    description: Cluster Mode
+                    type: boolean
+                  comment:
+                    description: Deprecated - use description
+                    type: string
+                  connection_type:
+                    description: Type of connection to mssql database [credentials/cloud-identity/wallet/parent-target]
+                    type: string
+                  db_name:
+                    description: Database name
+                    type: string
+                  db_server_certificates:
+                    description: Database server TLS certificates (PEM) [sensitive]
+                    type: string
+                  db_server_name:
+                    description: Database server name for TLS verification
+                    type: string
+                  db_type:
+                    description: 'Database type: mysql, mssql, postgresql, mongodb, snowflake, oracle, cassandra, redshift, hanadb'
+                    type: string
+                  description:
+                    description: Target description
+                    type: string
+                  host:
+                    description: Database hostname
+                    type: string
+                  key:
+                    description: The name of a key that used to encrypt the target secret value (if empty, the account default protectionKey key will be used)
+                    type: string
+                  max_versions:
+                    description: Set the maximum number of versions, limited by the account settings defaults.
+                    type: string
+                  mongodb_atlas:
+                    description: Use MongoDB Atlas connection
+                    type: boolean
+                  mongodb_atlas_api_private_key:
+                    description: MongoDB Atlas API private key [sensitive]
+                    type: string
+                  mongodb_atlas_api_public_key:
+                    description: MongoDB Atlas API public key
+                    type: string
+                  mongodb_atlas_project_id:
+                    description: MongoDB Atlas project ID
+                    type: string
+                  mongodb_default_auth_db:
+                    description: MongoDB default authentication database
+                    type: string
+                  mongodb_uri_options:
+                    description: MongoDB additional URI options
+                    type: string
+                  name:
+                    description: Target name (immutable)
+                    type: string
+                  oracle_service_name:
+                    description: Oracle service name
+                    type: string
+                  oracle_wallet_login_type:
+                    description: Oracle Wallet login type (password/mtls)
+                    type: string
+                  oracle_wallet_p12_file_data:
+                    description: Oracle wallet p12 file data in base64
+                    type: string
+                  oracle_wallet_sso_file_data:
+                    description: Oracle wallet sso file data in base64
+                    type: string
+                  parent_target_name:
+                    description: Name of the parent target, relevant only when connection-type is parent-target
+                    type: string
+                  port:
+                    description: Database port
+                    type: string
+                  pwd:
+                    description: Database password [sensitive]
+                    type: string
+                  snowflake_account:
+                    description: Snowflake account identifier
+                    type: string
+                  snowflake_api_private_key:
+                    description: RSA Private key (base64 encoded)
+                    type: string
+                  snowflake_api_private_key_password:
+                    description: The Private key passphrase
+                    type: string
+                  ssl:
+                    description: Enable SSL connection
+                    type: boolean
+                  ssl_certificate:
+                    description: Client SSL certificate (PEM) [sensitive]
+                    type: string
+                  user_name:
+                    description: Database username
+                    type: string
+                required:
+                - connection_type
+                - db_type
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            properties:
+              atProvider:
+                properties:
+                  azure_client_id:
+                    description: (Optional) Client id (relevant for "cloud-service-provider" only)
+                    type: string
+                  azure_client_secret:
+                    description: (Optional) Client secret (relevant for "cloud-service-provider" only)
+                    type: string
+                  azure_tenant_id:
+                    description: (Optional) Tenant id (relevant for "cloud-service-provider" only)
+                    type: string
+                  cloud_service_provider:
+                    description: (Optional) Cloud service provider (currently only supports Azure)
+                    type: string
+                  cluster_mode:
+                    description: Cluster Mode
+                    type: boolean
+                  comment:
+                    description: Deprecated - use description
+                    type: string
+                  connection_type:
+                    description: Type of connection to mssql database [credentials/cloud-identity/wallet/parent-target]
+                    type: string
+                  db_name:
+                    description: Database name
+                    type: string
+                  db_server_certificates:
+                    description: Database server TLS certificates (PEM)
+                    type: string
+                  db_server_name:
+                    description: Database server name for TLS verification
+                    type: string
+                  db_type:
+                    description: 'Database type: mysql, mssql, postgresql, mongodb, snowflake, oracle, cassandra, redshift, hanadb'
+                    type: string
+                  description:
+                    description: Target description
+                    type: string
+                  host:
+                    description: Database hostname
+                    type: string
+                  key:
+                    description: The name of a key that used to encrypt the target secret value (if empty, the account default protectionKey key will be used)
+                    type: string
+                  max_versions:
+                    description: Set the maximum number of versions, limited by the account settings defaults.
+                    type: string
+                  mongodb_atlas:
+                    description: Use MongoDB Atlas connection
+                    type: boolean
+                  mongodb_atlas_api_private_key:
+                    description: MongoDB Atlas API private key
+                    type: string
+                  mongodb_atlas_api_public_key:
+                    description: MongoDB Atlas API public key
+                    type: string
+                  mongodb_atlas_project_id:
+                    description: MongoDB Atlas project ID
+                    type: string
+                  mongodb_default_auth_db:
+                    description: MongoDB default authentication database
+                    type: string
+                  mongodb_uri_options:
+                    description: MongoDB additional URI options
+                    type: string
+                  name:
+                    description: Target name
+                    type: string
+                  oracle_service_name:
+                    description: Oracle service name
+                    type: string
+                  oracle_wallet_login_type:
+                    description: Oracle Wallet login type (password/mtls)
+                    type: string
+                  oracle_wallet_p12_file_data:
+                    description: Oracle wallet p12 file data in base64
+                    type: string
+                  oracle_wallet_sso_file_data:
+                    description: Oracle wallet sso file data in base64
+                    type: string
+                  parent_target_name:
+                    description: Name of the parent target, relevant only when connection-type is parent-target
+                    type: string
+                  port:
+                    description: Database port
+                    type: string
+                  pwd:
+                    description: Database password
+                    type: string
+                  snowflake_account:
+                    description: Snowflake account identifier
+                    type: string
+                  snowflake_api_private_key:
+                    description: RSA Private key (base64 encoded)
+                    type: string
+                  snowflake_api_private_key_password:
+                    description: The Private key passphrase
+                    type: string
+                  ssl:
+                    description: Enable SSL connection
+                    type: boolean
+                  ssl_certificate:
+                    description: Client SSL certificate (PEM)
+                    type: string
+                  user_name:
+                    description: Database username
+                    type: string
+                type: object
+              conditions:
+                items:
+                  properties:
+                    lastTransitionTime:
+                      format: date-time
+                      type: string
+                    message:
+                      type: string
+                    reason:
+                      type: string
+                    status:
+                      type: string
+                    type:
+                      type: string
+                  required:
+                  - type
+                  - status
+                  type: object
+                type: array
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
