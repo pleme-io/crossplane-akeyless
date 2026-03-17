@@ -1,0 +1,250 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: authmethodkerbeross.akeyless.crossplane.io
+spec:
+  group: akeyless.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - akeyless
+    kind: AuthMethodKerberos
+    plural: authmethodkerbeross
+    singular: authmethodkerberos
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        properties:
+          spec:
+            properties:
+              forProvider:
+                properties:
+                  access_expires:
+                    description: Access expiration in Unix time (0 = no expiry)
+                    format: int64
+                    type: integer
+                  allowed_client_type:
+                    description: limit the auth method usage for specific client types [cli,ui,gateway-admin,sdk,mobile,extension]
+                    items:
+                      type: string
+                    type: array
+                  audit_logs_claims:
+                    description: Subclaims to include in audit logs, e.g "--audit-logs-claims email --audit-logs-claims username"
+                    items:
+                      type: string
+                    type: array
+                  bind_dn:
+                    type: string
+                  bind_dn_password:
+                    type: string
+                  bound_ips:
+                    description: CIDR whitelist for access
+                    items:
+                      type: string
+                    type: array
+                  delete_protection:
+                    description: Enable delete protection
+                    type: boolean
+                  description:
+                    description: Auth Method description
+                    type: string
+                  expiration_event_in:
+                    description: How many days before the expiration of the auth method would you like to be notified.
+                    items:
+                      type: string
+                    type: array
+                  force_sub_claims:
+                    description: Force sub-claims enforcement
+                    type: boolean
+                  group_attr:
+                    type: string
+                  group_dn:
+                    type: string
+                  group_filter:
+                    type: string
+                  gw_bound_ips:
+                    description: Gateway CIDR whitelist
+                    items:
+                      type: string
+                    type: array
+                  jwt_ttl:
+                    description: JWT TTL in seconds
+                    format: int64
+                    type: integer
+                  keytab_file_data:
+                    description: Kerberos keytab file data (base64) [sensitive]
+                    type: string
+                  keytab_file_path:
+                    description: Path to Kerberos keytab file on gateway
+                    type: string
+                  krb5_conf_data:
+                    description: Kerberos krb5.conf file data (base64)
+                    type: string
+                  krb5_conf_path:
+                    description: Path to krb5.conf file on gateway
+                    type: string
+                  ldap_anonymous_search:
+                    type: boolean
+                  ldap_ca_cert:
+                    type: string
+                  ldap_url:
+                    type: string
+                  name:
+                    description: Auth Method name (immutable)
+                    type: string
+                  product_type:
+                    description: Choose the relevant product type for the auth method [sm, sra, pm, dp, ca]
+                    items:
+                      type: string
+                    type: array
+                  subclaims_delimiters:
+                    description: A list of additional sub claims delimiters (relevant only for SAML, OIDC, OAuth2/JWT)
+                    items:
+                      type: string
+                    type: array
+                  unique_identifier:
+                    description: A unique identifier (ID) value which is a "sub claim" name that contains details uniquely identifying that resource. This "sub claim" is used to distinguish between different identities.
+                    type: string
+                  user_attribute:
+                    type: string
+                  user_dn:
+                    type: string
+                required:
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            properties:
+              atProvider:
+                properties:
+                  access_expires:
+                    description: Access expiration in Unix time (0 = no expiry)
+                    format: int64
+                    type: integer
+                  allowed_client_type:
+                    description: limit the auth method usage for specific client types [cli,ui,gateway-admin,sdk,mobile,extension]
+                    items:
+                      type: string
+                    type: array
+                  audit_logs_claims:
+                    description: Subclaims to include in audit logs, e.g "--audit-logs-claims email --audit-logs-claims username"
+                    items:
+                      type: string
+                    type: array
+                  bind_dn:
+                    type: string
+                  bind_dn_password:
+                    type: string
+                  bound_ips:
+                    description: CIDR whitelist for access
+                    items:
+                      type: string
+                    type: array
+                  delete_protection:
+                    description: Enable delete protection
+                    type: boolean
+                  description:
+                    description: Auth Method description
+                    type: string
+                  expiration_event_in:
+                    description: How many days before the expiration of the auth method would you like to be notified.
+                    items:
+                      type: string
+                    type: array
+                  force_sub_claims:
+                    description: Force sub-claims enforcement
+                    type: boolean
+                  group_attr:
+                    type: string
+                  group_dn:
+                    type: string
+                  group_filter:
+                    type: string
+                  gw_bound_ips:
+                    description: Gateway CIDR whitelist
+                    items:
+                      type: string
+                    type: array
+                  jwt_ttl:
+                    description: JWT TTL in seconds
+                    format: int64
+                    type: integer
+                  keytab_file_data:
+                    description: Kerberos keytab file data (base64)
+                    type: string
+                  keytab_file_path:
+                    description: Path to Kerberos keytab file on gateway
+                    type: string
+                  krb5_conf_data:
+                    description: Kerberos krb5.conf file data (base64)
+                    type: string
+                  krb5_conf_path:
+                    description: Path to krb5.conf file on gateway
+                    type: string
+                  ldap_anonymous_search:
+                    type: boolean
+                  ldap_ca_cert:
+                    type: string
+                  ldap_url:
+                    type: string
+                  name:
+                    description: Auth Method name
+                    type: string
+                  product_type:
+                    description: Choose the relevant product type for the auth method [sm, sra, pm, dp, ca]
+                    items:
+                      type: string
+                    type: array
+                  subclaims_delimiters:
+                    description: A list of additional sub claims delimiters (relevant only for SAML, OIDC, OAuth2/JWT)
+                    items:
+                      type: string
+                    type: array
+                  unique_identifier:
+                    description: A unique identifier (ID) value which is a "sub claim" name that contains details uniquely identifying that resource. This "sub claim" is used to distinguish between different identities.
+                    type: string
+                  user_attribute:
+                    type: string
+                  user_dn:
+                    type: string
+                type: object
+              conditions:
+                items:
+                  properties:
+                    lastTransitionTime:
+                      format: date-time
+                      type: string
+                    message:
+                      type: string
+                    reason:
+                      type: string
+                    status:
+                      type: string
+                    type:
+                      type: string
+                  required:
+                  - type
+                  - status
+                  type: object
+                type: array
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

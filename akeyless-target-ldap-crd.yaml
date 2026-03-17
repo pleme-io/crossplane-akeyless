@@ -1,0 +1,133 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: targetldaps.akeyless.crossplane.io
+spec:
+  group: akeyless.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - akeyless
+    kind: TargetLdap
+    plural: targetldaps
+    singular: targetldap
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        properties:
+          spec:
+            properties:
+              forProvider:
+                properties:
+                  bind_dn:
+                    description: LDAP bind DN
+                    type: string
+                  bind_dn_password:
+                    description: LDAP bind DN password [sensitive]
+                    type: string
+                  description:
+                    description: Target description
+                    type: string
+                  key:
+                    description: The name of a key that used to encrypt the target secret value (if empty, the account default protectionKey key will be used)
+                    type: string
+                  ldap_ca_cert:
+                    description: CA Certificate File Content
+                    type: string
+                  ldap_url:
+                    description: LDAP server URL (e.g., ldap://host:389)
+                    type: string
+                  max_versions:
+                    description: Set the maximum number of versions, limited by the account settings defaults.
+                    type: string
+                  name:
+                    description: Target name (immutable)
+                    type: string
+                  server_type:
+                    description: Set Ldap server type, Options:[OpenLDAP, ActiveDirectory]. Default is OpenLDAP
+                    type: string
+                  token_expiration:
+                    description: LDAP token expiration in seconds
+                    type: string
+                required:
+                - bind_dn
+                - bind_dn_password
+                - ldap_url
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            properties:
+              atProvider:
+                properties:
+                  bind_dn:
+                    description: LDAP bind DN
+                    type: string
+                  bind_dn_password:
+                    description: LDAP bind DN password
+                    type: string
+                  description:
+                    description: Target description
+                    type: string
+                  key:
+                    description: The name of a key that used to encrypt the target secret value (if empty, the account default protectionKey key will be used)
+                    type: string
+                  ldap_ca_cert:
+                    description: CA Certificate File Content
+                    type: string
+                  ldap_url:
+                    description: LDAP server URL (e.g., ldap://host:389)
+                    type: string
+                  max_versions:
+                    description: Set the maximum number of versions, limited by the account settings defaults.
+                    type: string
+                  name:
+                    description: Target name
+                    type: string
+                  server_type:
+                    description: Set Ldap server type, Options:[OpenLDAP, ActiveDirectory]. Default is OpenLDAP
+                    type: string
+                  token_expiration:
+                    description: LDAP token expiration in seconds
+                    type: string
+                type: object
+              conditions:
+                items:
+                  properties:
+                    lastTransitionTime:
+                      format: date-time
+                      type: string
+                    message:
+                      type: string
+                    reason:
+                      type: string
+                    status:
+                      type: string
+                    type:
+                      type: string
+                  required:
+                  - type
+                  - status
+                  type: object
+                type: array
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

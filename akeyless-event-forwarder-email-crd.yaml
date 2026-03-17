@@ -1,0 +1,168 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: eventforwarderemails.akeyless.crossplane.io
+spec:
+  group: akeyless.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - akeyless
+    kind: EventForwarderEmail
+    plural: eventforwarderemails
+    singular: eventforwarderemail
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        properties:
+          spec:
+            properties:
+              forProvider:
+                properties:
+                  auth_methods_event_source_locations:
+                    description: Auth Method Event sources
+                    items:
+                      type: string
+                    type: array
+                  description:
+                    description: Description of the object
+                    type: string
+                  email_to:
+                    description: A comma seperated list of email addresses to send event to
+                    type: string
+                  event_types:
+                    description: List of event types to notify about [request-access, certificate-pending-expiration, certificate-expired, certificate-provisioning-success, certificate-provisioning-failure, auth-method-pending-expiration, auth-method-expired, next-automatic-rotation, rotated-secret-success, rotated-secret-failure, dynamic-secret-failure, multi-auth-failure, uid-rotation-failure, apply-justification, email-auth-method-approved, usage, rotation-usage, gateway-inactive, static-secret-updated, rate-limiting, usage-report, secret-sync]
+                    items:
+                      type: string
+                    type: array
+                  every:
+                    description: Rate of periodic runner repetition in hours
+                    type: string
+                  gateways_event_source_locations:
+                    description: Event sources
+                    items:
+                      type: string
+                    type: array
+                  include_error:
+                    description: Set this option to include event errors details [true/false]
+                    type: string
+                  items_event_source_locations:
+                    description: Items Event sources
+                    items:
+                      type: string
+                    type: array
+                  key:
+                    description: The name of a key that used to encrypt the EventForwarder secret value (if empty, the account default protectionKey key will be used)
+                    type: string
+                  name:
+                    description: EventForwarder name (immutable)
+                    type: string
+                  override_url:
+                    description: Override Akeyless default URL with your Gateway url (port 18888)
+                    type: string
+                  runner_type:
+                    type: string
+                  targets_event_source_locations:
+                    description: Targets Event sources
+                    items:
+                      type: string
+                    type: array
+                required:
+                - gateways_event_source_locations
+                - name
+                - runner_type
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            properties:
+              atProvider:
+                properties:
+                  auth_methods_event_source_locations:
+                    description: Auth Method Event sources
+                    items:
+                      type: string
+                    type: array
+                  description:
+                    description: Description of the object
+                    type: string
+                  email_to:
+                    description: A comma seperated list of email addresses to send event to
+                    type: string
+                  event_types:
+                    description: List of event types to notify about [request-access, certificate-pending-expiration, certificate-expired, certificate-provisioning-success, certificate-provisioning-failure, auth-method-pending-expiration, auth-method-expired, next-automatic-rotation, rotated-secret-success, rotated-secret-failure, dynamic-secret-failure, multi-auth-failure, uid-rotation-failure, apply-justification, email-auth-method-approved, usage, rotation-usage, gateway-inactive, static-secret-updated, rate-limiting, usage-report, secret-sync]
+                    items:
+                      type: string
+                    type: array
+                  every:
+                    description: Rate of periodic runner repetition in hours
+                    type: string
+                  gateways_event_source_locations:
+                    description: Event sources
+                    items:
+                      type: string
+                    type: array
+                  include_error:
+                    description: Set this option to include event errors details [true/false]
+                    type: string
+                  items_event_source_locations:
+                    description: Items Event sources
+                    items:
+                      type: string
+                    type: array
+                  key:
+                    description: The name of a key that used to encrypt the EventForwarder secret value (if empty, the account default protectionKey key will be used)
+                    type: string
+                  name:
+                    description: EventForwarder name
+                    type: string
+                  override_url:
+                    description: Override Akeyless default URL with your Gateway url (port 18888)
+                    type: string
+                  runner_type:
+                    type: string
+                  targets_event_source_locations:
+                    description: Targets Event sources
+                    items:
+                      type: string
+                    type: array
+                type: object
+              conditions:
+                items:
+                  properties:
+                    lastTransitionTime:
+                      format: date-time
+                      type: string
+                    message:
+                      type: string
+                    reason:
+                      type: string
+                    status:
+                      type: string
+                    type:
+                      type: string
+                  required:
+                  - type
+                  - status
+                  type: object
+                type: array
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

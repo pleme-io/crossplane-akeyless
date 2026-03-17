@@ -1,0 +1,100 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: targetlinkeds.akeyless.crossplane.io
+spec:
+  group: akeyless.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - akeyless
+    kind: TargetLinked
+    plural: targetlinkeds
+    singular: targetlinked
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        properties:
+          spec:
+            properties:
+              forProvider:
+                properties:
+                  description:
+                    description: Target description
+                    type: string
+                  hosts:
+                    description: Hosts for the linked target
+                    type: string
+                  name:
+                    description: Target name (immutable)
+                    type: string
+                  parent_target_name:
+                    description: Parent target name to link to
+                    type: string
+                  type:
+                    description: Specifies the hosts type, relevant only when working without parent target
+                    type: string
+                required:
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            properties:
+              atProvider:
+                properties:
+                  description:
+                    description: Target description
+                    type: string
+                  hosts:
+                    description: Hosts for the linked target
+                    type: string
+                  name:
+                    description: Target name
+                    type: string
+                  parent_target_name:
+                    description: Parent target name to link to
+                    type: string
+                  type:
+                    description: Specifies the hosts type, relevant only when working without parent target
+                    type: string
+                type: object
+              conditions:
+                items:
+                  properties:
+                    lastTransitionTime:
+                      format: date-time
+                      type: string
+                    message:
+                      type: string
+                    reason:
+                      type: string
+                    status:
+                      type: string
+                    type:
+                      type: string
+                  required:
+                  - type
+                  - status
+                  type: object
+                type: array
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

@@ -1,0 +1,341 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: pkicertissuers.akeyless.crossplane.io
+spec:
+  group: akeyless.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - akeyless
+    kind: PkiCertIssuer
+    plural: pkicertissuers
+    singular: pkicertissuer
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        properties:
+          spec:
+            properties:
+              forProvider:
+                properties:
+                  allow_any_name:
+                    description: If set, clients can request certificates for any CN
+                    type: boolean
+                  allow_copy_ext_from_csr:
+                    description: Allow copying extra extensions from CSR
+                    type: boolean
+                  allow_subdomains:
+                    description: Allow certificates for subdomains of allowed domains
+                    type: boolean
+                  allowed_domains:
+                    description: Comma-delimited list of allowed domains
+                    type: string
+                  allowed_extra_extensions:
+                    description: JSON string of allowed extra extensions
+                    type: string
+                  allowed_ip_sans:
+                    description: Comma-delimited list of allowed CIDRs for IP SANs
+                    type: string
+                  allowed_uri_sans:
+                    description: Comma-delimited list of allowed URIs for URI SANs
+                    type: string
+                  auto_renew:
+                    description: Automatically renew certificates before expiration
+                    type: boolean
+                  ca_target:
+                    description: Name of existing CA target (required in Public CA mode)
+                    type: string
+                  client_flag:
+                    description: Flag certificates for client auth use
+                    type: boolean
+                  code_signing_flag:
+                    description: Flag certificates for code signing use
+                    type: boolean
+                  country:
+                    description: Comma-separated list of countries for issued certificate
+                    type: string
+                  create_private_crl:
+                    description: Expose CRL endpoint in Gateway
+                    type: boolean
+                  create_private_ocsp:
+                    description: Expose private OCSP endpoint
+                    type: boolean
+                  create_public_crl:
+                    description: Expose public CRL endpoint
+                    type: boolean
+                  create_public_ocsp:
+                    description: Expose public OCSP endpoint
+                    type: boolean
+                  critical_key_usage:
+                    description: Mark key usage as critical
+                    type: string
+                  delete_protection:
+                    description: Enable delete protection
+                    type: boolean
+                  description:
+                    description: Description of the object
+                    type: string
+                  destination_path:
+                    description: Destination path for generated certificates
+                    type: string
+                  disable_wildcards:
+                    description: Disable wildcard certificates
+                    type: boolean
+                  enable_acme:
+                    description: Enable ACME protocol
+                    type: boolean
+                  expiration_event_in:
+                    description: How many days before the expiration of the certificate would you like to be notified.
+                    items:
+                      type: string
+                    type: array
+                  gw_cluster_url:
+                    description: Gateway cluster URL
+                    type: string
+                  is_ca:
+                    description: If set, the basic constraints is-ca flag is set
+                    type: boolean
+                  key_usage:
+                    description: 'Key usage: DigitalSignature, KeyAgreement, KeyEncipherment'
+                    type: string
+                  locality:
+                    description: Locality for issued certificate
+                    type: string
+                  max_path_len:
+                    description: Maximum path length for CA certificates
+                    format: int64
+                    type: integer
+                  name:
+                    description: PKI certificate issuer name (immutable)
+                    type: string
+                  not_enforce_hostnames:
+                    description: Do not enforce hostnames
+                    type: boolean
+                  not_require_cn:
+                    description: Do not require common name
+                    type: boolean
+                  ocsp_ttl:
+                    description: OCSP response TTL
+                    type: string
+                  organizational_units:
+                    description: Organizational units for issued certificate
+                    type: string
+                  organizations:
+                    description: Organization for issued certificate
+                    type: string
+                  postal_code:
+                    description: Postal code for issued certificate
+                    type: string
+                  protect_certificates:
+                    description: Protect generated certificates
+                    type: boolean
+                  province:
+                    description: Province for issued certificate
+                    type: string
+                  scheduled_renew:
+                    description: Number of days before expiration to renew certificates
+                    format: int64
+                    type: integer
+                  server_flag:
+                    description: Flag certificates for server auth use
+                    type: boolean
+                  signer_key_name:
+                    description: Key to sign certificates with (immutable)
+                    type: string
+                  street_address:
+                    description: Street address for issued certificate
+                    type: string
+                  tag:
+                    description: Tags for the PKI cert issuer
+                    items:
+                      type: string
+                    type: array
+                  ttl:
+                    description: Certificate TTL
+                    type: string
+                required:
+                - name
+                - ttl
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            properties:
+              atProvider:
+                properties:
+                  allow_any_name:
+                    description: If set, clients can request certificates for any CN
+                    type: boolean
+                  allow_copy_ext_from_csr:
+                    description: Allow copying extra extensions from CSR
+                    type: boolean
+                  allow_subdomains:
+                    description: Allow certificates for subdomains of allowed domains
+                    type: boolean
+                  allowed_domains:
+                    description: Comma-delimited list of allowed domains
+                    type: string
+                  allowed_extra_extensions:
+                    description: JSON string of allowed extra extensions
+                    type: string
+                  allowed_ip_sans:
+                    description: Comma-delimited list of allowed CIDRs for IP SANs
+                    type: string
+                  allowed_uri_sans:
+                    description: Comma-delimited list of allowed URIs for URI SANs
+                    type: string
+                  auto_renew:
+                    description: Automatically renew certificates before expiration
+                    type: boolean
+                  ca_target:
+                    description: Name of existing CA target (required in Public CA mode)
+                    type: string
+                  client_flag:
+                    description: Flag certificates for client auth use
+                    type: boolean
+                  code_signing_flag:
+                    description: Flag certificates for code signing use
+                    type: boolean
+                  country:
+                    description: Comma-separated list of countries for issued certificate
+                    type: string
+                  create_private_crl:
+                    description: Expose CRL endpoint in Gateway
+                    type: boolean
+                  create_private_ocsp:
+                    description: Expose private OCSP endpoint
+                    type: boolean
+                  create_public_crl:
+                    description: Expose public CRL endpoint
+                    type: boolean
+                  create_public_ocsp:
+                    description: Expose public OCSP endpoint
+                    type: boolean
+                  critical_key_usage:
+                    description: Mark key usage as critical
+                    type: string
+                  delete_protection:
+                    description: Enable delete protection
+                    type: boolean
+                  description:
+                    description: Description of the object
+                    type: string
+                  destination_path:
+                    description: Destination path for generated certificates
+                    type: string
+                  disable_wildcards:
+                    description: Disable wildcard certificates
+                    type: boolean
+                  enable_acme:
+                    description: Enable ACME protocol
+                    type: boolean
+                  expiration_event_in:
+                    description: How many days before the expiration of the certificate would you like to be notified.
+                    items:
+                      type: string
+                    type: array
+                  gw_cluster_url:
+                    description: Gateway cluster URL
+                    type: string
+                  is_ca:
+                    description: If set, the basic constraints is-ca flag is set
+                    type: boolean
+                  key_usage:
+                    description: 'Key usage: DigitalSignature, KeyAgreement, KeyEncipherment'
+                    type: string
+                  locality:
+                    description: Locality for issued certificate
+                    type: string
+                  max_path_len:
+                    description: Maximum path length for CA certificates
+                    format: int64
+                    type: integer
+                  name:
+                    description: PKI certificate issuer name
+                    type: string
+                  not_enforce_hostnames:
+                    description: Do not enforce hostnames
+                    type: boolean
+                  not_require_cn:
+                    description: Do not require common name
+                    type: boolean
+                  ocsp_ttl:
+                    description: OCSP response TTL
+                    type: string
+                  organizational_units:
+                    description: Organizational units for issued certificate
+                    type: string
+                  organizations:
+                    description: Organization for issued certificate
+                    type: string
+                  postal_code:
+                    description: Postal code for issued certificate
+                    type: string
+                  protect_certificates:
+                    description: Protect generated certificates
+                    type: boolean
+                  province:
+                    description: Province for issued certificate
+                    type: string
+                  scheduled_renew:
+                    description: Number of days before expiration to renew certificates
+                    format: int64
+                    type: integer
+                  server_flag:
+                    description: Flag certificates for server auth use
+                    type: boolean
+                  signer_key_name:
+                    description: Key to sign certificates with
+                    type: string
+                  street_address:
+                    description: Street address for issued certificate
+                    type: string
+                  tag:
+                    description: Tags for the PKI cert issuer
+                    items:
+                      type: string
+                    type: array
+                  ttl:
+                    description: Certificate TTL
+                    type: string
+                type: object
+              conditions:
+                items:
+                  properties:
+                    lastTransitionTime:
+                      format: date-time
+                      type: string
+                    message:
+                      type: string
+                    reason:
+                      type: string
+                    status:
+                      type: string
+                    type:
+                      type: string
+                  required:
+                  - type
+                  - status
+                  type: object
+                type: array
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

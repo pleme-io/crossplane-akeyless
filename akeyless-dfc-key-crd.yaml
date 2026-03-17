@@ -1,0 +1,221 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: dfckeys.akeyless.crossplane.io
+spec:
+  group: akeyless.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - akeyless
+    kind: DfcKey
+    plural: dfckeys
+    singular: dfckey
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        properties:
+          spec:
+            properties:
+              forProvider:
+                properties:
+                  alg:
+                    description: 'DFC key algorithm: AES128GCM, AES256GCM, AES128SIV, AES256SIV, RSA1024, RSA2048, RSA3072, RSA4096 (immutable)'
+                    type: string
+                  auto_rotate:
+                    description: Whether to automatically rotate every rotation_interval days, or disable existing automatic rotation [true/false]
+                    type: string
+                  certificate_common_name:
+                    description: Common name for generated certificate
+                    type: string
+                  certificate_country:
+                    description: Country for generated certificate
+                    type: string
+                  certificate_digest_algo:
+                    description: Digest algorithm to be used for the certificate key signing.
+                    type: string
+                  certificate_format:
+                    type: string
+                  certificate_locality:
+                    description: Locality for generated certificate
+                    type: string
+                  certificate_organization:
+                    description: Organization for generated certificate
+                    type: string
+                  certificate_province:
+                    description: Province for generated certificate
+                    type: string
+                  certificate_ttl:
+                    description: Certificate TTL in days
+                    format: int64
+                    type: integer
+                  customer_frg_id:
+                    description: The customer fragment ID that will be used to create the DFC key (if empty, the key will be created independently of a customer fragment)
+                    type: string
+                  delete_protection:
+                    description: Enable delete protection
+                    type: boolean
+                  description:
+                    description: Key description
+                    type: string
+                  expiration_event_in:
+                    description: How many days before the expiration of the certificate would you like to be notified.
+                    items:
+                      type: string
+                    type: array
+                  generate_self_signed_certificate:
+                    description: Generate a self-signed certificate
+                    type: boolean
+                  hash_algorithm:
+                    description: 'Specifies the hash algorithm used for the encryption key''s operations, available options: [SHA256, SHA384, SHA512]'
+                    type: string
+                  item_custom_fields:
+                    additionalProperties:
+                      type: string
+                    description: Additional custom fields to associate with the item
+                    type: object
+                  name:
+                    description: DFCKey name (immutable)
+                    type: string
+                  rotation_event_in:
+                    description: How many days before the rotation of the item would you like to be notified
+                    items:
+                      type: string
+                    type: array
+                  rotation_interval:
+                    description: The number of days to wait between every automatic rotation (7-365)
+                    type: string
+                  split_level:
+                    description: Number of key fragments (2-5)
+                    format: int64
+                    type: integer
+                  tag:
+                    description: List of the tags attached to this DFC key
+                    items:
+                      type: string
+                    type: array
+                required:
+                - alg
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            properties:
+              atProvider:
+                properties:
+                  alg:
+                    description: 'DFC key algorithm: AES128GCM, AES256GCM, AES128SIV, AES256SIV, RSA1024, RSA2048, RSA3072, RSA4096'
+                    type: string
+                  auto_rotate:
+                    description: Whether to automatically rotate every rotation_interval days, or disable existing automatic rotation [true/false]
+                    type: string
+                  certificate_common_name:
+                    description: Common name for generated certificate
+                    type: string
+                  certificate_country:
+                    description: Country for generated certificate
+                    type: string
+                  certificate_digest_algo:
+                    description: Digest algorithm to be used for the certificate key signing.
+                    type: string
+                  certificate_format:
+                    type: string
+                  certificate_locality:
+                    description: Locality for generated certificate
+                    type: string
+                  certificate_organization:
+                    description: Organization for generated certificate
+                    type: string
+                  certificate_province:
+                    description: Province for generated certificate
+                    type: string
+                  certificate_ttl:
+                    description: Certificate TTL in days
+                    format: int64
+                    type: integer
+                  customer_frg_id:
+                    description: The customer fragment ID that will be used to create the DFC key (if empty, the key will be created independently of a customer fragment)
+                    type: string
+                  delete_protection:
+                    description: Enable delete protection
+                    type: boolean
+                  description:
+                    description: Key description
+                    type: string
+                  expiration_event_in:
+                    description: How many days before the expiration of the certificate would you like to be notified.
+                    items:
+                      type: string
+                    type: array
+                  generate_self_signed_certificate:
+                    description: Generate a self-signed certificate
+                    type: boolean
+                  hash_algorithm:
+                    description: 'Specifies the hash algorithm used for the encryption key''s operations, available options: [SHA256, SHA384, SHA512]'
+                    type: string
+                  item_custom_fields:
+                    additionalProperties:
+                      type: string
+                    description: Additional custom fields to associate with the item
+                    type: object
+                  name:
+                    description: DFCKey name
+                    type: string
+                  rotation_event_in:
+                    description: How many days before the rotation of the item would you like to be notified
+                    items:
+                      type: string
+                    type: array
+                  rotation_interval:
+                    description: The number of days to wait between every automatic rotation (7-365)
+                    type: string
+                  split_level:
+                    description: Number of key fragments (2-5)
+                    format: int64
+                    type: integer
+                  tag:
+                    description: List of the tags attached to this DFC key
+                    items:
+                      type: string
+                    type: array
+                type: object
+              conditions:
+                items:
+                  properties:
+                    lastTransitionTime:
+                      format: date-time
+                      type: string
+                    message:
+                      type: string
+                    reason:
+                      type: string
+                    status:
+                      type: string
+                    type:
+                      type: string
+                  required:
+                  - type
+                  - status
+                  type: object
+                type: array
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

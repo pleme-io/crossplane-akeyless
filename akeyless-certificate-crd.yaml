@@ -1,0 +1,150 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: certificates.akeyless.crossplane.io
+spec:
+  group: akeyless.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - akeyless
+    kind: Certificate
+    plural: certificates
+    singular: certificate
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        properties:
+          spec:
+            properties:
+              forProvider:
+                properties:
+                  certificate_data:
+                    description: Content of the certificate in a Base64 format.
+                    type: string
+                  delete_protection:
+                    description: Protection from accidental deletion of this object [true/false]
+                    type: string
+                  description:
+                    description: Description of the object
+                    type: string
+                  expiration_event_in:
+                    description: How many days before the expiration of the certificate would you like to be notified.
+                    items:
+                      type: string
+                    type: array
+                  format:
+                    description: |-
+                      CertificateFormat of the certificate and private key, possible values: cer,crt,pem,pfx,p12.
+                      Required when passing inline certificate content with --certificate-data or --key-data, otherwise format is derived from the file extension.
+                    type: string
+                  item_custom_fields:
+                    additionalProperties:
+                      type: string
+                    description: Additional custom fields to associate with the item
+                    type: object
+                  key:
+                    description: |-
+                      The name of a key to use to encrypt the certificate's key (if empty, the
+                      account default protectionKey key will be used)
+                    type: string
+                  key_data:
+                    description: Content of the certificate's private key in a Base64 format.
+                    type: string
+                  name:
+                    description: Certificate name (immutable)
+                    type: string
+                  tags:
+                    description: Add tags attached to this object
+                    items:
+                      type: string
+                    type: array
+                required:
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            properties:
+              atProvider:
+                properties:
+                  certificate_data:
+                    description: Content of the certificate in a Base64 format.
+                    type: string
+                  delete_protection:
+                    description: Protection from accidental deletion of this object [true/false]
+                    type: string
+                  description:
+                    description: Description of the object
+                    type: string
+                  expiration_event_in:
+                    description: How many days before the expiration of the certificate would you like to be notified.
+                    items:
+                      type: string
+                    type: array
+                  format:
+                    description: |-
+                      CertificateFormat of the certificate and private key, possible values: cer,crt,pem,pfx,p12.
+                      Required when passing inline certificate content with --certificate-data or --key-data, otherwise format is derived from the file extension.
+                    type: string
+                  item_custom_fields:
+                    additionalProperties:
+                      type: string
+                    description: Additional custom fields to associate with the item
+                    type: object
+                  key:
+                    description: |-
+                      The name of a key to use to encrypt the certificate's key (if empty, the
+                      account default protectionKey key will be used)
+                    type: string
+                  key_data:
+                    description: Content of the certificate's private key in a Base64 format.
+                    type: string
+                  name:
+                    description: Certificate name
+                    type: string
+                  tags:
+                    description: Add tags attached to this object
+                    items:
+                      type: string
+                    type: array
+                type: object
+              conditions:
+                items:
+                  properties:
+                    lastTransitionTime:
+                      format: date-time
+                      type: string
+                    message:
+                      type: string
+                    reason:
+                      type: string
+                    status:
+                      type: string
+                    type:
+                      type: string
+                  required:
+                  - type
+                  - status
+                  type: object
+                type: array
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

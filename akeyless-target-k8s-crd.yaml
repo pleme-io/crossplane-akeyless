@@ -1,0 +1,142 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: targetk8ss.akeyless.crossplane.io
+spec:
+  group: akeyless.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - akeyless
+    kind: TargetK8s
+    plural: targetk8ss
+    singular: targetk8s
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        properties:
+          spec:
+            properties:
+              forProvider:
+                properties:
+                  description:
+                    description: Target description
+                    type: string
+                  k8s_auth_type:
+                    description: 'Kubernetes auth type: token, certificate, or password'
+                    type: string
+                  k8s_client_certificate:
+                    description: Kubernetes client certificate (PEM) [sensitive]
+                    type: string
+                  k8s_client_key:
+                    description: Kubernetes client key (PEM) [sensitive]
+                    type: string
+                  k8s_cluster_ca_cert:
+                    description: Kubernetes cluster CA certificate (PEM) [sensitive]
+                    type: string
+                  k8s_cluster_endpoint:
+                    description: Kubernetes API server URL
+                    type: string
+                  k8s_cluster_name:
+                    description: K8S cluster name
+                    type: string
+                  k8s_cluster_token:
+                    description: Kubernetes bearer token [sensitive]
+                    type: string
+                  key:
+                    description: The name of a key that used to encrypt the target secret value (if empty, the account default protectionKey key will be used)
+                    type: string
+                  max_versions:
+                    description: Set the maximum number of versions, limited by the account settings defaults.
+                    type: string
+                  name:
+                    description: Target name (immutable)
+                    type: string
+                  use_gw_service_account:
+                    description: Use gateway service account for authentication
+                    type: boolean
+                required:
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            properties:
+              atProvider:
+                properties:
+                  description:
+                    description: Target description
+                    type: string
+                  k8s_auth_type:
+                    description: 'Kubernetes auth type: token, certificate, or password'
+                    type: string
+                  k8s_client_certificate:
+                    description: Kubernetes client certificate (PEM)
+                    type: string
+                  k8s_client_key:
+                    description: Kubernetes client key (PEM)
+                    type: string
+                  k8s_cluster_ca_cert:
+                    description: Kubernetes cluster CA certificate (PEM)
+                    type: string
+                  k8s_cluster_endpoint:
+                    description: Kubernetes API server URL
+                    type: string
+                  k8s_cluster_name:
+                    description: K8S cluster name
+                    type: string
+                  k8s_cluster_token:
+                    description: Kubernetes bearer token
+                    type: string
+                  key:
+                    description: The name of a key that used to encrypt the target secret value (if empty, the account default protectionKey key will be used)
+                    type: string
+                  max_versions:
+                    description: Set the maximum number of versions, limited by the account settings defaults.
+                    type: string
+                  name:
+                    description: Target name
+                    type: string
+                  use_gw_service_account:
+                    description: Use gateway service account for authentication
+                    type: boolean
+                type: object
+              conditions:
+                items:
+                  properties:
+                    lastTransitionTime:
+                      format: date-time
+                      type: string
+                    message:
+                      type: string
+                    reason:
+                      type: string
+                    status:
+                      type: string
+                    type:
+                      type: string
+                  required:
+                  - type
+                  - status
+                  type: object
+                type: array
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

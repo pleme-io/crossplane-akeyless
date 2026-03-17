@@ -1,0 +1,130 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: targetsshs.akeyless.crossplane.io
+spec:
+  group: akeyless.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - akeyless
+    kind: TargetSsh
+    plural: targetsshs
+    singular: targetssh
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        properties:
+          spec:
+            properties:
+              forProvider:
+                properties:
+                  description:
+                    description: Target description
+                    type: string
+                  host:
+                    description: SSH host address
+                    type: string
+                  key:
+                    description: The name of a key that used to encrypt the target secret value (if empty, the account default protectionKey key will be used)
+                    type: string
+                  max_versions:
+                    description: Set the maximum number of versions, limited by the account settings defaults.
+                    type: string
+                  name:
+                    description: Target name (immutable)
+                    type: string
+                  port:
+                    description: 'SSH port (default: 22)'
+                    type: string
+                  private_key:
+                    description: SSH private key (PEM) [sensitive]
+                    type: string
+                  private_key_password:
+                    description: SSH private key passphrase [sensitive]
+                    type: string
+                  ssh_password:
+                    description: SSH password [sensitive]
+                    type: string
+                  ssh_username:
+                    description: SSH username
+                    type: string
+                required:
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            properties:
+              atProvider:
+                properties:
+                  description:
+                    description: Target description
+                    type: string
+                  host:
+                    description: SSH host address
+                    type: string
+                  key:
+                    description: The name of a key that used to encrypt the target secret value (if empty, the account default protectionKey key will be used)
+                    type: string
+                  max_versions:
+                    description: Set the maximum number of versions, limited by the account settings defaults.
+                    type: string
+                  name:
+                    description: Target name
+                    type: string
+                  port:
+                    description: 'SSH port (default: 22)'
+                    type: string
+                  private_key:
+                    description: SSH private key (PEM)
+                    type: string
+                  private_key_password:
+                    description: SSH private key passphrase
+                    type: string
+                  ssh_password:
+                    description: SSH password
+                    type: string
+                  ssh_username:
+                    description: SSH username
+                    type: string
+                type: object
+              conditions:
+                items:
+                  properties:
+                    lastTransitionTime:
+                      format: date-time
+                      type: string
+                    message:
+                      type: string
+                    reason:
+                      type: string
+                    status:
+                      type: string
+                    type:
+                      type: string
+                  required:
+                  - type
+                  - status
+                  type: object
+                type: array
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

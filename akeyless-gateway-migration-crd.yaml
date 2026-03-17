@@ -1,0 +1,554 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: gatewaymigrations.akeyless.crossplane.io
+spec:
+  group: akeyless.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - akeyless
+    kind: GatewayMigration
+    plural: gatewaymigrations
+    singular: gatewaymigration
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        properties:
+          spec:
+            properties:
+              forProvider:
+                properties:
+                  ServiceAccountKeyDecoded:
+                    type: string
+                  ad_auto_rotate:
+                    description: 'Enable/Disable automatic/recurrent rotation for migrated secrets. Default is false: only manual rotation is allowed for migrated secrets. If set to true, this command should be combined with --ad-rotation-interval and --ad-rotation-hour parameters (Relevant only for Active Directory migration)'
+                    type: string
+                  ad_cert_expiration_event_in:
+                    description: How many days before the expiration of discovered certificates would you like to be notified (Relevant only for Active Directory migration with certificate discovery enabled)
+                    items:
+                      type: string
+                    type: array
+                  ad_certificates_path_template:
+                    description: 'Path location template for migrating certificates e.g.: /Certificates/{{COMMON_NAME}} (Relevant only for Active Directory migration with certificate discovery enabled)'
+                    type: string
+                  ad_computer_base_dn:
+                    description: 'Distinguished Name of Computer objects (servers) to search in Active Directory e.g.: CN=Computers,DC=example,DC=com (Relevant only for Active Directory migration)'
+                    type: string
+                  ad_discover_iis_app:
+                    description: Enable/Disable discovery of IIS application from each domain server as part of the SSH/Windows Rotated Secrets. Default is false. (Relevant only for Active Directory migration)
+                    type: string
+                  ad_discover_local_users:
+                    description: |-
+                      Enable/Disable discovery of local users from each domain server and migrate them as SSH/Windows Rotated Secrets. Default is false: only domain users will be migrated. Discovery of local users might require further installation of SSH on the servers, based on the supplied computer base DN. This will be implemented automatically as part of the migration process (Relevant only for Active Directory migration)
+                      Deprecated: use AdDiscoverTypes
+                    type: string
+                  ad_discover_services:
+                    description: Enable/Disable discovery of Windows services from each domain server as part of the SSH/Windows Rotated Secrets. Default is false. (Relevant only for Active Directory migration)
+                    type: string
+                  ad_discovery_types:
+                    description: Set migration discovery types (domain-users, computers, local-users). (Relevant only for Active Directory migration)
+                    items:
+                      type: string
+                    type: array
+                  ad_domain_name:
+                    description: Active Directory Domain Name (Relevant only for Active Directory migration)
+                    type: string
+                  ad_domain_users_path_template:
+                    description: 'Path location template for migrating domain users as Rotated Secrets e.g.: .../DomainUsers/{{USERNAME}} (Relevant only for Active Directory migration)'
+                    type: string
+                  ad_local_users_ignore:
+                    description: Comma-separated list of Local Users which should not be migrated (Relevant only for Active Directory migration)
+                    type: string
+                  ad_local_users_path_template:
+                    description: 'Path location template for migrating domain users as Rotated Secrets e.g.: .../LocalUsers/{{COMPUTER_NAME}}/{{USERNAME}} (Relevant only for Active Directory migration)'
+                    type: string
+                  ad_os_filter:
+                    description: Filter by Operating System to run the migration, can be used with wildcards, e.g. SRV20* (Relevant only for Active Directory migration)
+                    type: string
+                  ad_rotation_hour:
+                    description: The hour of the scheduled rotation in UTC (Relevant only for Active Directory migration)
+                    format: int64
+                    type: integer
+                  ad_rotation_interval:
+                    description: The number of days to wait between every automatic rotation [1-365] (Relevant only for Active Directory migration)
+                    format: int64
+                    type: integer
+                  ad_sra_enable_rdp:
+                    description: 'Enable/Disable RDP Secure Remote Access for the migrated local users rotated secrets. Default is false: rotated secrets will not be created with SRA (Relevant only for Active Directory migration)'
+                    type: string
+                  ad_ssh_port:
+                    description: Set the SSH Port for further connection to the domain servers. Default is port 22 (Relevant only for Active Directory migration)
+                    type: string
+                  ad_target_format:
+                    description: Relevant only for ad-discovery-types=computers. For linked, all computers will be migrated into a linked target(s). if set with regular, the migration will create a target for each computer.
+                    type: string
+                  ad_target_name:
+                    description: Active Directory LDAP Target Name. Server type should be Active Directory (Relevant only for Active Directory migration)
+                    type: string
+                  ad_targets_path_template:
+                    description: 'Path location template for migrating domain servers as SSH/Windows Targets e.g.: .../Servers/{{COMPUTER_NAME}} (Relevant only for Active Directory migration)'
+                    type: string
+                  ad_targets_type:
+                    description: Set the target type of the domain servers [ssh/windows](Relevant only for Active Directory migration)
+                    type: string
+                  ad_user_base_dn:
+                    description: 'Distinguished Name of User objects to search in Active Directory, e.g.: CN=Users,DC=example,DC=com (Relevant only for Active Directory migration)'
+                    type: string
+                  ad_user_groups:
+                    description: Comma-separated list of domain groups from which privileged domain users will be migrated. If empty, migrate all users based on the --ad-user-base-dn (Relevant only for Active Directory migration)
+                    type: string
+                  ad_winrm_over_http:
+                    description: Use WinRM over HTTP, by default runs over HTTPS
+                    type: string
+                  ad_winrm_port:
+                    description: Set the WinRM Port for further connection to the domain servers. Default is 5986 (Relevant only for Active Directory migration)
+                    type: string
+                  ai_certificate_discovery:
+                    description: Enable AI-assisted certificate discovery (only when AI Insight is enabled on the Gateway)
+                    type: string
+                  aws_key:
+                    description: AWS Secret Access Key (relevant only for AWS migration)
+                    type: string
+                  aws_key_id:
+                    description: AWS Access Key ID with sufficient permissions to get all secrets, e.g. 'arn:aws:secretsmanager:[Region]:[AccountId]:secret:[/path/to/secrets/*]' (relevant only for AWS migration)
+                    type: string
+                  aws_region:
+                    description: AWS region of the required Secrets Manager (relevant only for AWS migration)
+                    type: string
+                  azure_client_id:
+                    description: Azure Key Vault Access client ID, should be Azure AD App with a service principal (relevant only for Azure Key Vault migration)
+                    type: string
+                  azure_kv_name:
+                    description: Azure Key Vault Name (relevant only for Azure Key Vault migration)
+                    type: string
+                  azure_secret:
+                    description: Azure Key Vault secret (relevant only for Azure Key Vault migration)
+                    type: string
+                  azure_tenant_id:
+                    description: Azure Key Vault Access tenant ID (relevant only for Azure Key Vault migration)
+                    type: string
+                  conjur_account:
+                    description: Conjur account name set on your Conjur server (relevant only for Conjur migration).
+                    type: string
+                  conjur_api_key:
+                    description: Conjur API Key for the specified user (relevant only for Conjur migration).
+                    type: string
+                  conjur_url:
+                    description: |-
+                      Conjur server base URL (relevant only for Conjur migration).
+                      If conjur-url is HTTPS and Conjur uses a private CA/self-signed certificate,
+                      make the CA bundle available on the Gateway and set CONJUR_SSL_CERT_PATH to its path.
+                    type: string
+                  conjur_username:
+                    description: Conjur username used to authenticate (relevant only for Conjur migration).
+                    type: string
+                  expiration_event_in:
+                    description: How many days before the expiration of the certificate would you like to be notified.
+                    items:
+                      type: string
+                    type: array
+                  gcp_key:
+                    description: Base64-encoded GCP Service Account private key text with sufficient permissions to Secrets Manager, Minimum required permission is Secret Manager Secret Accessor, e.g. 'roles/secretmanager.secretAccessor' (relevant only for GCP migration)
+                    type: string
+                  gcp_project_id:
+                    description: GCP Project ID (cross-project override)
+                    type: string
+                  hashi_json:
+                    description: Import secret key as json value or independent secrets (relevant only for HasiCorp Vault migration) [true/false]
+                    type: string
+                  hashi_ns:
+                    description: HashiCorp Vault Namespaces is a comma-separated list of namespaces which need to be imported into Akeyless Vault. For every provided namespace, all its child namespaces are imported as well, e.g. nmsp/subnmsp1/subnmsp2,nmsp/anothernmsp. By default, import all namespaces (relevant only for HasiCorp Vault migration)
+                    items:
+                      type: string
+                    type: array
+                  hashi_token:
+                    description: HashiCorp Vault access token with sufficient permissions to preform list & read operations on secrets objects (relevant only for HasiCorp Vault migration)
+                    type: string
+                  hashi_url:
+                    description: HashiCorp Vault API URL, e.g. https://vault-mgr01:8200 (relevant only for HasiCorp Vault migration)
+                    type: string
+                  hosts:
+                    description: A comma separated list of IPs, CIDR ranges, or DNS names to scan
+                    type: string
+                  k8s_ca_certificate:
+                    description: |-
+                      For Certificate Authentication method
+                      K8s Cluster CA certificate (relevant only for K8s migration with Certificate Authentication method)
+                    items:
+                      format: int64
+                      type: integer
+                    type: array
+                  k8s_client_certificate:
+                    description: K8s Client certificate with sufficient permission to list and get secrets in the namespace(s) you selected (relevant only for K8s migration with Certificate Authentication method)
+                    items:
+                      format: int64
+                      type: integer
+                    type: array
+                  k8s_client_key:
+                    description: K8s Client key (relevant only for K8s migration with Certificate Authentication method)
+                    items:
+                      format: int64
+                      type: integer
+                    type: array
+                  k8s_namespace:
+                    description: K8s Namespace, Use this field to import secrets from a particular namespace only. By default, the secrets are imported from all namespaces (relevant only for K8s migration)
+                    type: string
+                  k8s_password:
+                    description: K8s Client password (relevant only for K8s migration with Password Authentication method)
+                    type: string
+                  k8s_skip_system:
+                    description: K8s Skip Control Plane Secrets, This option allows to avoid importing secrets from system namespaces (relevant only for K8s migration)
+                    type: boolean
+                  k8s_token:
+                    description: |-
+                      For Token Authentication method
+                      K8s Bearer Token with sufficient permission to list and get secrets in the namespace(s) you selected (relevant only for K8s migration with Token Authentication method)
+                    type: string
+                  k8s_url:
+                    description: K8s API Server URL, e.g. https://k8s-api.mycompany.com:6443 (relevant only for K8s migration)
+                    type: string
+                  k8s_username:
+                    description: |-
+                      For Password Authentication method
+                      K8s Client username with sufficient permission to list and get secrets in the namespace(s) you selected (relevant only for K8s migration with Password Authentication method)
+                    type: string
+                  name:
+                    description: Migration name (immutable)
+                    type: string
+                  port_ranges:
+                    description: |-
+                      A comma separated list of port ranges
+                      Examples: "80,443" or "80,443,8080-8090" or "443"
+                    type: string
+                  protection_key:
+                    description: The name of the key that protects the classic key value (if empty, the account default key will be used)
+                    type: string
+                  si_auto_rotate:
+                    description: 'Enable/Disable automatic/recurrent rotation for migrated secrets. Default is false: only manual rotation is allowed for migrated secrets. If set to true, this command should be combined with --si-rotation-interval and --si-rotation-hour parameters (Relevant only for Server Inventory migration)'
+                    type: string
+                  si_rotation_hour:
+                    description: The hour of the scheduled rotation in UTC (Relevant only for Server Inventory migration)
+                    format: int64
+                    type: integer
+                  si_rotation_interval:
+                    description: The number of days to wait between every automatic rotation [1-365] (Relevant only for Server Inventory migration)
+                    format: int64
+                    type: integer
+                  si_sra_enable_rdp:
+                    description: 'Enable/Disable RDP Secure Remote Access for the migrated local users rotated secrets. Default is false: rotated secrets will not be created with SRA (Relevant only for Server Inventory migration)'
+                    type: string
+                  si_target_name:
+                    description: SSH, Windows or Linked Target Name. (Relevant only for Server Inventory migration)
+                    type: string
+                  si_user_groups:
+                    description: Comma-separated list of groups to migrate users from. If empty, all users from all groups will be migrated (Relevant only for Server Inventory migration)
+                    type: string
+                  si_users_ignore:
+                    description: Comma-separated list of Local Users which should not be migrated (Relevant only for Server Inventory migration)
+                    type: string
+                  si_users_path_template:
+                    description: 'Path location template for migrating users as Rotated Secrets e.g.: .../Users/{{COMPUTER_NAME}}/{{USERNAME}} (Relevant only for Server Inventory migration)'
+                    type: string
+                  target_location:
+                    description: Target location in Akeyless for imported secrets
+                    type: string
+                  type:
+                    description: Migration type (hashi/aws/gcp/k8s/azure_kv/conjur/active_directory/server_inventory/certificate)
+                    type: string
+                  use_gw_cloud_identity:
+                    description: Use the GW's Cloud IAM
+                    type: boolean
+                required:
+                - hosts
+                - name
+                - si_target_name
+                - si_users_path_template
+                - target_location
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            properties:
+              atProvider:
+                properties:
+                  ServiceAccountKeyDecoded:
+                    type: string
+                  ad_auto_rotate:
+                    description: 'Enable/Disable automatic/recurrent rotation for migrated secrets. Default is false: only manual rotation is allowed for migrated secrets. If set to true, this command should be combined with --ad-rotation-interval and --ad-rotation-hour parameters (Relevant only for Active Directory migration)'
+                    type: string
+                  ad_cert_expiration_event_in:
+                    description: How many days before the expiration of discovered certificates would you like to be notified (Relevant only for Active Directory migration with certificate discovery enabled)
+                    items:
+                      type: string
+                    type: array
+                  ad_certificates_path_template:
+                    description: 'Path location template for migrating certificates e.g.: /Certificates/{{COMMON_NAME}} (Relevant only for Active Directory migration with certificate discovery enabled)'
+                    type: string
+                  ad_computer_base_dn:
+                    description: 'Distinguished Name of Computer objects (servers) to search in Active Directory e.g.: CN=Computers,DC=example,DC=com (Relevant only for Active Directory migration)'
+                    type: string
+                  ad_discover_iis_app:
+                    description: Enable/Disable discovery of IIS application from each domain server as part of the SSH/Windows Rotated Secrets. Default is false. (Relevant only for Active Directory migration)
+                    type: string
+                  ad_discover_local_users:
+                    description: |-
+                      Enable/Disable discovery of local users from each domain server and migrate them as SSH/Windows Rotated Secrets. Default is false: only domain users will be migrated. Discovery of local users might require further installation of SSH on the servers, based on the supplied computer base DN. This will be implemented automatically as part of the migration process (Relevant only for Active Directory migration)
+                      Deprecated: use AdDiscoverTypes
+                    type: string
+                  ad_discover_services:
+                    description: Enable/Disable discovery of Windows services from each domain server as part of the SSH/Windows Rotated Secrets. Default is false. (Relevant only for Active Directory migration)
+                    type: string
+                  ad_discovery_types:
+                    description: Set migration discovery types (domain-users, computers, local-users). (Relevant only for Active Directory migration)
+                    items:
+                      type: string
+                    type: array
+                  ad_domain_name:
+                    description: Active Directory Domain Name (Relevant only for Active Directory migration)
+                    type: string
+                  ad_domain_users_path_template:
+                    description: 'Path location template for migrating domain users as Rotated Secrets e.g.: .../DomainUsers/{{USERNAME}} (Relevant only for Active Directory migration)'
+                    type: string
+                  ad_local_users_ignore:
+                    description: Comma-separated list of Local Users which should not be migrated (Relevant only for Active Directory migration)
+                    type: string
+                  ad_local_users_path_template:
+                    description: 'Path location template for migrating domain users as Rotated Secrets e.g.: .../LocalUsers/{{COMPUTER_NAME}}/{{USERNAME}} (Relevant only for Active Directory migration)'
+                    type: string
+                  ad_os_filter:
+                    description: Filter by Operating System to run the migration, can be used with wildcards, e.g. SRV20* (Relevant only for Active Directory migration)
+                    type: string
+                  ad_rotation_hour:
+                    description: The hour of the scheduled rotation in UTC (Relevant only for Active Directory migration)
+                    format: int64
+                    type: integer
+                  ad_rotation_interval:
+                    description: The number of days to wait between every automatic rotation [1-365] (Relevant only for Active Directory migration)
+                    format: int64
+                    type: integer
+                  ad_sra_enable_rdp:
+                    description: 'Enable/Disable RDP Secure Remote Access for the migrated local users rotated secrets. Default is false: rotated secrets will not be created with SRA (Relevant only for Active Directory migration)'
+                    type: string
+                  ad_ssh_port:
+                    description: Set the SSH Port for further connection to the domain servers. Default is port 22 (Relevant only for Active Directory migration)
+                    type: string
+                  ad_target_format:
+                    description: Relevant only for ad-discovery-types=computers. For linked, all computers will be migrated into a linked target(s). if set with regular, the migration will create a target for each computer.
+                    type: string
+                  ad_target_name:
+                    description: Active Directory LDAP Target Name. Server type should be Active Directory (Relevant only for Active Directory migration)
+                    type: string
+                  ad_targets_path_template:
+                    description: 'Path location template for migrating domain servers as SSH/Windows Targets e.g.: .../Servers/{{COMPUTER_NAME}} (Relevant only for Active Directory migration)'
+                    type: string
+                  ad_targets_type:
+                    description: Set the target type of the domain servers [ssh/windows](Relevant only for Active Directory migration)
+                    type: string
+                  ad_user_base_dn:
+                    description: 'Distinguished Name of User objects to search in Active Directory, e.g.: CN=Users,DC=example,DC=com (Relevant only for Active Directory migration)'
+                    type: string
+                  ad_user_groups:
+                    description: Comma-separated list of domain groups from which privileged domain users will be migrated. If empty, migrate all users based on the --ad-user-base-dn (Relevant only for Active Directory migration)
+                    type: string
+                  ad_winrm_over_http:
+                    description: Use WinRM over HTTP, by default runs over HTTPS
+                    type: string
+                  ad_winrm_port:
+                    description: Set the WinRM Port for further connection to the domain servers. Default is 5986 (Relevant only for Active Directory migration)
+                    type: string
+                  ai_certificate_discovery:
+                    description: Enable AI-assisted certificate discovery (only when AI Insight is enabled on the Gateway)
+                    type: string
+                  aws_key:
+                    description: AWS Secret Access Key (relevant only for AWS migration)
+                    type: string
+                  aws_key_id:
+                    description: AWS Access Key ID with sufficient permissions to get all secrets, e.g. 'arn:aws:secretsmanager:[Region]:[AccountId]:secret:[/path/to/secrets/*]' (relevant only for AWS migration)
+                    type: string
+                  aws_region:
+                    description: AWS region of the required Secrets Manager (relevant only for AWS migration)
+                    type: string
+                  azure_client_id:
+                    description: Azure Key Vault Access client ID, should be Azure AD App with a service principal (relevant only for Azure Key Vault migration)
+                    type: string
+                  azure_kv_name:
+                    description: Azure Key Vault Name (relevant only for Azure Key Vault migration)
+                    type: string
+                  azure_secret:
+                    description: Azure Key Vault secret (relevant only for Azure Key Vault migration)
+                    type: string
+                  azure_tenant_id:
+                    description: Azure Key Vault Access tenant ID (relevant only for Azure Key Vault migration)
+                    type: string
+                  conjur_account:
+                    description: Conjur account name set on your Conjur server (relevant only for Conjur migration).
+                    type: string
+                  conjur_api_key:
+                    description: Conjur API Key for the specified user (relevant only for Conjur migration).
+                    type: string
+                  conjur_url:
+                    description: |-
+                      Conjur server base URL (relevant only for Conjur migration).
+                      If conjur-url is HTTPS and Conjur uses a private CA/self-signed certificate,
+                      make the CA bundle available on the Gateway and set CONJUR_SSL_CERT_PATH to its path.
+                    type: string
+                  conjur_username:
+                    description: Conjur username used to authenticate (relevant only for Conjur migration).
+                    type: string
+                  expiration_event_in:
+                    description: How many days before the expiration of the certificate would you like to be notified.
+                    items:
+                      type: string
+                    type: array
+                  gcp_key:
+                    description: Base64-encoded GCP Service Account private key text with sufficient permissions to Secrets Manager, Minimum required permission is Secret Manager Secret Accessor, e.g. 'roles/secretmanager.secretAccessor' (relevant only for GCP migration)
+                    type: string
+                  gcp_project_id:
+                    description: GCP Project ID (cross-project override)
+                    type: string
+                  hashi_json:
+                    description: Import secret key as json value or independent secrets (relevant only for HasiCorp Vault migration) [true/false]
+                    type: string
+                  hashi_ns:
+                    description: HashiCorp Vault Namespaces is a comma-separated list of namespaces which need to be imported into Akeyless Vault. For every provided namespace, all its child namespaces are imported as well, e.g. nmsp/subnmsp1/subnmsp2,nmsp/anothernmsp. By default, import all namespaces (relevant only for HasiCorp Vault migration)
+                    items:
+                      type: string
+                    type: array
+                  hashi_token:
+                    description: HashiCorp Vault access token with sufficient permissions to preform list & read operations on secrets objects (relevant only for HasiCorp Vault migration)
+                    type: string
+                  hashi_url:
+                    description: HashiCorp Vault API URL, e.g. https://vault-mgr01:8200 (relevant only for HasiCorp Vault migration)
+                    type: string
+                  hosts:
+                    description: A comma separated list of IPs, CIDR ranges, or DNS names to scan
+                    type: string
+                  k8s_ca_certificate:
+                    description: |-
+                      For Certificate Authentication method
+                      K8s Cluster CA certificate (relevant only for K8s migration with Certificate Authentication method)
+                    items:
+                      format: int64
+                      type: integer
+                    type: array
+                  k8s_client_certificate:
+                    description: K8s Client certificate with sufficient permission to list and get secrets in the namespace(s) you selected (relevant only for K8s migration with Certificate Authentication method)
+                    items:
+                      format: int64
+                      type: integer
+                    type: array
+                  k8s_client_key:
+                    description: K8s Client key (relevant only for K8s migration with Certificate Authentication method)
+                    items:
+                      format: int64
+                      type: integer
+                    type: array
+                  k8s_namespace:
+                    description: K8s Namespace, Use this field to import secrets from a particular namespace only. By default, the secrets are imported from all namespaces (relevant only for K8s migration)
+                    type: string
+                  k8s_password:
+                    description: K8s Client password (relevant only for K8s migration with Password Authentication method)
+                    type: string
+                  k8s_skip_system:
+                    description: K8s Skip Control Plane Secrets, This option allows to avoid importing secrets from system namespaces (relevant only for K8s migration)
+                    type: boolean
+                  k8s_token:
+                    description: |-
+                      For Token Authentication method
+                      K8s Bearer Token with sufficient permission to list and get secrets in the namespace(s) you selected (relevant only for K8s migration with Token Authentication method)
+                    type: string
+                  k8s_url:
+                    description: K8s API Server URL, e.g. https://k8s-api.mycompany.com:6443 (relevant only for K8s migration)
+                    type: string
+                  k8s_username:
+                    description: |-
+                      For Password Authentication method
+                      K8s Client username with sufficient permission to list and get secrets in the namespace(s) you selected (relevant only for K8s migration with Password Authentication method)
+                    type: string
+                  name:
+                    description: Migration name
+                    type: string
+                  port_ranges:
+                    description: |-
+                      A comma separated list of port ranges
+                      Examples: "80,443" or "80,443,8080-8090" or "443"
+                    type: string
+                  protection_key:
+                    description: The name of the key that protects the classic key value (if empty, the account default key will be used)
+                    type: string
+                  si_auto_rotate:
+                    description: 'Enable/Disable automatic/recurrent rotation for migrated secrets. Default is false: only manual rotation is allowed for migrated secrets. If set to true, this command should be combined with --si-rotation-interval and --si-rotation-hour parameters (Relevant only for Server Inventory migration)'
+                    type: string
+                  si_rotation_hour:
+                    description: The hour of the scheduled rotation in UTC (Relevant only for Server Inventory migration)
+                    format: int64
+                    type: integer
+                  si_rotation_interval:
+                    description: The number of days to wait between every automatic rotation [1-365] (Relevant only for Server Inventory migration)
+                    format: int64
+                    type: integer
+                  si_sra_enable_rdp:
+                    description: 'Enable/Disable RDP Secure Remote Access for the migrated local users rotated secrets. Default is false: rotated secrets will not be created with SRA (Relevant only for Server Inventory migration)'
+                    type: string
+                  si_target_name:
+                    description: SSH, Windows or Linked Target Name. (Relevant only for Server Inventory migration)
+                    type: string
+                  si_user_groups:
+                    description: Comma-separated list of groups to migrate users from. If empty, all users from all groups will be migrated (Relevant only for Server Inventory migration)
+                    type: string
+                  si_users_ignore:
+                    description: Comma-separated list of Local Users which should not be migrated (Relevant only for Server Inventory migration)
+                    type: string
+                  si_users_path_template:
+                    description: 'Path location template for migrating users as Rotated Secrets e.g.: .../Users/{{COMPUTER_NAME}}/{{USERNAME}} (Relevant only for Server Inventory migration)'
+                    type: string
+                  target_location:
+                    description: Target location in Akeyless for imported secrets
+                    type: string
+                  type:
+                    description: Migration type (hashi/aws/gcp/k8s/azure_kv/conjur/active_directory/server_inventory/certificate)
+                    type: string
+                  use_gw_cloud_identity:
+                    description: Use the GW's Cloud IAM
+                    type: boolean
+                type: object
+              conditions:
+                items:
+                  properties:
+                    lastTransitionTime:
+                      format: date-time
+                      type: string
+                    message:
+                      type: string
+                    reason:
+                      type: string
+                    status:
+                      type: string
+                    type:
+                      type: string
+                  required:
+                  - type
+                  - status
+                  type: object
+                type: array
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

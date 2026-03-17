@@ -1,0 +1,281 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: authmethodazureads.akeyless.crossplane.io
+spec:
+  group: akeyless.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - akeyless
+    kind: AuthMethodAzureAd
+    plural: authmethodazureads
+    singular: authmethodazuread
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        properties:
+          spec:
+            properties:
+              forProvider:
+                properties:
+                  access_expires:
+                    description: Access expiration in Unix time (0 = no expiry)
+                    format: int64
+                    type: integer
+                  allowed_client_type:
+                    description: limit the auth method usage for specific client types [cli,ui,gateway-admin,sdk,mobile,extension]
+                    items:
+                      type: string
+                    type: array
+                  audience:
+                    description: Azure AD audience (application ID)
+                    type: string
+                  audit_logs_claims:
+                    description: Subclaims to include in audit logs, e.g "--audit-logs-claims email --audit-logs-claims username"
+                    items:
+                      type: string
+                    type: array
+                  bound_group_id:
+                    description: Azure AD group IDs to restrict access
+                    items:
+                      type: string
+                    type: array
+                  bound_ips:
+                    description: CIDR whitelist for access
+                    items:
+                      type: string
+                    type: array
+                  bound_providers:
+                    description: Azure resource providers to restrict access
+                    items:
+                      type: string
+                    type: array
+                  bound_resource_id:
+                    description: Azure resource IDs to restrict access
+                    items:
+                      type: string
+                    type: array
+                  bound_resource_names:
+                    description: Azure resource names to restrict access
+                    items:
+                      type: string
+                    type: array
+                  bound_resource_types:
+                    description: Azure resource types to restrict access
+                    items:
+                      type: string
+                    type: array
+                  bound_rg_id:
+                    description: Azure resource group IDs to restrict access
+                    items:
+                      type: string
+                    type: array
+                  bound_spid:
+                    description: Service principal IDs to restrict access
+                    items:
+                      type: string
+                    type: array
+                  bound_sub_id:
+                    description: Azure subscription IDs to restrict access
+                    items:
+                      type: string
+                    type: array
+                  bound_tenant_id:
+                    description: Azure tenant ID to restrict access
+                    type: string
+                  delete_protection:
+                    description: Enable delete protection
+                    type: boolean
+                  description:
+                    description: Auth Method description
+                    type: string
+                  expiration_event_in:
+                    description: How many days before the expiration of the auth method would you like to be notified.
+                    items:
+                      type: string
+                    type: array
+                  force_sub_claims:
+                    description: Force sub-claims enforcement
+                    type: boolean
+                  gw_bound_ips:
+                    description: Gateway CIDR whitelist
+                    items:
+                      type: string
+                    type: array
+                  issuer:
+                    description: Azure AD issuer URL
+                    type: string
+                  jwks_uri:
+                    description: JWKS URI for token verification
+                    type: string
+                  jwt_ttl:
+                    description: JWT TTL in seconds
+                    format: int64
+                    type: integer
+                  name:
+                    description: Auth Method name (immutable)
+                    type: string
+                  product_type:
+                    description: Choose the relevant product type for the auth method [sm, sra, pm, dp, ca]
+                    items:
+                      type: string
+                    type: array
+                  unique_identifier:
+                    description: A unique identifier (ID) value which is a "sub claim" name that contains details uniquely identifying that resource. This "sub claim" is used to distinguish between different identities.
+                    type: string
+                required:
+                - bound_tenant_id
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            properties:
+              atProvider:
+                properties:
+                  access_expires:
+                    description: Access expiration in Unix time (0 = no expiry)
+                    format: int64
+                    type: integer
+                  allowed_client_type:
+                    description: limit the auth method usage for specific client types [cli,ui,gateway-admin,sdk,mobile,extension]
+                    items:
+                      type: string
+                    type: array
+                  audience:
+                    description: Azure AD audience (application ID)
+                    type: string
+                  audit_logs_claims:
+                    description: Subclaims to include in audit logs, e.g "--audit-logs-claims email --audit-logs-claims username"
+                    items:
+                      type: string
+                    type: array
+                  bound_group_id:
+                    description: Azure AD group IDs to restrict access
+                    items:
+                      type: string
+                    type: array
+                  bound_ips:
+                    description: CIDR whitelist for access
+                    items:
+                      type: string
+                    type: array
+                  bound_providers:
+                    description: Azure resource providers to restrict access
+                    items:
+                      type: string
+                    type: array
+                  bound_resource_id:
+                    description: Azure resource IDs to restrict access
+                    items:
+                      type: string
+                    type: array
+                  bound_resource_names:
+                    description: Azure resource names to restrict access
+                    items:
+                      type: string
+                    type: array
+                  bound_resource_types:
+                    description: Azure resource types to restrict access
+                    items:
+                      type: string
+                    type: array
+                  bound_rg_id:
+                    description: Azure resource group IDs to restrict access
+                    items:
+                      type: string
+                    type: array
+                  bound_spid:
+                    description: Service principal IDs to restrict access
+                    items:
+                      type: string
+                    type: array
+                  bound_sub_id:
+                    description: Azure subscription IDs to restrict access
+                    items:
+                      type: string
+                    type: array
+                  bound_tenant_id:
+                    description: Azure tenant ID to restrict access
+                    type: string
+                  delete_protection:
+                    description: Enable delete protection
+                    type: boolean
+                  description:
+                    description: Auth Method description
+                    type: string
+                  expiration_event_in:
+                    description: How many days before the expiration of the auth method would you like to be notified.
+                    items:
+                      type: string
+                    type: array
+                  force_sub_claims:
+                    description: Force sub-claims enforcement
+                    type: boolean
+                  gw_bound_ips:
+                    description: Gateway CIDR whitelist
+                    items:
+                      type: string
+                    type: array
+                  issuer:
+                    description: Azure AD issuer URL
+                    type: string
+                  jwks_uri:
+                    description: JWKS URI for token verification
+                    type: string
+                  jwt_ttl:
+                    description: JWT TTL in seconds
+                    format: int64
+                    type: integer
+                  name:
+                    description: Auth Method name
+                    type: string
+                  product_type:
+                    description: Choose the relevant product type for the auth method [sm, sra, pm, dp, ca]
+                    items:
+                      type: string
+                    type: array
+                  unique_identifier:
+                    description: A unique identifier (ID) value which is a "sub claim" name that contains details uniquely identifying that resource. This "sub claim" is used to distinguish between different identities.
+                    type: string
+                type: object
+              conditions:
+                items:
+                  properties:
+                    lastTransitionTime:
+                      format: date-time
+                      type: string
+                    message:
+                      type: string
+                    reason:
+                      type: string
+                    status:
+                      type: string
+                    type:
+                      type: string
+                  required:
+                  - type
+                  - status
+                  type: object
+                type: array
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

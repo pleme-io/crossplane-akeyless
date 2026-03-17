@@ -1,0 +1,239 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: authmethodoauth2s.akeyless.crossplane.io
+spec:
+  group: akeyless.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - akeyless
+    kind: AuthMethodOauth2
+    plural: authmethodoauth2s
+    singular: authmethodoauth2
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        properties:
+          spec:
+            properties:
+              forProvider:
+                properties:
+                  access_expires:
+                    description: Access expiration in Unix time (0 = no expiry)
+                    format: int64
+                    type: integer
+                  allowed_client_type:
+                    description: limit the auth method usage for specific client types [cli,ui,gateway-admin,sdk,mobile,extension]
+                    items:
+                      type: string
+                    type: array
+                  audience:
+                    description: OAuth2 audience
+                    type: string
+                  audit_logs_claims:
+                    description: Subclaims to include in audit logs, e.g "--audit-logs-claims email --audit-logs-claims username"
+                    items:
+                      type: string
+                    type: array
+                  bound_client_ids:
+                    description: OAuth2 client IDs to restrict access
+                    items:
+                      type: string
+                    type: array
+                  bound_ips:
+                    description: CIDR whitelist for access
+                    items:
+                      type: string
+                    type: array
+                  cert:
+                    description: CertificateFile Path to a file that contain the certificate in a PEM format.
+                    type: string
+                  cert_file_data:
+                    description: CertificateFileData PEM Certificate in a Base64 format.
+                    type: string
+                  delete_protection:
+                    description: Enable delete protection
+                    type: boolean
+                  description:
+                    description: Auth Method description
+                    type: string
+                  expiration_event_in:
+                    description: How many days before the expiration of the auth method would you like to be notified.
+                    items:
+                      type: string
+                    type: array
+                  force_sub_claims:
+                    description: Force sub-claims enforcement
+                    type: boolean
+                  gateway_url:
+                    description: Akeyless Gateway URL (Configuration Management port). Relevant only when the jwks-uri is accessible only from the gateway.
+                    type: string
+                  gw_bound_ips:
+                    description: Gateway CIDR whitelist
+                    items:
+                      type: string
+                    type: array
+                  issuer:
+                    description: OAuth2 issuer URL
+                    type: string
+                  jwks_json_data:
+                    description: JWKS JSON data for token verification
+                    type: string
+                  jwks_uri:
+                    description: JWKS URI for token verification
+                    type: string
+                  jwt_ttl:
+                    description: JWT TTL in seconds
+                    format: int64
+                    type: integer
+                  name:
+                    description: Auth Method name (immutable)
+                    type: string
+                  product_type:
+                    description: Choose the relevant product type for the auth method [sm, sra, pm, dp, ca]
+                    items:
+                      type: string
+                    type: array
+                  subclaims_delimiters:
+                    description: A list of additional sub claims delimiters (relevant only for SAML, OIDC, OAuth2/JWT)
+                    items:
+                      type: string
+                    type: array
+                  unique_identifier:
+                    description: Unique identifier claim name in the JWT token
+                    type: string
+                required:
+                - name
+                - unique_identifier
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            properties:
+              atProvider:
+                properties:
+                  access_expires:
+                    description: Access expiration in Unix time (0 = no expiry)
+                    format: int64
+                    type: integer
+                  allowed_client_type:
+                    description: limit the auth method usage for specific client types [cli,ui,gateway-admin,sdk,mobile,extension]
+                    items:
+                      type: string
+                    type: array
+                  audience:
+                    description: OAuth2 audience
+                    type: string
+                  audit_logs_claims:
+                    description: Subclaims to include in audit logs, e.g "--audit-logs-claims email --audit-logs-claims username"
+                    items:
+                      type: string
+                    type: array
+                  bound_client_ids:
+                    description: OAuth2 client IDs to restrict access
+                    items:
+                      type: string
+                    type: array
+                  bound_ips:
+                    description: CIDR whitelist for access
+                    items:
+                      type: string
+                    type: array
+                  cert:
+                    description: CertificateFile Path to a file that contain the certificate in a PEM format.
+                    type: string
+                  cert_file_data:
+                    description: CertificateFileData PEM Certificate in a Base64 format.
+                    type: string
+                  delete_protection:
+                    description: Enable delete protection
+                    type: boolean
+                  description:
+                    description: Auth Method description
+                    type: string
+                  expiration_event_in:
+                    description: How many days before the expiration of the auth method would you like to be notified.
+                    items:
+                      type: string
+                    type: array
+                  force_sub_claims:
+                    description: Force sub-claims enforcement
+                    type: boolean
+                  gateway_url:
+                    description: Akeyless Gateway URL (Configuration Management port). Relevant only when the jwks-uri is accessible only from the gateway.
+                    type: string
+                  gw_bound_ips:
+                    description: Gateway CIDR whitelist
+                    items:
+                      type: string
+                    type: array
+                  issuer:
+                    description: OAuth2 issuer URL
+                    type: string
+                  jwks_json_data:
+                    description: JWKS JSON data for token verification
+                    type: string
+                  jwks_uri:
+                    description: JWKS URI for token verification
+                    type: string
+                  jwt_ttl:
+                    description: JWT TTL in seconds
+                    format: int64
+                    type: integer
+                  name:
+                    description: Auth Method name
+                    type: string
+                  product_type:
+                    description: Choose the relevant product type for the auth method [sm, sra, pm, dp, ca]
+                    items:
+                      type: string
+                    type: array
+                  subclaims_delimiters:
+                    description: A list of additional sub claims delimiters (relevant only for SAML, OIDC, OAuth2/JWT)
+                    items:
+                      type: string
+                    type: array
+                  unique_identifier:
+                    description: Unique identifier claim name in the JWT token
+                    type: string
+                type: object
+              conditions:
+                items:
+                  properties:
+                    lastTransitionTime:
+                      format: date-time
+                      type: string
+                    message:
+                      type: string
+                    reason:
+                      type: string
+                    status:
+                      type: string
+                    type:
+                      type: string
+                  required:
+                  - type
+                  - status
+                  type: object
+                type: array
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

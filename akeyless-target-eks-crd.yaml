@@ -1,0 +1,141 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: targetekss.akeyless.crossplane.io
+spec:
+  group: akeyless.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - akeyless
+    kind: TargetEks
+    plural: targetekss
+    singular: targeteks
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        properties:
+          spec:
+            properties:
+              forProvider:
+                properties:
+                  description:
+                    description: Target description
+                    type: string
+                  eks_access_key_id:
+                    description: AWS access key ID for EKS [sensitive]
+                    type: string
+                  eks_cluster_ca_cert:
+                    description: EKS cluster CA certificate (PEM) [sensitive]
+                    type: string
+                  eks_cluster_endpoint:
+                    description: EKS cluster API server URL
+                    type: string
+                  eks_cluster_name:
+                    description: EKS cluster name
+                    type: string
+                  eks_region:
+                    description: AWS region for EKS cluster
+                    type: string
+                  eks_secret_access_key:
+                    description: AWS secret access key for EKS [sensitive]
+                    type: string
+                  key:
+                    description: The name of a key that used to encrypt the target secret value (if empty, the account default protectionKey key will be used)
+                    type: string
+                  max_versions:
+                    description: Set the maximum number of versions, limited by the account settings defaults.
+                    type: string
+                  name:
+                    description: Target name (immutable)
+                    type: string
+                  use_gw_cloud_identity:
+                    description: Use gateway cloud identity for authentication
+                    type: boolean
+                required:
+                - eks_access_key_id
+                - eks_cluster_ca_cert
+                - eks_cluster_endpoint
+                - eks_cluster_name
+                - eks_secret_access_key
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            properties:
+              atProvider:
+                properties:
+                  description:
+                    description: Target description
+                    type: string
+                  eks_access_key_id:
+                    description: AWS access key ID for EKS
+                    type: string
+                  eks_cluster_ca_cert:
+                    description: EKS cluster CA certificate (PEM)
+                    type: string
+                  eks_cluster_endpoint:
+                    description: EKS cluster API server URL
+                    type: string
+                  eks_cluster_name:
+                    description: EKS cluster name
+                    type: string
+                  eks_region:
+                    description: AWS region for EKS cluster
+                    type: string
+                  eks_secret_access_key:
+                    description: AWS secret access key for EKS
+                    type: string
+                  key:
+                    description: The name of a key that used to encrypt the target secret value (if empty, the account default protectionKey key will be used)
+                    type: string
+                  max_versions:
+                    description: Set the maximum number of versions, limited by the account settings defaults.
+                    type: string
+                  name:
+                    description: Target name
+                    type: string
+                  use_gw_cloud_identity:
+                    description: Use gateway cloud identity for authentication
+                    type: boolean
+                type: object
+              conditions:
+                items:
+                  properties:
+                    lastTransitionTime:
+                      format: date-time
+                      type: string
+                    message:
+                      type: string
+                    reason:
+                      type: string
+                    status:
+                      type: string
+                    type:
+                      type: string
+                  required:
+                  - type
+                  - status
+                  type: object
+                type: array
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
