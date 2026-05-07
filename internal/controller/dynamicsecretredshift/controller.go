@@ -165,6 +165,19 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.DynamicSecretCreateRedshift{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		CreationStatements: cr.Spec.ForProvider.CreationStatements,
+		CustomUsernameTemplate: cr.Spec.ForProvider.CustomUsernameTemplate,
+		Description: cr.Spec.ForProvider.Description,
+		PasswordLength: cr.Spec.ForProvider.PasswordLength,
+		ProducerEncryptionKey: cr.Spec.ForProvider.ProducerEncryptionKey,
+		RedshiftDbName: cr.Spec.ForProvider.RedshiftDbName,
+		RedshiftHost: cr.Spec.ForProvider.RedshiftHost,
+		RedshiftPassword: cr.Spec.ForProvider.RedshiftPassword,
+		RedshiftPort: cr.Spec.ForProvider.RedshiftPort,
+		RedshiftUsername: cr.Spec.ForProvider.RedshiftUsername,
+		Ssl: cr.Spec.ForProvider.Ssl,
+		TargetName: cr.Spec.ForProvider.TargetName,
+		UserTtl: cr.Spec.ForProvider.UserTtl,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.DynamicSecretCreateRedshift(ctx).DynamicSecretCreateRedshift(body).Execute()
@@ -181,6 +194,19 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.DynamicSecretUpdateRedshift{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		CreationStatements: cr.Spec.ForProvider.CreationStatements,
+		CustomUsernameTemplate: cr.Spec.ForProvider.CustomUsernameTemplate,
+		Description: cr.Spec.ForProvider.Description,
+		PasswordLength: cr.Spec.ForProvider.PasswordLength,
+		ProducerEncryptionKey: cr.Spec.ForProvider.ProducerEncryptionKey,
+		RedshiftDbName: cr.Spec.ForProvider.RedshiftDbName,
+		RedshiftHost: cr.Spec.ForProvider.RedshiftHost,
+		RedshiftPassword: cr.Spec.ForProvider.RedshiftPassword,
+		RedshiftPort: cr.Spec.ForProvider.RedshiftPort,
+		RedshiftUsername: cr.Spec.ForProvider.RedshiftUsername,
+		Ssl: cr.Spec.ForProvider.Ssl,
+		TargetName: cr.Spec.ForProvider.TargetName,
+		UserTtl: cr.Spec.ForProvider.UserTtl,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.DynamicSecretUpdateRedshift(ctx).DynamicSecretUpdateRedshift(body).Execute()

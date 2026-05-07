@@ -165,6 +165,13 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.AuthMethodCreateK8s{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AccessExpires: cr.Spec.ForProvider.AccessExpires,
+		Audience: cr.Spec.ForProvider.Audience,
+		Description: cr.Spec.ForProvider.Description,
+		ForceSubClaims: cr.Spec.ForProvider.ForceSubClaims,
+		GenKey: cr.Spec.ForProvider.GenKey,
+		JwtTtl: cr.Spec.ForProvider.JwtTtl,
+		PublicKey: cr.Spec.ForProvider.PublicKey,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.AuthMethodCreateK8s(ctx).AuthMethodCreateK8s(body).Execute()
@@ -181,6 +188,13 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.AuthMethodUpdateK8s{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AccessExpires: cr.Spec.ForProvider.AccessExpires,
+		Audience: cr.Spec.ForProvider.Audience,
+		Description: cr.Spec.ForProvider.Description,
+		ForceSubClaims: cr.Spec.ForProvider.ForceSubClaims,
+		GenKey: cr.Spec.ForProvider.GenKey,
+		JwtTtl: cr.Spec.ForProvider.JwtTtl,
+		PublicKey: cr.Spec.ForProvider.PublicKey,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.AuthMethodUpdateK8s(ctx).AuthMethodUpdateK8s(body).Execute()

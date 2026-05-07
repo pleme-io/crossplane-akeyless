@@ -165,6 +165,14 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.TargetCreateSectigo{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		CertificateProfileId: cr.Spec.ForProvider.CertificateProfileId,
+		CustomerUri: cr.Spec.ForProvider.CustomerUri,
+		Description: cr.Spec.ForProvider.Description,
+		ExternalRequester: cr.Spec.ForProvider.ExternalRequester,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
+		OrganizationId: cr.Spec.ForProvider.OrganizationId,
+		Timeout: cr.Spec.ForProvider.Timeout,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.TargetCreateSectigo(ctx).TargetCreateSectigo(body).Execute()
@@ -181,6 +189,14 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.TargetUpdateSectigo{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		CertificateProfileId: cr.Spec.ForProvider.CertificateProfileId,
+		CustomerUri: cr.Spec.ForProvider.CustomerUri,
+		Description: cr.Spec.ForProvider.Description,
+		ExternalRequester: cr.Spec.ForProvider.ExternalRequester,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
+		OrganizationId: cr.Spec.ForProvider.OrganizationId,
+		Timeout: cr.Spec.ForProvider.Timeout,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.TargetUpdateSectigo(ctx).TargetUpdateSectigo(body).Execute()

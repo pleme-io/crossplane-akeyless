@@ -165,6 +165,23 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.DynamicSecretCreatePing{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		Description: cr.Spec.ForProvider.Description,
+		PingAdministrativePort: cr.Spec.ForProvider.PingAdministrativePort,
+		PingAtmId: cr.Spec.ForProvider.PingAtmId,
+		PingAuthorizationPort: cr.Spec.ForProvider.PingAuthorizationPort,
+		PingCertSubjectDn: cr.Spec.ForProvider.PingCertSubjectDn,
+		PingClientAuthenticationType: cr.Spec.ForProvider.PingClientAuthenticationType,
+		PingEnforceReplayPrevention: cr.Spec.ForProvider.PingEnforceReplayPrevention,
+		PingIssuerDn: cr.Spec.ForProvider.PingIssuerDn,
+		PingJwks: cr.Spec.ForProvider.PingJwks,
+		PingJwksUrl: cr.Spec.ForProvider.PingJwksUrl,
+		PingPassword: cr.Spec.ForProvider.PingPassword,
+		PingPrivilegedUser: cr.Spec.ForProvider.PingPrivilegedUser,
+		PingSigningAlgo: cr.Spec.ForProvider.PingSigningAlgo,
+		PingUrl: cr.Spec.ForProvider.PingUrl,
+		ProducerEncryptionKeyName: cr.Spec.ForProvider.ProducerEncryptionKeyName,
+		TargetName: cr.Spec.ForProvider.TargetName,
+		UserTtl: cr.Spec.ForProvider.UserTtl,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.DynamicSecretCreatePing(ctx).DynamicSecretCreatePing(body).Execute()
@@ -181,6 +198,23 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.DynamicSecretUpdatePing{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		Description: cr.Spec.ForProvider.Description,
+		PingAdministrativePort: cr.Spec.ForProvider.PingAdministrativePort,
+		PingAtmId: cr.Spec.ForProvider.PingAtmId,
+		PingAuthorizationPort: cr.Spec.ForProvider.PingAuthorizationPort,
+		PingCertSubjectDn: cr.Spec.ForProvider.PingCertSubjectDn,
+		PingClientAuthenticationType: cr.Spec.ForProvider.PingClientAuthenticationType,
+		PingEnforceReplayPrevention: cr.Spec.ForProvider.PingEnforceReplayPrevention,
+		PingIssuerDn: cr.Spec.ForProvider.PingIssuerDn,
+		PingJwks: cr.Spec.ForProvider.PingJwks,
+		PingJwksUrl: cr.Spec.ForProvider.PingJwksUrl,
+		PingPassword: cr.Spec.ForProvider.PingPassword,
+		PingPrivilegedUser: cr.Spec.ForProvider.PingPrivilegedUser,
+		PingSigningAlgo: cr.Spec.ForProvider.PingSigningAlgo,
+		PingUrl: cr.Spec.ForProvider.PingUrl,
+		ProducerEncryptionKeyName: cr.Spec.ForProvider.ProducerEncryptionKeyName,
+		TargetName: cr.Spec.ForProvider.TargetName,
+		UserTtl: cr.Spec.ForProvider.UserTtl,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.DynamicSecretUpdatePing(ctx).DynamicSecretUpdatePing(body).Execute()

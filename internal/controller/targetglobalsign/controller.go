@@ -165,6 +165,15 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.TargetCreateGlobalSign{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		ContactEmail: cr.Spec.ForProvider.ContactEmail,
+		ContactFirstName: cr.Spec.ForProvider.ContactFirstName,
+		ContactLastName: cr.Spec.ForProvider.ContactLastName,
+		ContactPhone: cr.Spec.ForProvider.ContactPhone,
+		Description: cr.Spec.ForProvider.Description,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
+		ProfileId: cr.Spec.ForProvider.ProfileId,
+		Timeout: cr.Spec.ForProvider.Timeout,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.TargetCreateGlobalSign(ctx).TargetCreateGlobalSign(body).Execute()
@@ -181,6 +190,15 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.TargetUpdateGlobalSign{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		ContactEmail: cr.Spec.ForProvider.ContactEmail,
+		ContactFirstName: cr.Spec.ForProvider.ContactFirstName,
+		ContactLastName: cr.Spec.ForProvider.ContactLastName,
+		ContactPhone: cr.Spec.ForProvider.ContactPhone,
+		Description: cr.Spec.ForProvider.Description,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
+		ProfileId: cr.Spec.ForProvider.ProfileId,
+		Timeout: cr.Spec.ForProvider.Timeout,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.TargetUpdateGlobalSign(ctx).TargetUpdateGlobalSign(body).Execute()

@@ -165,6 +165,13 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.TargetCreateSplunk{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		Audience: cr.Spec.ForProvider.Audience,
+		Description: cr.Spec.ForProvider.Description,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
+		TokenOwner: cr.Spec.ForProvider.TokenOwner,
+		Url: cr.Spec.ForProvider.Url,
+		UseTls: cr.Spec.ForProvider.UseTls,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.TargetCreateSplunk(ctx).TargetCreateSplunk(body).Execute()

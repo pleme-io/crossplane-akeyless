@@ -165,6 +165,18 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.EventForwarderCreateServiceNow{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AdminName: cr.Spec.ForProvider.AdminName,
+		AdminPwd: cr.Spec.ForProvider.AdminPwd,
+		AppPrivateKeyBase64: cr.Spec.ForProvider.AppPrivateKeyBase64,
+		AuthType: cr.Spec.ForProvider.AuthType,
+		ClientId: cr.Spec.ForProvider.ClientId,
+		ClientSecret: cr.Spec.ForProvider.ClientSecret,
+		Description: cr.Spec.ForProvider.Description,
+		Every: cr.Spec.ForProvider.Every,
+		Host: cr.Spec.ForProvider.Host,
+		Key: cr.Spec.ForProvider.Key,
+		RunnerType: cr.Spec.ForProvider.RunnerType,
+		UserEmail: cr.Spec.ForProvider.UserEmail,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.EventForwarderCreateServiceNow(ctx).EventForwarderCreateServiceNow(body).Execute()
@@ -181,6 +193,16 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.EventForwarderUpdateServiceNow{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AdminName: cr.Spec.ForProvider.AdminName,
+		AdminPwd: cr.Spec.ForProvider.AdminPwd,
+		AppPrivateKeyBase64: cr.Spec.ForProvider.AppPrivateKeyBase64,
+		AuthType: cr.Spec.ForProvider.AuthType,
+		ClientId: cr.Spec.ForProvider.ClientId,
+		ClientSecret: cr.Spec.ForProvider.ClientSecret,
+		Description: cr.Spec.ForProvider.Description,
+		Host: cr.Spec.ForProvider.Host,
+		Key: cr.Spec.ForProvider.Key,
+		UserEmail: cr.Spec.ForProvider.UserEmail,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.EventForwarderUpdateServiceNow(ctx).EventForwarderUpdateServiceNow(body).Execute()

@@ -165,6 +165,16 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.DynamicSecretCreateCustom{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AdminRotationIntervalDays: cr.Spec.ForProvider.AdminRotationIntervalDays,
+		CreateSyncUrl: cr.Spec.ForProvider.CreateSyncUrl,
+		Description: cr.Spec.ForProvider.Description,
+		EnableAdminRotation: cr.Spec.ForProvider.EnableAdminRotation,
+		Payload: cr.Spec.ForProvider.Payload,
+		ProducerEncryptionKeyName: cr.Spec.ForProvider.ProducerEncryptionKeyName,
+		RevokeSyncUrl: cr.Spec.ForProvider.RevokeSyncUrl,
+		RotateSyncUrl: cr.Spec.ForProvider.RotateSyncUrl,
+		TimeoutSec: cr.Spec.ForProvider.TimeoutSec,
+		UserTtl: cr.Spec.ForProvider.UserTtl,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.DynamicSecretCreateCustom(ctx).DynamicSecretCreateCustom(body).Execute()
@@ -181,6 +191,16 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.DynamicSecretUpdateCustom{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AdminRotationIntervalDays: cr.Spec.ForProvider.AdminRotationIntervalDays,
+		CreateSyncUrl: cr.Spec.ForProvider.CreateSyncUrl,
+		Description: cr.Spec.ForProvider.Description,
+		EnableAdminRotation: cr.Spec.ForProvider.EnableAdminRotation,
+		Payload: cr.Spec.ForProvider.Payload,
+		ProducerEncryptionKeyName: cr.Spec.ForProvider.ProducerEncryptionKeyName,
+		RevokeSyncUrl: cr.Spec.ForProvider.RevokeSyncUrl,
+		RotateSyncUrl: cr.Spec.ForProvider.RotateSyncUrl,
+		TimeoutSec: cr.Spec.ForProvider.TimeoutSec,
+		UserTtl: cr.Spec.ForProvider.UserTtl,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.DynamicSecretUpdateCustom(ctx).DynamicSecretUpdateCustom(body).Execute()

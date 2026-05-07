@@ -165,6 +165,17 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.DynamicSecretCreateRedis{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AclRules: cr.Spec.ForProvider.AclRules,
+		CustomUsernameTemplate: cr.Spec.ForProvider.CustomUsernameTemplate,
+		Description: cr.Spec.ForProvider.Description,
+		Host: cr.Spec.ForProvider.Host,
+		PasswordLength: cr.Spec.ForProvider.PasswordLength,
+		Port: cr.Spec.ForProvider.Port,
+		ProducerEncryptionKeyName: cr.Spec.ForProvider.ProducerEncryptionKeyName,
+		Ssl: cr.Spec.ForProvider.Ssl,
+		SslCertificate: cr.Spec.ForProvider.SslCertificate,
+		TargetName: cr.Spec.ForProvider.TargetName,
+		UserTtl: cr.Spec.ForProvider.UserTtl,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.DynamicSecretCreateRedis(ctx).DynamicSecretCreateRedis(body).Execute()
@@ -181,6 +192,17 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.DynamicSecretUpdateRedis{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AclRules: cr.Spec.ForProvider.AclRules,
+		CustomUsernameTemplate: cr.Spec.ForProvider.CustomUsernameTemplate,
+		Description: cr.Spec.ForProvider.Description,
+		Host: cr.Spec.ForProvider.Host,
+		PasswordLength: cr.Spec.ForProvider.PasswordLength,
+		Port: cr.Spec.ForProvider.Port,
+		ProducerEncryptionKeyName: cr.Spec.ForProvider.ProducerEncryptionKeyName,
+		Ssl: cr.Spec.ForProvider.Ssl,
+		SslCertificate: cr.Spec.ForProvider.SslCertificate,
+		TargetName: cr.Spec.ForProvider.TargetName,
+		UserTtl: cr.Spec.ForProvider.UserTtl,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.DynamicSecretUpdateRedis(ctx).DynamicSecretUpdateRedis(body).Execute()

@@ -165,6 +165,24 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.DynamicSecretCreateAzure{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AppObjId: cr.Spec.ForProvider.AppObjId,
+		AzureAdministrativeUnit: cr.Spec.ForProvider.AzureAdministrativeUnit,
+		AzureClientId: cr.Spec.ForProvider.AzureClientId,
+		AzureClientSecret: cr.Spec.ForProvider.AzureClientSecret,
+		AzureTenantId: cr.Spec.ForProvider.AzureTenantId,
+		CustomUsernameTemplate: cr.Spec.ForProvider.CustomUsernameTemplate,
+		Description: cr.Spec.ForProvider.Description,
+		FixedUserClaimKeyname: cr.Spec.ForProvider.FixedUserClaimKeyname,
+		FixedUserOnly: cr.Spec.ForProvider.FixedUserOnly,
+		PasswordLength: cr.Spec.ForProvider.PasswordLength,
+		ProducerEncryptionKeyName: cr.Spec.ForProvider.ProducerEncryptionKeyName,
+		TargetName: cr.Spec.ForProvider.TargetName,
+		UserGroupObjId: cr.Spec.ForProvider.UserGroupObjId,
+		UserPortalAccess: cr.Spec.ForProvider.UserPortalAccess,
+		UserPrincipalName: cr.Spec.ForProvider.UserPrincipalName,
+		UserProgrammaticAccess: cr.Spec.ForProvider.UserProgrammaticAccess,
+		UserRoleTemplateId: cr.Spec.ForProvider.UserRoleTemplateId,
+		UserTtl: cr.Spec.ForProvider.UserTtl,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.DynamicSecretCreateAzure(ctx).DynamicSecretCreateAzure(body).Execute()
@@ -181,6 +199,24 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.DynamicSecretUpdateAzure{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AppObjId: cr.Spec.ForProvider.AppObjId,
+		AzureAdministrativeUnit: cr.Spec.ForProvider.AzureAdministrativeUnit,
+		AzureClientId: cr.Spec.ForProvider.AzureClientId,
+		AzureClientSecret: cr.Spec.ForProvider.AzureClientSecret,
+		AzureTenantId: cr.Spec.ForProvider.AzureTenantId,
+		CustomUsernameTemplate: cr.Spec.ForProvider.CustomUsernameTemplate,
+		Description: cr.Spec.ForProvider.Description,
+		FixedUserClaimKeyname: cr.Spec.ForProvider.FixedUserClaimKeyname,
+		FixedUserOnly: cr.Spec.ForProvider.FixedUserOnly,
+		PasswordLength: cr.Spec.ForProvider.PasswordLength,
+		ProducerEncryptionKeyName: cr.Spec.ForProvider.ProducerEncryptionKeyName,
+		TargetName: cr.Spec.ForProvider.TargetName,
+		UserGroupObjId: cr.Spec.ForProvider.UserGroupObjId,
+		UserPortalAccess: cr.Spec.ForProvider.UserPortalAccess,
+		UserPrincipalName: cr.Spec.ForProvider.UserPrincipalName,
+		UserProgrammaticAccess: cr.Spec.ForProvider.UserProgrammaticAccess,
+		UserRoleTemplateId: cr.Spec.ForProvider.UserRoleTemplateId,
+		UserTtl: cr.Spec.ForProvider.UserTtl,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.DynamicSecretUpdateAzure(ctx).DynamicSecretUpdateAzure(body).Execute()

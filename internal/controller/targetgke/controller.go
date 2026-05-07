@@ -165,6 +165,15 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.TargetCreateGke{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		Description: cr.Spec.ForProvider.Description,
+		GkeAccountKey: cr.Spec.ForProvider.GkeAccountKey,
+		GkeClusterCert: cr.Spec.ForProvider.GkeClusterCert,
+		GkeClusterEndpoint: cr.Spec.ForProvider.GkeClusterEndpoint,
+		GkeClusterName: cr.Spec.ForProvider.GkeClusterName,
+		GkeServiceAccountEmail: cr.Spec.ForProvider.GkeServiceAccountEmail,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
+		UseGwCloudIdentity: cr.Spec.ForProvider.UseGwCloudIdentity,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.TargetCreateGke(ctx).TargetCreateGke(body).Execute()
@@ -181,6 +190,15 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.TargetUpdateGke{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		Description: cr.Spec.ForProvider.Description,
+		GkeAccountKey: cr.Spec.ForProvider.GkeAccountKey,
+		GkeClusterCert: cr.Spec.ForProvider.GkeClusterCert,
+		GkeClusterEndpoint: cr.Spec.ForProvider.GkeClusterEndpoint,
+		GkeClusterName: cr.Spec.ForProvider.GkeClusterName,
+		GkeServiceAccountEmail: cr.Spec.ForProvider.GkeServiceAccountEmail,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
+		UseGwCloudIdentity: cr.Spec.ForProvider.UseGwCloudIdentity,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.TargetUpdateGke(ctx).TargetUpdateGke(body).Execute()

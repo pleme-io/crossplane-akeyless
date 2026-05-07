@@ -165,6 +165,15 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.DynamicSecretCreateGithub{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		Description: cr.Spec.ForProvider.Description,
+		GithubAppId: cr.Spec.ForProvider.GithubAppId,
+		GithubAppPrivateKey: cr.Spec.ForProvider.GithubAppPrivateKey,
+		GithubBaseUrl: cr.Spec.ForProvider.GithubBaseUrl,
+		InstallationId: cr.Spec.ForProvider.InstallationId,
+		InstallationOrganization: cr.Spec.ForProvider.InstallationOrganization,
+		InstallationRepository: cr.Spec.ForProvider.InstallationRepository,
+		TargetName: cr.Spec.ForProvider.TargetName,
+		TokenTtl: cr.Spec.ForProvider.TokenTtl,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.DynamicSecretCreateGithub(ctx).DynamicSecretCreateGithub(body).Execute()
@@ -181,6 +190,15 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.DynamicSecretUpdateGithub{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		Description: cr.Spec.ForProvider.Description,
+		GithubAppId: cr.Spec.ForProvider.GithubAppId,
+		GithubAppPrivateKey: cr.Spec.ForProvider.GithubAppPrivateKey,
+		GithubBaseUrl: cr.Spec.ForProvider.GithubBaseUrl,
+		InstallationId: cr.Spec.ForProvider.InstallationId,
+		InstallationOrganization: cr.Spec.ForProvider.InstallationOrganization,
+		InstallationRepository: cr.Spec.ForProvider.InstallationRepository,
+		TargetName: cr.Spec.ForProvider.TargetName,
+		TokenTtl: cr.Spec.ForProvider.TokenTtl,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.DynamicSecretUpdateGithub(ctx).DynamicSecretUpdateGithub(body).Execute()

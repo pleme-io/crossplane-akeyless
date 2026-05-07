@@ -165,6 +165,17 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.RotatedSecretCreateOpenAI{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		ApiKey: cr.Spec.ForProvider.ApiKey,
+		ApiKeyId: cr.Spec.ForProvider.ApiKeyId,
+		AuthenticationCredentials: cr.Spec.ForProvider.AuthenticationCredentials,
+		AutoRotate: cr.Spec.ForProvider.AutoRotate,
+		Description: cr.Spec.ForProvider.Description,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
+		PasswordLength: cr.Spec.ForProvider.PasswordLength,
+		RotationInterval: cr.Spec.ForProvider.RotationInterval,
+		RotatorType: cr.Spec.ForProvider.RotatorType,
+		TargetName: cr.Spec.ForProvider.TargetName,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.RotatedSecretCreateOpenAI(ctx).RotatedSecretCreateOpenAI(body).Execute()
@@ -181,6 +192,15 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.RotatedSecretUpdateOpenAI{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		ApiKey: cr.Spec.ForProvider.ApiKey,
+		ApiKeyId: cr.Spec.ForProvider.ApiKeyId,
+		AuthenticationCredentials: cr.Spec.ForProvider.AuthenticationCredentials,
+		AutoRotate: cr.Spec.ForProvider.AutoRotate,
+		Description: cr.Spec.ForProvider.Description,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
+		PasswordLength: cr.Spec.ForProvider.PasswordLength,
+		RotationInterval: cr.Spec.ForProvider.RotationInterval,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.RotatedSecretUpdateOpenAI(ctx).RotatedSecretUpdateOpenAI(body).Execute()

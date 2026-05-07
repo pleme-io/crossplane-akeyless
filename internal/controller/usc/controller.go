@@ -165,6 +165,15 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.UscCreate{
 		UscName: meta.GetExternalName(cr),
 		Token: &e.token,
+		BinaryValue: cr.Spec.ForProvider.BinaryValue,
+		Description: cr.Spec.ForProvider.Description,
+		Namespace: cr.Spec.ForProvider.Namespace,
+		ObjectType: cr.Spec.ForProvider.ObjectType,
+		PfxPassword: cr.Spec.ForProvider.PfxPassword,
+		Region: cr.Spec.ForProvider.Region,
+		SecretName: cr.Spec.ForProvider.SecretName,
+		UscEncryptionKey: cr.Spec.ForProvider.UscEncryptionKey,
+		Value: cr.Spec.ForProvider.Value,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.UscCreate(ctx).UscCreate(body).Execute()
@@ -181,6 +190,12 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.UscUpdate{
 		UscName: meta.GetExternalName(cr),
 		Token: &e.token,
+		BinaryValue: cr.Spec.ForProvider.BinaryValue,
+		Description: cr.Spec.ForProvider.Description,
+		Namespace: cr.Spec.ForProvider.Namespace,
+		PfxPassword: cr.Spec.ForProvider.PfxPassword,
+		UscEncryptionKey: cr.Spec.ForProvider.UscEncryptionKey,
+		Value: cr.Spec.ForProvider.Value,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.UscUpdate(ctx).UscUpdate(body).Execute()

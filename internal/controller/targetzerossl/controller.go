@@ -165,6 +165,16 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.TargetCreateZeroSSL{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		ApiKey: cr.Spec.ForProvider.ApiKey,
+		Description: cr.Spec.ForProvider.Description,
+		ImapFqdn: cr.Spec.ForProvider.ImapFqdn,
+		ImapPassword: cr.Spec.ForProvider.ImapPassword,
+		ImapPort: cr.Spec.ForProvider.ImapPort,
+		ImapTargetEmail: cr.Spec.ForProvider.ImapTargetEmail,
+		ImapUsername: cr.Spec.ForProvider.ImapUsername,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
+		Timeout: cr.Spec.ForProvider.Timeout,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.TargetCreateZeroSSL(ctx).TargetCreateZeroSSL(body).Execute()
@@ -181,6 +191,16 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.TargetUpdateZeroSSL{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		ApiKey: cr.Spec.ForProvider.ApiKey,
+		Description: cr.Spec.ForProvider.Description,
+		ImapFqdn: cr.Spec.ForProvider.ImapFqdn,
+		ImapPassword: cr.Spec.ForProvider.ImapPassword,
+		ImapPort: cr.Spec.ForProvider.ImapPort,
+		ImapTargetEmail: cr.Spec.ForProvider.ImapTargetEmail,
+		ImapUsername: cr.Spec.ForProvider.ImapUsername,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
+		Timeout: cr.Spec.ForProvider.Timeout,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.TargetUpdateZeroSSL(ctx).TargetUpdateZeroSSL(body).Execute()

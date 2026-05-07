@@ -165,6 +165,18 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.TargetCreateAzure{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AzureCloud: cr.Spec.ForProvider.AzureCloud,
+		ClientId: cr.Spec.ForProvider.ClientId,
+		ClientSecret: cr.Spec.ForProvider.ClientSecret,
+		ConnectionType: cr.Spec.ForProvider.ConnectionType,
+		Description: cr.Spec.ForProvider.Description,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
+		ResourceGroupName: cr.Spec.ForProvider.ResourceGroupName,
+		ResourceName: cr.Spec.ForProvider.ResourceName,
+		SubscriptionId: cr.Spec.ForProvider.SubscriptionId,
+		TenantId: cr.Spec.ForProvider.TenantId,
+		UseGwCloudIdentity: cr.Spec.ForProvider.UseGwCloudIdentity,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.TargetCreateAzure(ctx).TargetCreateAzure(body).Execute()
@@ -181,6 +193,18 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.TargetUpdateAzure{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AzureCloud: cr.Spec.ForProvider.AzureCloud,
+		ClientId: cr.Spec.ForProvider.ClientId,
+		ClientSecret: cr.Spec.ForProvider.ClientSecret,
+		ConnectionType: cr.Spec.ForProvider.ConnectionType,
+		Description: cr.Spec.ForProvider.Description,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
+		ResourceGroupName: cr.Spec.ForProvider.ResourceGroupName,
+		ResourceName: cr.Spec.ForProvider.ResourceName,
+		SubscriptionId: cr.Spec.ForProvider.SubscriptionId,
+		TenantId: cr.Spec.ForProvider.TenantId,
+		UseGwCloudIdentity: cr.Spec.ForProvider.UseGwCloudIdentity,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.TargetUpdateAzure(ctx).TargetUpdateAzure(body).Execute()

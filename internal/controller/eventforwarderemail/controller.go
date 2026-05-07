@@ -165,6 +165,13 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.EventForwarderCreateEmail{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		Description: cr.Spec.ForProvider.Description,
+		EmailTo: cr.Spec.ForProvider.EmailTo,
+		Every: cr.Spec.ForProvider.Every,
+		IncludeError: cr.Spec.ForProvider.IncludeError,
+		Key: cr.Spec.ForProvider.Key,
+		OverrideUrl: cr.Spec.ForProvider.OverrideUrl,
+		RunnerType: cr.Spec.ForProvider.RunnerType,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.EventForwarderCreateEmail(ctx).EventForwarderCreateEmail(body).Execute()
@@ -181,6 +188,11 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.EventForwarderUpdateEmail{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		Description: cr.Spec.ForProvider.Description,
+		EmailTo: cr.Spec.ForProvider.EmailTo,
+		IncludeError: cr.Spec.ForProvider.IncludeError,
+		Key: cr.Spec.ForProvider.Key,
+		OverrideUrl: cr.Spec.ForProvider.OverrideUrl,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.EventForwarderUpdateEmail(ctx).EventForwarderUpdateEmail(body).Execute()

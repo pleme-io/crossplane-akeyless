@@ -165,6 +165,10 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.AuthMethodCreateApiKey{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AccessExpires: cr.Spec.ForProvider.AccessExpires,
+		Description: cr.Spec.ForProvider.Description,
+		ForceSubClaims: cr.Spec.ForProvider.ForceSubClaims,
+		JwtTtl: cr.Spec.ForProvider.JwtTtl,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.AuthMethodCreateApiKey(ctx).AuthMethodCreateApiKey(body).Execute()
@@ -181,6 +185,10 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.AuthMethodUpdateApiKey{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AccessExpires: cr.Spec.ForProvider.AccessExpires,
+		Description: cr.Spec.ForProvider.Description,
+		ForceSubClaims: cr.Spec.ForProvider.ForceSubClaims,
+		JwtTtl: cr.Spec.ForProvider.JwtTtl,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.AuthMethodUpdateApiKey(ctx).AuthMethodUpdateApiKey(body).Execute()

@@ -165,6 +165,11 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.GatewayCreateAllowedAccess{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		SubClaimsCaseInsensitive: cr.Spec.ForProvider.SubClaimsCaseInsensitive,
+		AccessId: cr.Spec.ForProvider.AccessId,
+		CaseSensitive: cr.Spec.ForProvider.CaseSensitive,
+		Description: cr.Spec.ForProvider.Description,
+		Permissions: cr.Spec.ForProvider.Permissions,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.GatewayCreateAllowedAccess(ctx).GatewayCreateAllowedAccess(body).Execute()
@@ -181,6 +186,11 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.GatewayUpdateAllowedAccess{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		SubClaimsCaseInsensitive: cr.Spec.ForProvider.SubClaimsCaseInsensitive,
+		AccessId: cr.Spec.ForProvider.AccessId,
+		CaseSensitive: cr.Spec.ForProvider.CaseSensitive,
+		Description: cr.Spec.ForProvider.Description,
+		Permissions: cr.Spec.ForProvider.Permissions,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.GatewayUpdateAllowedAccess(ctx).GatewayUpdateAllowedAccess(body).Execute()

@@ -165,6 +165,14 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.TargetCreateOpenAI{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		ApiKey: cr.Spec.ForProvider.ApiKey,
+		ApiKeyId: cr.Spec.ForProvider.ApiKeyId,
+		Description: cr.Spec.ForProvider.Description,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
+		Model: cr.Spec.ForProvider.Model,
+		OpenaiUrl: cr.Spec.ForProvider.OpenaiUrl,
+		OrganizationId: cr.Spec.ForProvider.OrganizationId,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.TargetCreateOpenAI(ctx).TargetCreateOpenAI(body).Execute()
@@ -181,6 +189,14 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.TargetUpdateOpenAI{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		ApiKey: cr.Spec.ForProvider.ApiKey,
+		ApiKeyId: cr.Spec.ForProvider.ApiKeyId,
+		Description: cr.Spec.ForProvider.Description,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
+		Model: cr.Spec.ForProvider.Model,
+		OpenaiUrl: cr.Spec.ForProvider.OpenaiUrl,
+		OrganizationId: cr.Spec.ForProvider.OrganizationId,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.TargetUpdateOpenAI(ctx).TargetUpdateOpenAI(body).Execute()

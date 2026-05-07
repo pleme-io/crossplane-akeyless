@@ -165,6 +165,18 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.AuthMethodCreateOauth2{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AccessExpires: cr.Spec.ForProvider.AccessExpires,
+		Audience: cr.Spec.ForProvider.Audience,
+		Cert: cr.Spec.ForProvider.Cert,
+		CertFileData: cr.Spec.ForProvider.CertFileData,
+		Description: cr.Spec.ForProvider.Description,
+		ForceSubClaims: cr.Spec.ForProvider.ForceSubClaims,
+		GatewayUrl: cr.Spec.ForProvider.GatewayUrl,
+		Issuer: cr.Spec.ForProvider.Issuer,
+		JwksJsonData: cr.Spec.ForProvider.JwksJsonData,
+		JwksUri: cr.Spec.ForProvider.JwksUri,
+		JwtTtl: cr.Spec.ForProvider.JwtTtl,
+		UniqueIdentifier: cr.Spec.ForProvider.UniqueIdentifier,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.AuthMethodCreateOauth2(ctx).AuthMethodCreateOauth2(body).Execute()
@@ -181,6 +193,18 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.AuthMethodUpdateOauth2{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AccessExpires: cr.Spec.ForProvider.AccessExpires,
+		Audience: cr.Spec.ForProvider.Audience,
+		Cert: cr.Spec.ForProvider.Cert,
+		CertFileData: cr.Spec.ForProvider.CertFileData,
+		Description: cr.Spec.ForProvider.Description,
+		ForceSubClaims: cr.Spec.ForProvider.ForceSubClaims,
+		GatewayUrl: cr.Spec.ForProvider.GatewayUrl,
+		Issuer: cr.Spec.ForProvider.Issuer,
+		JwksJsonData: cr.Spec.ForProvider.JwksJsonData,
+		JwksUri: cr.Spec.ForProvider.JwksUri,
+		JwtTtl: cr.Spec.ForProvider.JwtTtl,
+		UniqueIdentifier: cr.Spec.ForProvider.UniqueIdentifier,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.AuthMethodUpdateOauth2(ctx).AuthMethodUpdateOauth2(body).Execute()

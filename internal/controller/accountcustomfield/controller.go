@@ -167,6 +167,9 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.AccountCustomFieldCreate{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		Object: cr.Spec.ForProvider.Object,
+		ObjectType: cr.Spec.ForProvider.ObjectType,
+		Required: cr.Spec.ForProvider.Required,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.AccountCustomFieldCreate(ctx).AccountCustomFieldCreate(body).Execute()

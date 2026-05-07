@@ -165,6 +165,24 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.DynamicSecretCreateMySql{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		CustomUsernameTemplate: cr.Spec.ForProvider.CustomUsernameTemplate,
+		DbServerCertificates: cr.Spec.ForProvider.DbServerCertificates,
+		DbServerName: cr.Spec.ForProvider.DbServerName,
+		Description: cr.Spec.ForProvider.Description,
+		MysqlDbname: cr.Spec.ForProvider.MysqlDbname,
+		MysqlHost: cr.Spec.ForProvider.MysqlHost,
+		MysqlPassword: cr.Spec.ForProvider.MysqlPassword,
+		MysqlPort: cr.Spec.ForProvider.MysqlPort,
+		MysqlRevocationStatements: cr.Spec.ForProvider.MysqlRevocationStatements,
+		MysqlScreationStatements: cr.Spec.ForProvider.MysqlScreationStatements,
+		MysqlUsername: cr.Spec.ForProvider.MysqlUsername,
+		PasswordLength: cr.Spec.ForProvider.PasswordLength,
+		ProducerEncryptionKeyName: cr.Spec.ForProvider.ProducerEncryptionKeyName,
+		SecureAccessDelay: cr.Spec.ForProvider.SecureAccessDelay,
+		Ssl: cr.Spec.ForProvider.Ssl,
+		SslCertificate: cr.Spec.ForProvider.SslCertificate,
+		TargetName: cr.Spec.ForProvider.TargetName,
+		UserTtl: cr.Spec.ForProvider.UserTtl,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.DynamicSecretCreateMySql(ctx).DynamicSecretCreateMySql(body).Execute()
@@ -181,6 +199,24 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.DynamicSecretUpdateMySql{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		CustomUsernameTemplate: cr.Spec.ForProvider.CustomUsernameTemplate,
+		DbServerCertificates: cr.Spec.ForProvider.DbServerCertificates,
+		DbServerName: cr.Spec.ForProvider.DbServerName,
+		Description: cr.Spec.ForProvider.Description,
+		MysqlDbname: cr.Spec.ForProvider.MysqlDbname,
+		MysqlHost: cr.Spec.ForProvider.MysqlHost,
+		MysqlPassword: cr.Spec.ForProvider.MysqlPassword,
+		MysqlPort: cr.Spec.ForProvider.MysqlPort,
+		MysqlRevocationStatements: cr.Spec.ForProvider.MysqlRevocationStatements,
+		MysqlScreationStatements: cr.Spec.ForProvider.MysqlScreationStatements,
+		MysqlUsername: cr.Spec.ForProvider.MysqlUsername,
+		PasswordLength: cr.Spec.ForProvider.PasswordLength,
+		ProducerEncryptionKeyName: cr.Spec.ForProvider.ProducerEncryptionKeyName,
+		SecureAccessDelay: cr.Spec.ForProvider.SecureAccessDelay,
+		Ssl: cr.Spec.ForProvider.Ssl,
+		SslCertificate: cr.Spec.ForProvider.SslCertificate,
+		TargetName: cr.Spec.ForProvider.TargetName,
+		UserTtl: cr.Spec.ForProvider.UserTtl,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.DynamicSecretUpdateMySql(ctx).DynamicSecretUpdateMySql(body).Execute()

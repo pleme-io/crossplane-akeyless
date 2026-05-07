@@ -164,6 +164,8 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.KmipServerSetup{
 		Hostname: meta.GetExternalName(cr),
 		Token: &e.token,
+		CertificateTtl: cr.Spec.ForProvider.CertificateTtl,
+		Root: cr.Spec.ForProvider.Root,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.KmipServerSetup(ctx).KmipServerSetup(body).Execute()

@@ -165,6 +165,25 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.AuthMethodCreateKerberos{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AccessExpires: cr.Spec.ForProvider.AccessExpires,
+		BindDn: cr.Spec.ForProvider.BindDn,
+		BindDnPassword: cr.Spec.ForProvider.BindDnPassword,
+		Description: cr.Spec.ForProvider.Description,
+		ForceSubClaims: cr.Spec.ForProvider.ForceSubClaims,
+		GroupAttr: cr.Spec.ForProvider.GroupAttr,
+		GroupDn: cr.Spec.ForProvider.GroupDn,
+		GroupFilter: cr.Spec.ForProvider.GroupFilter,
+		JwtTtl: cr.Spec.ForProvider.JwtTtl,
+		KeytabFileData: cr.Spec.ForProvider.KeytabFileData,
+		KeytabFilePath: cr.Spec.ForProvider.KeytabFilePath,
+		Krb5ConfData: cr.Spec.ForProvider.Krb5ConfData,
+		Krb5ConfPath: cr.Spec.ForProvider.Krb5ConfPath,
+		LdapAnonymousSearch: cr.Spec.ForProvider.LdapAnonymousSearch,
+		LdapCaCert: cr.Spec.ForProvider.LdapCaCert,
+		LdapUrl: cr.Spec.ForProvider.LdapUrl,
+		UniqueIdentifier: cr.Spec.ForProvider.UniqueIdentifier,
+		UserAttribute: cr.Spec.ForProvider.UserAttribute,
+		UserDn: cr.Spec.ForProvider.UserDn,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.AuthMethodCreateKerberos(ctx).AuthMethodCreateKerberos(body).Execute()
@@ -181,6 +200,25 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.AuthMethodUpdateKerberos{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AccessExpires: cr.Spec.ForProvider.AccessExpires,
+		BindDn: cr.Spec.ForProvider.BindDn,
+		BindDnPassword: cr.Spec.ForProvider.BindDnPassword,
+		Description: cr.Spec.ForProvider.Description,
+		ForceSubClaims: cr.Spec.ForProvider.ForceSubClaims,
+		GroupAttr: cr.Spec.ForProvider.GroupAttr,
+		GroupDn: cr.Spec.ForProvider.GroupDn,
+		GroupFilter: cr.Spec.ForProvider.GroupFilter,
+		JwtTtl: cr.Spec.ForProvider.JwtTtl,
+		KeytabFileData: cr.Spec.ForProvider.KeytabFileData,
+		KeytabFilePath: cr.Spec.ForProvider.KeytabFilePath,
+		Krb5ConfData: cr.Spec.ForProvider.Krb5ConfData,
+		Krb5ConfPath: cr.Spec.ForProvider.Krb5ConfPath,
+		LdapAnonymousSearch: cr.Spec.ForProvider.LdapAnonymousSearch,
+		LdapCaCert: cr.Spec.ForProvider.LdapCaCert,
+		LdapUrl: cr.Spec.ForProvider.LdapUrl,
+		UniqueIdentifier: cr.Spec.ForProvider.UniqueIdentifier,
+		UserAttribute: cr.Spec.ForProvider.UserAttribute,
+		UserDn: cr.Spec.ForProvider.UserDn,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.AuthMethodUpdateKerberos(ctx).AuthMethodUpdateKerberos(body).Execute()

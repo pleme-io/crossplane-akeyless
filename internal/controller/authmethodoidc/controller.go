@@ -165,6 +165,16 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.AuthMethodCreateOIDC{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AccessExpires: cr.Spec.ForProvider.AccessExpires,
+		Audience: cr.Spec.ForProvider.Audience,
+		ClientId: cr.Spec.ForProvider.ClientId,
+		ClientSecret: cr.Spec.ForProvider.ClientSecret,
+		Description: cr.Spec.ForProvider.Description,
+		ForceSubClaims: cr.Spec.ForProvider.ForceSubClaims,
+		Issuer: cr.Spec.ForProvider.Issuer,
+		JwtTtl: cr.Spec.ForProvider.JwtTtl,
+		RequiredScopesPrefix: cr.Spec.ForProvider.RequiredScopesPrefix,
+		UniqueIdentifier: cr.Spec.ForProvider.UniqueIdentifier,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.AuthMethodCreateOIDC(ctx).AuthMethodCreateOIDC(body).Execute()
@@ -181,6 +191,16 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.AuthMethodUpdateOIDC{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AccessExpires: cr.Spec.ForProvider.AccessExpires,
+		Audience: cr.Spec.ForProvider.Audience,
+		ClientId: cr.Spec.ForProvider.ClientId,
+		ClientSecret: cr.Spec.ForProvider.ClientSecret,
+		Description: cr.Spec.ForProvider.Description,
+		ForceSubClaims: cr.Spec.ForProvider.ForceSubClaims,
+		Issuer: cr.Spec.ForProvider.Issuer,
+		JwtTtl: cr.Spec.ForProvider.JwtTtl,
+		RequiredScopesPrefix: cr.Spec.ForProvider.RequiredScopesPrefix,
+		UniqueIdentifier: cr.Spec.ForProvider.UniqueIdentifier,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.AuthMethodUpdateOIDC(ctx).AuthMethodUpdateOIDC(body).Execute()

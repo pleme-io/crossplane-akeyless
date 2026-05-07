@@ -165,6 +165,17 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.CreateRole{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AnalyticsAccess: cr.Spec.ForProvider.AnalyticsAccess,
+		AuditAccess: cr.Spec.ForProvider.AuditAccess,
+		Comment: cr.Spec.ForProvider.Comment,
+		DeleteProtection: cr.Spec.ForProvider.DeleteProtection,
+		Description: cr.Spec.ForProvider.Description,
+		EventCenterAccess: cr.Spec.ForProvider.EventCenterAccess,
+		EventForwardersAccess: cr.Spec.ForProvider.EventForwardersAccess,
+		GwAnalyticsAccess: cr.Spec.ForProvider.GwAnalyticsAccess,
+		ReverseRbacAccess: cr.Spec.ForProvider.ReverseRbacAccess,
+		SraReportsAccess: cr.Spec.ForProvider.SraReportsAccess,
+		UsageReportsAccess: cr.Spec.ForProvider.UsageReportsAccess,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.CreateRole(ctx).CreateRole(body).Execute()
@@ -181,6 +192,15 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.UpdateRole{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AnalyticsAccess: cr.Spec.ForProvider.AnalyticsAccess,
+		AuditAccess: cr.Spec.ForProvider.AuditAccess,
+		DeleteProtection: cr.Spec.ForProvider.DeleteProtection,
+		Description: cr.Spec.ForProvider.Description,
+		EventCenterAccess: cr.Spec.ForProvider.EventCenterAccess,
+		GwAnalyticsAccess: cr.Spec.ForProvider.GwAnalyticsAccess,
+		ReverseRbacAccess: cr.Spec.ForProvider.ReverseRbacAccess,
+		SraReportsAccess: cr.Spec.ForProvider.SraReportsAccess,
+		UsageReportsAccess: cr.Spec.ForProvider.UsageReportsAccess,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.UpdateRole(ctx).UpdateRole(body).Execute()

@@ -165,6 +165,15 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.TargetCreateSsh{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		Description: cr.Spec.ForProvider.Description,
+		Host: cr.Spec.ForProvider.Host,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
+		Port: cr.Spec.ForProvider.Port,
+		PrivateKey: cr.Spec.ForProvider.PrivateKey,
+		PrivateKeyPassword: cr.Spec.ForProvider.PrivateKeyPassword,
+		SshPassword: cr.Spec.ForProvider.SshPassword,
+		SshUsername: cr.Spec.ForProvider.SshUsername,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.TargetCreateSsh(ctx).TargetCreateSsh(body).Execute()
@@ -181,6 +190,15 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.TargetUpdateSsh{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		Description: cr.Spec.ForProvider.Description,
+		Host: cr.Spec.ForProvider.Host,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
+		Port: cr.Spec.ForProvider.Port,
+		PrivateKey: cr.Spec.ForProvider.PrivateKey,
+		PrivateKeyPassword: cr.Spec.ForProvider.PrivateKeyPassword,
+		SshPassword: cr.Spec.ForProvider.SshPassword,
+		SshUsername: cr.Spec.ForProvider.SshUsername,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.TargetUpdateSsh(ctx).TargetUpdateSsh(body).Execute()

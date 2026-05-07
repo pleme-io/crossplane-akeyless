@@ -166,6 +166,8 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.KmipCreateClient{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		ActivateKeysOnCreation: cr.Spec.ForProvider.ActivateKeysOnCreation,
+		CertificateTtl: cr.Spec.ForProvider.CertificateTtl,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.KmipCreateClient(ctx).KmipCreateClient(body).Execute()

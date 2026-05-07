@@ -165,6 +165,18 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.TargetCreateSalesforce{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AppPrivateKeyData: cr.Spec.ForProvider.AppPrivateKeyData,
+		AuthFlow: cr.Spec.ForProvider.AuthFlow,
+		CaCertData: cr.Spec.ForProvider.CaCertData,
+		CaCertName: cr.Spec.ForProvider.CaCertName,
+		ClientId: cr.Spec.ForProvider.ClientId,
+		ClientSecret: cr.Spec.ForProvider.ClientSecret,
+		Description: cr.Spec.ForProvider.Description,
+		Email: cr.Spec.ForProvider.Email,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
+		SecurityToken: cr.Spec.ForProvider.SecurityToken,
+		TenantUrl: cr.Spec.ForProvider.TenantUrl,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.TargetCreateSalesforce(ctx).TargetCreateSalesforce(body).Execute()
@@ -181,6 +193,18 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.TargetUpdateSalesforce{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AppPrivateKeyData: cr.Spec.ForProvider.AppPrivateKeyData,
+		AuthFlow: cr.Spec.ForProvider.AuthFlow,
+		CaCertData: cr.Spec.ForProvider.CaCertData,
+		CaCertName: cr.Spec.ForProvider.CaCertName,
+		ClientId: cr.Spec.ForProvider.ClientId,
+		ClientSecret: cr.Spec.ForProvider.ClientSecret,
+		Description: cr.Spec.ForProvider.Description,
+		Email: cr.Spec.ForProvider.Email,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
+		SecurityToken: cr.Spec.ForProvider.SecurityToken,
+		TenantUrl: cr.Spec.ForProvider.TenantUrl,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.TargetUpdateSalesforce(ctx).TargetUpdateSalesforce(body).Execute()

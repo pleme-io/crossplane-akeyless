@@ -165,6 +165,16 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.CreateTokenizer{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		Alphabet: cr.Spec.ForProvider.Alphabet,
+		DecodingTemplate: cr.Spec.ForProvider.DecodingTemplate,
+		DeleteProtection: cr.Spec.ForProvider.DeleteProtection,
+		Description: cr.Spec.ForProvider.Description,
+		EncodingTemplate: cr.Spec.ForProvider.EncodingTemplate,
+		EncryptionKeyName: cr.Spec.ForProvider.EncryptionKeyName,
+		Pattern: cr.Spec.ForProvider.Pattern,
+		TemplateType: cr.Spec.ForProvider.TemplateType,
+		TokenizerType: cr.Spec.ForProvider.TokenizerType,
+		TweakType: cr.Spec.ForProvider.TweakType,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.CreateTokenizer(ctx).CreateTokenizer(body).Execute()

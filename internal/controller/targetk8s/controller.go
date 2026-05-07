@@ -165,6 +165,17 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.TargetCreateK8s{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		Description: cr.Spec.ForProvider.Description,
+		K8sAuthType: cr.Spec.ForProvider.K8sAuthType,
+		K8sClientCertificate: cr.Spec.ForProvider.K8sClientCertificate,
+		K8sClientKey: cr.Spec.ForProvider.K8sClientKey,
+		K8sClusterCaCert: cr.Spec.ForProvider.K8sClusterCaCert,
+		K8sClusterEndpoint: cr.Spec.ForProvider.K8sClusterEndpoint,
+		K8sClusterName: cr.Spec.ForProvider.K8sClusterName,
+		K8sClusterToken: cr.Spec.ForProvider.K8sClusterToken,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
+		UseGwServiceAccount: cr.Spec.ForProvider.UseGwServiceAccount,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.TargetCreateK8s(ctx).TargetCreateK8s(body).Execute()
@@ -181,6 +192,17 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.TargetUpdateK8s{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		Description: cr.Spec.ForProvider.Description,
+		K8sAuthType: cr.Spec.ForProvider.K8sAuthType,
+		K8sClientCertificate: cr.Spec.ForProvider.K8sClientCertificate,
+		K8sClientKey: cr.Spec.ForProvider.K8sClientKey,
+		K8sClusterCaCert: cr.Spec.ForProvider.K8sClusterCaCert,
+		K8sClusterEndpoint: cr.Spec.ForProvider.K8sClusterEndpoint,
+		K8sClusterName: cr.Spec.ForProvider.K8sClusterName,
+		K8sClusterToken: cr.Spec.ForProvider.K8sClusterToken,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
+		UseGwServiceAccount: cr.Spec.ForProvider.UseGwServiceAccount,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.TargetUpdateK8s(ctx).TargetUpdateK8s(body).Execute()

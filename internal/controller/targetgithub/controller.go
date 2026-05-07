@@ -165,6 +165,12 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.TargetCreateGithub{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		Description: cr.Spec.ForProvider.Description,
+		GithubAppId: cr.Spec.ForProvider.GithubAppId,
+		GithubAppPrivateKey: cr.Spec.ForProvider.GithubAppPrivateKey,
+		GithubBaseUrl: cr.Spec.ForProvider.GithubBaseUrl,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.TargetCreateGithub(ctx).TargetCreateGithub(body).Execute()
@@ -181,6 +187,12 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.TargetUpdateGithub{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		Description: cr.Spec.ForProvider.Description,
+		GithubAppId: cr.Spec.ForProvider.GithubAppId,
+		GithubAppPrivateKey: cr.Spec.ForProvider.GithubAppPrivateKey,
+		GithubBaseUrl: cr.Spec.ForProvider.GithubBaseUrl,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.TargetUpdateGithub(ctx).TargetUpdateGithub(body).Execute()

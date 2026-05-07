@@ -165,6 +165,23 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.DynamicSecretCreateRdp{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AllowUserExtendSession: cr.Spec.ForProvider.AllowUserExtendSession,
+		CustomUsernameTemplate: cr.Spec.ForProvider.CustomUsernameTemplate,
+		Description: cr.Spec.ForProvider.Description,
+		FixedUserClaimKeyname: cr.Spec.ForProvider.FixedUserClaimKeyname,
+		FixedUserOnly: cr.Spec.ForProvider.FixedUserOnly,
+		PasswordLength: cr.Spec.ForProvider.PasswordLength,
+		ProducerEncryptionKeyName: cr.Spec.ForProvider.ProducerEncryptionKeyName,
+		RdpAdminName: cr.Spec.ForProvider.RdpAdminName,
+		RdpAdminPwd: cr.Spec.ForProvider.RdpAdminPwd,
+		RdpHostName: cr.Spec.ForProvider.RdpHostName,
+		RdpHostPort: cr.Spec.ForProvider.RdpHostPort,
+		RdpUserGroups: cr.Spec.ForProvider.RdpUserGroups,
+		SecureAccessDelay: cr.Spec.ForProvider.SecureAccessDelay,
+		SecureAccessRdGatewayServer: cr.Spec.ForProvider.SecureAccessRdGatewayServer,
+		TargetName: cr.Spec.ForProvider.TargetName,
+		UserTtl: cr.Spec.ForProvider.UserTtl,
+		WarnUserBeforeExpiration: cr.Spec.ForProvider.WarnUserBeforeExpiration,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.DynamicSecretCreateRdp(ctx).DynamicSecretCreateRdp(body).Execute()
@@ -181,6 +198,23 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.DynamicSecretUpdateRdp{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AllowUserExtendSession: cr.Spec.ForProvider.AllowUserExtendSession,
+		CustomUsernameTemplate: cr.Spec.ForProvider.CustomUsernameTemplate,
+		Description: cr.Spec.ForProvider.Description,
+		FixedUserClaimKeyname: cr.Spec.ForProvider.FixedUserClaimKeyname,
+		FixedUserOnly: cr.Spec.ForProvider.FixedUserOnly,
+		PasswordLength: cr.Spec.ForProvider.PasswordLength,
+		ProducerEncryptionKeyName: cr.Spec.ForProvider.ProducerEncryptionKeyName,
+		RdpAdminName: cr.Spec.ForProvider.RdpAdminName,
+		RdpAdminPwd: cr.Spec.ForProvider.RdpAdminPwd,
+		RdpHostName: cr.Spec.ForProvider.RdpHostName,
+		RdpHostPort: cr.Spec.ForProvider.RdpHostPort,
+		RdpUserGroups: cr.Spec.ForProvider.RdpUserGroups,
+		SecureAccessDelay: cr.Spec.ForProvider.SecureAccessDelay,
+		SecureAccessRdGatewayServer: cr.Spec.ForProvider.SecureAccessRdGatewayServer,
+		TargetName: cr.Spec.ForProvider.TargetName,
+		UserTtl: cr.Spec.ForProvider.UserTtl,
+		WarnUserBeforeExpiration: cr.Spec.ForProvider.WarnUserBeforeExpiration,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.DynamicSecretUpdateRdp(ctx).DynamicSecretUpdateRdp(body).Execute()

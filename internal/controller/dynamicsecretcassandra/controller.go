@@ -165,6 +165,19 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.DynamicSecretCreateCassandra{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		CassandraCreationStatements: cr.Spec.ForProvider.CassandraCreationStatements,
+		CassandraHosts: cr.Spec.ForProvider.CassandraHosts,
+		CassandraPassword: cr.Spec.ForProvider.CassandraPassword,
+		CassandraPort: cr.Spec.ForProvider.CassandraPort,
+		CassandraUsername: cr.Spec.ForProvider.CassandraUsername,
+		CustomUsernameTemplate: cr.Spec.ForProvider.CustomUsernameTemplate,
+		Description: cr.Spec.ForProvider.Description,
+		PasswordLength: cr.Spec.ForProvider.PasswordLength,
+		ProducerEncryptionKeyName: cr.Spec.ForProvider.ProducerEncryptionKeyName,
+		Ssl: cr.Spec.ForProvider.Ssl,
+		SslCertificate: cr.Spec.ForProvider.SslCertificate,
+		TargetName: cr.Spec.ForProvider.TargetName,
+		UserTtl: cr.Spec.ForProvider.UserTtl,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.DynamicSecretCreateCassandra(ctx).DynamicSecretCreateCassandra(body).Execute()
@@ -181,6 +194,19 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.DynamicSecretUpdateCassandra{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		CassandraCreationStatements: cr.Spec.ForProvider.CassandraCreationStatements,
+		CassandraHosts: cr.Spec.ForProvider.CassandraHosts,
+		CassandraPassword: cr.Spec.ForProvider.CassandraPassword,
+		CassandraPort: cr.Spec.ForProvider.CassandraPort,
+		CassandraUsername: cr.Spec.ForProvider.CassandraUsername,
+		CustomUsernameTemplate: cr.Spec.ForProvider.CustomUsernameTemplate,
+		Description: cr.Spec.ForProvider.Description,
+		PasswordLength: cr.Spec.ForProvider.PasswordLength,
+		ProducerEncryptionKeyName: cr.Spec.ForProvider.ProducerEncryptionKeyName,
+		Ssl: cr.Spec.ForProvider.Ssl,
+		SslCertificate: cr.Spec.ForProvider.SslCertificate,
+		TargetName: cr.Spec.ForProvider.TargetName,
+		UserTtl: cr.Spec.ForProvider.UserTtl,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.DynamicSecretUpdateCassandra(ctx).DynamicSecretUpdateCassandra(body).Execute()

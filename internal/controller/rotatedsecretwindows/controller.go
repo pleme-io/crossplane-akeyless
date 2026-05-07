@@ -165,6 +165,19 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.RotatedSecretCreateWindows{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AuthenticationCredentials: cr.Spec.ForProvider.AuthenticationCredentials,
+		AutoRotate: cr.Spec.ForProvider.AutoRotate,
+		Description: cr.Spec.ForProvider.Description,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
+		PasswordLength: cr.Spec.ForProvider.PasswordLength,
+		RotateAfterDisconnect: cr.Spec.ForProvider.RotateAfterDisconnect,
+		RotatedPassword: cr.Spec.ForProvider.RotatedPassword,
+		RotatedUsername: cr.Spec.ForProvider.RotatedUsername,
+		RotationInterval: cr.Spec.ForProvider.RotationInterval,
+		RotatorType: cr.Spec.ForProvider.RotatorType,
+		SamePassword: cr.Spec.ForProvider.SamePassword,
+		TargetName: cr.Spec.ForProvider.TargetName,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.RotatedSecretCreateWindows(ctx).RotatedSecretCreateWindows(body).Execute()
@@ -181,6 +194,18 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.RotatedSecretUpdateWindows{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AuthenticationCredentials: cr.Spec.ForProvider.AuthenticationCredentials,
+		AutoRotate: cr.Spec.ForProvider.AutoRotate,
+		Description: cr.Spec.ForProvider.Description,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
+		PasswordLength: cr.Spec.ForProvider.PasswordLength,
+		RotateAfterDisconnect: cr.Spec.ForProvider.RotateAfterDisconnect,
+		RotatedPassword: cr.Spec.ForProvider.RotatedPassword,
+		RotatedUsername: cr.Spec.ForProvider.RotatedUsername,
+		RotationInterval: cr.Spec.ForProvider.RotationInterval,
+		RotatorType: cr.Spec.ForProvider.RotatorType,
+		SamePassword: cr.Spec.ForProvider.SamePassword,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.RotatedSecretUpdateWindows(ctx).RotatedSecretUpdateWindows(body).Execute()

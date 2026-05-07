@@ -165,6 +165,12 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.AuthMethodCreateUniversalIdentity{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AccessExpires: cr.Spec.ForProvider.AccessExpires,
+		DenyInheritance: cr.Spec.ForProvider.DenyInheritance,
+		DenyRotate: cr.Spec.ForProvider.DenyRotate,
+		Description: cr.Spec.ForProvider.Description,
+		ForceSubClaims: cr.Spec.ForProvider.ForceSubClaims,
+		JwtTtl: cr.Spec.ForProvider.JwtTtl,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.AuthMethodCreateUniversalIdentity(ctx).AuthMethodCreateUniversalIdentity(body).Execute()
@@ -181,6 +187,12 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.AuthMethodUpdateUniversalIdentity{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AccessExpires: cr.Spec.ForProvider.AccessExpires,
+		DenyInheritance: cr.Spec.ForProvider.DenyInheritance,
+		DenyRotate: cr.Spec.ForProvider.DenyRotate,
+		Description: cr.Spec.ForProvider.Description,
+		ForceSubClaims: cr.Spec.ForProvider.ForceSubClaims,
+		JwtTtl: cr.Spec.ForProvider.JwtTtl,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.AuthMethodUpdateUniversalIdentity(ctx).AuthMethodUpdateUniversalIdentity(body).Execute()

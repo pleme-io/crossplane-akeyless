@@ -165,6 +165,22 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.RotatedSecretCreateLdap{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		ProviderType: cr.Spec.ForProvider.ProviderType,
+		AuthenticationCredentials: cr.Spec.ForProvider.AuthenticationCredentials,
+		AutoRotate: cr.Spec.ForProvider.AutoRotate,
+		Description: cr.Spec.ForProvider.Description,
+		HostProvider: cr.Spec.ForProvider.HostProvider,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
+		PasswordLength: cr.Spec.ForProvider.PasswordLength,
+		RotateAfterDisconnect: cr.Spec.ForProvider.RotateAfterDisconnect,
+		RotatedPassword: cr.Spec.ForProvider.RotatedPassword,
+		RotatedUsername: cr.Spec.ForProvider.RotatedUsername,
+		RotationInterval: cr.Spec.ForProvider.RotationInterval,
+		RotatorType: cr.Spec.ForProvider.RotatorType,
+		TargetName: cr.Spec.ForProvider.TargetName,
+		UserAttribute: cr.Spec.ForProvider.UserAttribute,
+		UserDn: cr.Spec.ForProvider.UserDn,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.RotatedSecretCreateLdap(ctx).RotatedSecretCreateLdap(body).Execute()
@@ -181,6 +197,20 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.RotatedSecretUpdateLdap{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		ProviderType: cr.Spec.ForProvider.ProviderType,
+		AuthenticationCredentials: cr.Spec.ForProvider.AuthenticationCredentials,
+		AutoRotate: cr.Spec.ForProvider.AutoRotate,
+		Description: cr.Spec.ForProvider.Description,
+		HostProvider: cr.Spec.ForProvider.HostProvider,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
+		PasswordLength: cr.Spec.ForProvider.PasswordLength,
+		RotateAfterDisconnect: cr.Spec.ForProvider.RotateAfterDisconnect,
+		RotatedPassword: cr.Spec.ForProvider.RotatedPassword,
+		RotatedUsername: cr.Spec.ForProvider.RotatedUsername,
+		RotationInterval: cr.Spec.ForProvider.RotationInterval,
+		UserAttribute: cr.Spec.ForProvider.UserAttribute,
+		UserDn: cr.Spec.ForProvider.UserDn,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.RotatedSecretUpdateLdap(ctx).RotatedSecretUpdateLdap(body).Execute()

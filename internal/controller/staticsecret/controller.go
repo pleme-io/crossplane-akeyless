@@ -165,6 +165,13 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.CreateSecret{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		Accessibility: cr.Spec.ForProvider.Accessibility,
+		Description: cr.Spec.ForProvider.Description,
+		Format: cr.Spec.ForProvider.Format,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
+		ProtectionKey: cr.Spec.ForProvider.ProtectionKey,
+		Type: cr.Spec.ForProvider.Type,
+		Value: cr.Spec.ForProvider.Value,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.CreateSecret(ctx).CreateSecret(body).Execute()
@@ -181,6 +188,9 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.UpdateSecretVal{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		Accessibility: cr.Spec.ForProvider.Accessibility,
+		Format: cr.Spec.ForProvider.Format,
+		Value: cr.Spec.ForProvider.Value,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.UpdateSecretVal(ctx).UpdateSecretVal(body).Execute()
