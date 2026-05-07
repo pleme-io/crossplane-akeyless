@@ -124,30 +124,24 @@ make verify                              # go build ./...
 | ProviderConfig + Usage | ✓ |
 | `apis/...` `go build` clean | ✓ |
 | `cmd/provider/main.go` `go build` clean | ✓ |
-| Per-resource controller compile clean | **111 / 119 (93.3%)** |
-| Per-resource controller body-mapping graduated | 0 (M3.2 work) |
-| Per-resource controller stub (compiles + no-ops) | 8 / 119 |
+| Per-resource controller compile clean | **119 / 119 (100%)** |
+| Per-resource controller body-mapping graduated | **119 / 119 (100%)** |
+| Per-resource controller stub (compiles + no-ops) | **0 / 119** |
 | Helm chart template (Deployment + RBAC + ServiceAccount) | ✓ |
 
-The 8 stubbed controllers cover resources whose SDK body shape requires
-heterogeneity the substrate's slice-1 `ResourceShape` doesn't yet
-handle:
+Every controller emits a real SDK call chain. The substrate's
+`ResourceShape` + `BodyTemplate` cover the seven heterogeneity
+classes the akeyless body types exhibit:
 
-| Resource | Why stubbed |
-|---|---|
-| `account_custom_field` | mixed types: `Id int64` on Get/Delete vs `Name string` on Create |
-| `certificate` | mixed pointer/value: `GetCertificateValue.Name *string` vs `DeleteItem.Name string` |
-| `gateway_migration` | mixed: `Name *string` on Get/Update vs `Id string` on Delete |
-| `kmip_client` | mixed pointer/value across CRUD methods |
-| `kmip_environment` | singleton bodies (Describe/Delete have no Name field; Setup uses Hostname) |
-| `policy` | mixed: `Path` on Create/Update vs `Id` on Get/Delete |
-| `role_auth_method_assoc` | composite key (RoleName + AmName) → AssocId on Delete |
-| `role_rule` | composite key (RoleName + Path) on Set/Delete |
-
-M3.2 graduates each one as the body-mapping iteration lands. Until
-then the stubs satisfy the `ExternalClient` interface (no-op every
-method, return empty observations) so the manager registers them and
-the rest of the provider works.
+| Class | Example resources | Mechanism |
+|---|---|---|
+| Default `Name string` | most | `ResourceShape::default()` |
+| Alt-field uniform identifier | `esm` (`EsmName`), `usc` (`UscName`) | `::alt_field("X")` |
+| Per-method pointer/value variation | `certificate`, `kmip_client` | `MethodOverride { identifier_pointer: Some(true) }` |
+| Per-method identifier-field name | `gateway_migration`, `policy` | `MethodOverride { identifier_field: Some("Id") }` |
+| Singleton bodies (no identifier) | `kmip_environment` (Read+Delete) | `BodyTemplate::NoIdentifier` |
+| `int64` identifier from external-name | `account_custom_field` (Read+Update+Delete) | `BodyTemplate::Int64FromExternalName` (adds `strconv` import) |
+| Composite key from `cr.Spec.ForProvider` | `role_rule`, `role_auth_method_assoc` | `BodyTemplate::SpecFields(...)` |
 
 ## History
 
