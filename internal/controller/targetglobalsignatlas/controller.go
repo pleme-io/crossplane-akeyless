@@ -165,6 +165,14 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.TargetCreateGlobalSignAtlas{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		ApiKey: cr.Spec.ForProvider.ApiKey,
+		ApiSecret: cr.Spec.ForProvider.ApiSecret,
+		Description: cr.Spec.ForProvider.Description,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
+		MtlsCertDataBase64: cr.Spec.ForProvider.MtlsCertDataBase64,
+		MtlsKeyDataBase64: cr.Spec.ForProvider.MtlsKeyDataBase64,
+		Timeout: cr.Spec.ForProvider.Timeout,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.TargetCreateGlobalSignAtlas(ctx).TargetCreateGlobalSignAtlas(body).Execute()
@@ -181,6 +189,14 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.TargetUpdateGlobalSignAtlas{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		ApiKey: cr.Spec.ForProvider.ApiKey,
+		ApiSecret: cr.Spec.ForProvider.ApiSecret,
+		Description: cr.Spec.ForProvider.Description,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
+		MtlsCertDataBase64: cr.Spec.ForProvider.MtlsCertDataBase64,
+		MtlsKeyDataBase64: cr.Spec.ForProvider.MtlsKeyDataBase64,
+		Timeout: cr.Spec.ForProvider.Timeout,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.TargetUpdateGlobalSignAtlas(ctx).TargetUpdateGlobalSignAtlas(body).Execute()

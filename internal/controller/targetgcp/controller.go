@@ -165,6 +165,11 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.TargetCreateGcp{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		Description: cr.Spec.ForProvider.Description,
+		GcpKey: cr.Spec.ForProvider.GcpKey,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
+		UseGwCloudIdentity: cr.Spec.ForProvider.UseGwCloudIdentity,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.TargetCreateGcp(ctx).TargetCreateGcp(body).Execute()
@@ -181,6 +186,11 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.TargetUpdateGcp{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		Description: cr.Spec.ForProvider.Description,
+		GcpKey: cr.Spec.ForProvider.GcpKey,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
+		UseGwCloudIdentity: cr.Spec.ForProvider.UseGwCloudIdentity,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.TargetUpdateGcp(ctx).TargetUpdateGcp(body).Execute()

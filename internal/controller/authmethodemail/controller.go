@@ -165,6 +165,13 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.AuthMethodCreateEmail{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AccessExpires: cr.Spec.ForProvider.AccessExpires,
+		Description: cr.Spec.ForProvider.Description,
+		Email: cr.Spec.ForProvider.Email,
+		EnableMfa: cr.Spec.ForProvider.EnableMfa,
+		ForceSubClaims: cr.Spec.ForProvider.ForceSubClaims,
+		JwtTtl: cr.Spec.ForProvider.JwtTtl,
+		MfaType: cr.Spec.ForProvider.MfaType,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.AuthMethodCreateEmail(ctx).AuthMethodCreateEmail(body).Execute()
@@ -181,6 +188,12 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.AuthMethodUpdateEmail{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AccessExpires: cr.Spec.ForProvider.AccessExpires,
+		Description: cr.Spec.ForProvider.Description,
+		EnableMfa: cr.Spec.ForProvider.EnableMfa,
+		ForceSubClaims: cr.Spec.ForProvider.ForceSubClaims,
+		JwtTtl: cr.Spec.ForProvider.JwtTtl,
+		MfaType: cr.Spec.ForProvider.MfaType,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.AuthMethodUpdateEmail(ctx).AuthMethodUpdateEmail(body).Execute()

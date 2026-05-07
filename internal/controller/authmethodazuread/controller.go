@@ -165,6 +165,15 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.AuthMethodCreateAzureAD{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AccessExpires: cr.Spec.ForProvider.AccessExpires,
+		Audience: cr.Spec.ForProvider.Audience,
+		BoundTenantId: cr.Spec.ForProvider.BoundTenantId,
+		Description: cr.Spec.ForProvider.Description,
+		ForceSubClaims: cr.Spec.ForProvider.ForceSubClaims,
+		Issuer: cr.Spec.ForProvider.Issuer,
+		JwksUri: cr.Spec.ForProvider.JwksUri,
+		JwtTtl: cr.Spec.ForProvider.JwtTtl,
+		UniqueIdentifier: cr.Spec.ForProvider.UniqueIdentifier,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.AuthMethodCreateAzureAD(ctx).AuthMethodCreateAzureAD(body).Execute()
@@ -181,6 +190,15 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.AuthMethodUpdateAzureAD{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AccessExpires: cr.Spec.ForProvider.AccessExpires,
+		Audience: cr.Spec.ForProvider.Audience,
+		BoundTenantId: cr.Spec.ForProvider.BoundTenantId,
+		Description: cr.Spec.ForProvider.Description,
+		ForceSubClaims: cr.Spec.ForProvider.ForceSubClaims,
+		Issuer: cr.Spec.ForProvider.Issuer,
+		JwksUri: cr.Spec.ForProvider.JwksUri,
+		JwtTtl: cr.Spec.ForProvider.JwtTtl,
+		UniqueIdentifier: cr.Spec.ForProvider.UniqueIdentifier,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.AuthMethodUpdateAzureAD(ctx).AuthMethodUpdateAzureAD(body).Execute()

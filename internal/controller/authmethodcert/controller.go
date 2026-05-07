@@ -165,6 +165,14 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.AuthMethodCreateCert{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AccessExpires: cr.Spec.ForProvider.AccessExpires,
+		AllowedCors: cr.Spec.ForProvider.AllowedCors,
+		CertificateData: cr.Spec.ForProvider.CertificateData,
+		Description: cr.Spec.ForProvider.Description,
+		ForceSubClaims: cr.Spec.ForProvider.ForceSubClaims,
+		JwtTtl: cr.Spec.ForProvider.JwtTtl,
+		RequireCrlDp: cr.Spec.ForProvider.RequireCrlDp,
+		UniqueIdentifier: cr.Spec.ForProvider.UniqueIdentifier,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.AuthMethodCreateCert(ctx).AuthMethodCreateCert(body).Execute()
@@ -181,6 +189,14 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.AuthMethodUpdateCert{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AccessExpires: cr.Spec.ForProvider.AccessExpires,
+		AllowedCors: cr.Spec.ForProvider.AllowedCors,
+		CertificateData: cr.Spec.ForProvider.CertificateData,
+		Description: cr.Spec.ForProvider.Description,
+		ForceSubClaims: cr.Spec.ForProvider.ForceSubClaims,
+		JwtTtl: cr.Spec.ForProvider.JwtTtl,
+		RequireCrlDp: cr.Spec.ForProvider.RequireCrlDp,
+		UniqueIdentifier: cr.Spec.ForProvider.UniqueIdentifier,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.AuthMethodUpdateCert(ctx).AuthMethodUpdateCert(body).Execute()

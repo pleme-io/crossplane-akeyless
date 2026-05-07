@@ -165,6 +165,11 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.TargetCreateGemini{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		ApiKey: cr.Spec.ForProvider.ApiKey,
+		Description: cr.Spec.ForProvider.Description,
+		GeminiUrl: cr.Spec.ForProvider.GeminiUrl,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.TargetCreateGemini(ctx).TargetCreateGemini(body).Execute()
@@ -181,6 +186,11 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.TargetUpdateGemini{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		ApiKey: cr.Spec.ForProvider.ApiKey,
+		Description: cr.Spec.ForProvider.Description,
+		GeminiUrl: cr.Spec.ForProvider.GeminiUrl,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.TargetUpdateGemini(ctx).TargetUpdateGemini(body).Execute()

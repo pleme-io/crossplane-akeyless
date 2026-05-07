@@ -165,6 +165,16 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.TargetCreateAws{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AccessKey: cr.Spec.ForProvider.AccessKey,
+		AccessKeyId: cr.Spec.ForProvider.AccessKeyId,
+		Description: cr.Spec.ForProvider.Description,
+		GenerateExternalId: cr.Spec.ForProvider.GenerateExternalId,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
+		Region: cr.Spec.ForProvider.Region,
+		RoleArn: cr.Spec.ForProvider.RoleArn,
+		SessionToken: cr.Spec.ForProvider.SessionToken,
+		UseGwCloudIdentity: cr.Spec.ForProvider.UseGwCloudIdentity,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.TargetCreateAws(ctx).TargetCreateAws(body).Execute()
@@ -181,6 +191,16 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.TargetUpdateAws{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AccessKey: cr.Spec.ForProvider.AccessKey,
+		AccessKeyId: cr.Spec.ForProvider.AccessKeyId,
+		Description: cr.Spec.ForProvider.Description,
+		GenerateExternalId: cr.Spec.ForProvider.GenerateExternalId,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
+		Region: cr.Spec.ForProvider.Region,
+		RoleArn: cr.Spec.ForProvider.RoleArn,
+		SessionToken: cr.Spec.ForProvider.SessionToken,
+		UseGwCloudIdentity: cr.Spec.ForProvider.UseGwCloudIdentity,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.TargetUpdateAws(ctx).TargetUpdateAws(body).Execute()

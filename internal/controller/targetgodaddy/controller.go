@@ -165,6 +165,17 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.TargetCreateGodaddy{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		ApiKey: cr.Spec.ForProvider.ApiKey,
+		CustomerId: cr.Spec.ForProvider.CustomerId,
+		Description: cr.Spec.ForProvider.Description,
+		ImapFqdn: cr.Spec.ForProvider.ImapFqdn,
+		ImapPassword: cr.Spec.ForProvider.ImapPassword,
+		ImapPort: cr.Spec.ForProvider.ImapPort,
+		ImapUsername: cr.Spec.ForProvider.ImapUsername,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
+		Secret: cr.Spec.ForProvider.Secret,
+		Timeout: cr.Spec.ForProvider.Timeout,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.TargetCreateGodaddy(ctx).TargetCreateGodaddy(body).Execute()
@@ -181,6 +192,17 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.TargetUpdateGodaddy{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		ApiKey: cr.Spec.ForProvider.ApiKey,
+		CustomerId: cr.Spec.ForProvider.CustomerId,
+		Description: cr.Spec.ForProvider.Description,
+		ImapFqdn: cr.Spec.ForProvider.ImapFqdn,
+		ImapPassword: cr.Spec.ForProvider.ImapPassword,
+		ImapPort: cr.Spec.ForProvider.ImapPort,
+		ImapUsername: cr.Spec.ForProvider.ImapUsername,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
+		Secret: cr.Spec.ForProvider.Secret,
+		Timeout: cr.Spec.ForProvider.Timeout,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.TargetUpdateGodaddy(ctx).TargetUpdateGodaddy(body).Execute()

@@ -165,6 +165,21 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.DynamicSecretCreateOracleDb{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		CustomUsernameTemplate: cr.Spec.ForProvider.CustomUsernameTemplate,
+		DbServerCertificates: cr.Spec.ForProvider.DbServerCertificates,
+		DbServerName: cr.Spec.ForProvider.DbServerName,
+		Description: cr.Spec.ForProvider.Description,
+		OracleHost: cr.Spec.ForProvider.OracleHost,
+		OraclePassword: cr.Spec.ForProvider.OraclePassword,
+		OraclePort: cr.Spec.ForProvider.OraclePort,
+		OracleRevocationStatements: cr.Spec.ForProvider.OracleRevocationStatements,
+		OracleScreationStatements: cr.Spec.ForProvider.OracleScreationStatements,
+		OracleServiceName: cr.Spec.ForProvider.OracleServiceName,
+		OracleUsername: cr.Spec.ForProvider.OracleUsername,
+		PasswordLength: cr.Spec.ForProvider.PasswordLength,
+		ProducerEncryptionKeyName: cr.Spec.ForProvider.ProducerEncryptionKeyName,
+		TargetName: cr.Spec.ForProvider.TargetName,
+		UserTtl: cr.Spec.ForProvider.UserTtl,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.DynamicSecretCreateOracleDb(ctx).DynamicSecretCreateOracleDb(body).Execute()
@@ -181,6 +196,21 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.DynamicSecretUpdateOracleDb{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		CustomUsernameTemplate: cr.Spec.ForProvider.CustomUsernameTemplate,
+		DbServerCertificates: cr.Spec.ForProvider.DbServerCertificates,
+		DbServerName: cr.Spec.ForProvider.DbServerName,
+		Description: cr.Spec.ForProvider.Description,
+		OracleHost: cr.Spec.ForProvider.OracleHost,
+		OraclePassword: cr.Spec.ForProvider.OraclePassword,
+		OraclePort: cr.Spec.ForProvider.OraclePort,
+		OracleRevocationStatements: cr.Spec.ForProvider.OracleRevocationStatements,
+		OracleScreationStatements: cr.Spec.ForProvider.OracleScreationStatements,
+		OracleServiceName: cr.Spec.ForProvider.OracleServiceName,
+		OracleUsername: cr.Spec.ForProvider.OracleUsername,
+		PasswordLength: cr.Spec.ForProvider.PasswordLength,
+		ProducerEncryptionKeyName: cr.Spec.ForProvider.ProducerEncryptionKeyName,
+		TargetName: cr.Spec.ForProvider.TargetName,
+		UserTtl: cr.Spec.ForProvider.UserTtl,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.DynamicSecretUpdateOracleDb(ctx).DynamicSecretUpdateOracleDb(body).Execute()

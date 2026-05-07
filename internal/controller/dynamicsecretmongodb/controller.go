@@ -165,6 +165,26 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.DynamicSecretCreateMongoDb{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		CustomUsernameTemplate: cr.Spec.ForProvider.CustomUsernameTemplate,
+		Description: cr.Spec.ForProvider.Description,
+		MongodbAtlasApiPrivateKey: cr.Spec.ForProvider.MongodbAtlasApiPrivateKey,
+		MongodbAtlasApiPublicKey: cr.Spec.ForProvider.MongodbAtlasApiPublicKey,
+		MongodbAtlasProjectId: cr.Spec.ForProvider.MongodbAtlasProjectId,
+		MongodbCustomData: cr.Spec.ForProvider.MongodbCustomData,
+		MongodbDefaultAuthDb: cr.Spec.ForProvider.MongodbDefaultAuthDb,
+		MongodbHostPort: cr.Spec.ForProvider.MongodbHostPort,
+		MongodbName: cr.Spec.ForProvider.MongodbName,
+		MongodbPassword: cr.Spec.ForProvider.MongodbPassword,
+		MongodbRoles: cr.Spec.ForProvider.MongodbRoles,
+		MongodbScopes: cr.Spec.ForProvider.MongodbScopes,
+		MongodbServerUri: cr.Spec.ForProvider.MongodbServerUri,
+		MongodbUriOptions: cr.Spec.ForProvider.MongodbUriOptions,
+		MongodbUsername: cr.Spec.ForProvider.MongodbUsername,
+		PasswordLength: cr.Spec.ForProvider.PasswordLength,
+		ProducerEncryptionKeyName: cr.Spec.ForProvider.ProducerEncryptionKeyName,
+		SecureAccessDelay: cr.Spec.ForProvider.SecureAccessDelay,
+		TargetName: cr.Spec.ForProvider.TargetName,
+		UserTtl: cr.Spec.ForProvider.UserTtl,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.DynamicSecretCreateMongoDb(ctx).DynamicSecretCreateMongoDb(body).Execute()
@@ -181,6 +201,26 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.DynamicSecretUpdateMongoDb{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		CustomUsernameTemplate: cr.Spec.ForProvider.CustomUsernameTemplate,
+		Description: cr.Spec.ForProvider.Description,
+		MongodbAtlasApiPrivateKey: cr.Spec.ForProvider.MongodbAtlasApiPrivateKey,
+		MongodbAtlasApiPublicKey: cr.Spec.ForProvider.MongodbAtlasApiPublicKey,
+		MongodbAtlasProjectId: cr.Spec.ForProvider.MongodbAtlasProjectId,
+		MongodbCustomData: cr.Spec.ForProvider.MongodbCustomData,
+		MongodbDefaultAuthDb: cr.Spec.ForProvider.MongodbDefaultAuthDb,
+		MongodbHostPort: cr.Spec.ForProvider.MongodbHostPort,
+		MongodbName: cr.Spec.ForProvider.MongodbName,
+		MongodbPassword: cr.Spec.ForProvider.MongodbPassword,
+		MongodbRoles: cr.Spec.ForProvider.MongodbRoles,
+		MongodbScopes: cr.Spec.ForProvider.MongodbScopes,
+		MongodbServerUri: cr.Spec.ForProvider.MongodbServerUri,
+		MongodbUriOptions: cr.Spec.ForProvider.MongodbUriOptions,
+		MongodbUsername: cr.Spec.ForProvider.MongodbUsername,
+		PasswordLength: cr.Spec.ForProvider.PasswordLength,
+		ProducerEncryptionKeyName: cr.Spec.ForProvider.ProducerEncryptionKeyName,
+		SecureAccessDelay: cr.Spec.ForProvider.SecureAccessDelay,
+		TargetName: cr.Spec.ForProvider.TargetName,
+		UserTtl: cr.Spec.ForProvider.UserTtl,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.DynamicSecretUpdateMongoDb(ctx).DynamicSecretUpdateMongoDb(body).Execute()

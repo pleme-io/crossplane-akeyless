@@ -165,6 +165,24 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.CreateClassicKey{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		Alg: cr.Spec.ForProvider.Alg,
+		AutoRotate: cr.Spec.ForProvider.AutoRotate,
+		CertFileData: cr.Spec.ForProvider.CertFileData,
+		CertificateCommonName: cr.Spec.ForProvider.CertificateCommonName,
+		CertificateCountry: cr.Spec.ForProvider.CertificateCountry,
+		CertificateDigestAlgo: cr.Spec.ForProvider.CertificateDigestAlgo,
+		CertificateFormat: cr.Spec.ForProvider.CertificateFormat,
+		CertificateLocality: cr.Spec.ForProvider.CertificateLocality,
+		CertificateOrganization: cr.Spec.ForProvider.CertificateOrganization,
+		CertificateProvince: cr.Spec.ForProvider.CertificateProvince,
+		CertificateTtl: cr.Spec.ForProvider.CertificateTtl,
+		Description: cr.Spec.ForProvider.Description,
+		GenerateSelfSignedCertificate: cr.Spec.ForProvider.GenerateSelfSignedCertificate,
+		GpgAlg: cr.Spec.ForProvider.GpgAlg,
+		HashAlgorithm: cr.Spec.ForProvider.HashAlgorithm,
+		KeyData: cr.Spec.ForProvider.KeyData,
+		ProtectionKeyName: cr.Spec.ForProvider.ProtectionKeyName,
+		RotationInterval: cr.Spec.ForProvider.RotationInterval,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.CreateClassicKey(ctx).CreateClassicKey(body).Execute()
@@ -181,6 +199,9 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.UpdateItem{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		CertFileData: cr.Spec.ForProvider.CertFileData,
+		CertificateFormat: cr.Spec.ForProvider.CertificateFormat,
+		Description: cr.Spec.ForProvider.Description,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.UpdateItem(ctx).UpdateItem(body).Execute()

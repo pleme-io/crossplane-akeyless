@@ -165,6 +165,15 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.TargetCreateLdap{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		BindDn: cr.Spec.ForProvider.BindDn,
+		BindDnPassword: cr.Spec.ForProvider.BindDnPassword,
+		Description: cr.Spec.ForProvider.Description,
+		Key: cr.Spec.ForProvider.Key,
+		LdapCaCert: cr.Spec.ForProvider.LdapCaCert,
+		LdapUrl: cr.Spec.ForProvider.LdapUrl,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
+		ServerType: cr.Spec.ForProvider.ServerType,
+		TokenExpiration: cr.Spec.ForProvider.TokenExpiration,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.TargetCreateLdap(ctx).TargetCreateLdap(body).Execute()
@@ -181,6 +190,15 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.TargetUpdateLdap{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		BindDn: cr.Spec.ForProvider.BindDn,
+		BindDnPassword: cr.Spec.ForProvider.BindDnPassword,
+		Description: cr.Spec.ForProvider.Description,
+		Key: cr.Spec.ForProvider.Key,
+		LdapCaCert: cr.Spec.ForProvider.LdapCaCert,
+		LdapUrl: cr.Spec.ForProvider.LdapUrl,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
+		ServerType: cr.Spec.ForProvider.ServerType,
+		TokenExpiration: cr.Spec.ForProvider.TokenExpiration,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.TargetUpdateLdap(ctx).TargetUpdateLdap(body).Execute()

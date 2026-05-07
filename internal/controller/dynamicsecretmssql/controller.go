@@ -165,6 +165,21 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.DynamicSecretCreateMsSql{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		CustomUsernameTemplate: cr.Spec.ForProvider.CustomUsernameTemplate,
+		Description: cr.Spec.ForProvider.Description,
+		MssqlAllowedDbNames: cr.Spec.ForProvider.MssqlAllowedDbNames,
+		MssqlCreateStatements: cr.Spec.ForProvider.MssqlCreateStatements,
+		MssqlDbname: cr.Spec.ForProvider.MssqlDbname,
+		MssqlHost: cr.Spec.ForProvider.MssqlHost,
+		MssqlPassword: cr.Spec.ForProvider.MssqlPassword,
+		MssqlPort: cr.Spec.ForProvider.MssqlPort,
+		MssqlRevocationStatements: cr.Spec.ForProvider.MssqlRevocationStatements,
+		MssqlUsername: cr.Spec.ForProvider.MssqlUsername,
+		PasswordLength: cr.Spec.ForProvider.PasswordLength,
+		ProducerEncryptionKeyName: cr.Spec.ForProvider.ProducerEncryptionKeyName,
+		SecureAccessDelay: cr.Spec.ForProvider.SecureAccessDelay,
+		TargetName: cr.Spec.ForProvider.TargetName,
+		UserTtl: cr.Spec.ForProvider.UserTtl,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.DynamicSecretCreateMsSql(ctx).DynamicSecretCreateMsSql(body).Execute()
@@ -181,6 +196,21 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.DynamicSecretUpdateMsSql{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		CustomUsernameTemplate: cr.Spec.ForProvider.CustomUsernameTemplate,
+		Description: cr.Spec.ForProvider.Description,
+		MssqlAllowedDbNames: cr.Spec.ForProvider.MssqlAllowedDbNames,
+		MssqlCreateStatements: cr.Spec.ForProvider.MssqlCreateStatements,
+		MssqlDbname: cr.Spec.ForProvider.MssqlDbname,
+		MssqlHost: cr.Spec.ForProvider.MssqlHost,
+		MssqlPassword: cr.Spec.ForProvider.MssqlPassword,
+		MssqlPort: cr.Spec.ForProvider.MssqlPort,
+		MssqlRevocationStatements: cr.Spec.ForProvider.MssqlRevocationStatements,
+		MssqlUsername: cr.Spec.ForProvider.MssqlUsername,
+		PasswordLength: cr.Spec.ForProvider.PasswordLength,
+		ProducerEncryptionKeyName: cr.Spec.ForProvider.ProducerEncryptionKeyName,
+		SecureAccessDelay: cr.Spec.ForProvider.SecureAccessDelay,
+		TargetName: cr.Spec.ForProvider.TargetName,
+		UserTtl: cr.Spec.ForProvider.UserTtl,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.DynamicSecretUpdateMsSql(ctx).DynamicSecretUpdateMsSql(body).Execute()

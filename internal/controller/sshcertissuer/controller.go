@@ -165,6 +165,16 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.CreateSSHCertIssuer{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		ProviderType: cr.Spec.ForProvider.ProviderType,
+		AllowedUsers: cr.Spec.ForProvider.AllowedUsers,
+		Description: cr.Spec.ForProvider.Description,
+		ExternalUsername: cr.Spec.ForProvider.ExternalUsername,
+		FixedUserClaimKeyname: cr.Spec.ForProvider.FixedUserClaimKeyname,
+		HostProvider: cr.Spec.ForProvider.HostProvider,
+		Principals: cr.Spec.ForProvider.Principals,
+		SecureAccessUseInternalSshAccess: cr.Spec.ForProvider.SecureAccessUseInternalSshAccess,
+		SignerKeyName: cr.Spec.ForProvider.SignerKeyName,
+		Ttl: cr.Spec.ForProvider.Ttl,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.CreateSSHCertIssuer(ctx).CreateSSHCertIssuer(body).Execute()
@@ -181,6 +191,16 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.UpdateSSHCertIssuer{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		ProviderType: cr.Spec.ForProvider.ProviderType,
+		AllowedUsers: cr.Spec.ForProvider.AllowedUsers,
+		Description: cr.Spec.ForProvider.Description,
+		ExternalUsername: cr.Spec.ForProvider.ExternalUsername,
+		FixedUserClaimKeyname: cr.Spec.ForProvider.FixedUserClaimKeyname,
+		HostProvider: cr.Spec.ForProvider.HostProvider,
+		Principals: cr.Spec.ForProvider.Principals,
+		SecureAccessUseInternalSshAccess: cr.Spec.ForProvider.SecureAccessUseInternalSshAccess,
+		SignerKeyName: cr.Spec.ForProvider.SignerKeyName,
+		Ttl: cr.Spec.ForProvider.Ttl,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.UpdateSSHCertIssuer(ctx).UpdateSSHCertIssuer(body).Execute()

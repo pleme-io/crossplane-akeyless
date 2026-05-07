@@ -165,6 +165,15 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.CreateOidcApp{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		Accessibility: cr.Spec.ForProvider.Accessibility,
+		Audience: cr.Spec.ForProvider.Audience,
+		DeleteProtection: cr.Spec.ForProvider.DeleteProtection,
+		Description: cr.Spec.ForProvider.Description,
+		Key: cr.Spec.ForProvider.Key,
+		PermissionAssignment: cr.Spec.ForProvider.PermissionAssignment,
+		Public: cr.Spec.ForProvider.Public,
+		RedirectUris: cr.Spec.ForProvider.RedirectUris,
+		Scopes: cr.Spec.ForProvider.Scopes,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.CreateOidcApp(ctx).CreateOidcApp(body).Execute()
@@ -181,6 +190,12 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.UpdateOidcApp{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		Audience: cr.Spec.ForProvider.Audience,
+		Key: cr.Spec.ForProvider.Key,
+		PermissionAssignment: cr.Spec.ForProvider.PermissionAssignment,
+		Public: cr.Spec.ForProvider.Public,
+		RedirectUris: cr.Spec.ForProvider.RedirectUris,
+		Scopes: cr.Spec.ForProvider.Scopes,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.UpdateOidcApp(ctx).UpdateOidcApp(body).Execute()

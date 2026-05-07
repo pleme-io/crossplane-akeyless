@@ -166,6 +166,12 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.CreateCertificate{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		CertificateData: cr.Spec.ForProvider.CertificateData,
+		DeleteProtection: cr.Spec.ForProvider.DeleteProtection,
+		Description: cr.Spec.ForProvider.Description,
+		Format: cr.Spec.ForProvider.Format,
+		Key: cr.Spec.ForProvider.Key,
+		KeyData: cr.Spec.ForProvider.KeyData,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.CreateCertificate(ctx).CreateCertificate(body).Execute()
@@ -182,6 +188,12 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.UpdateCertificateValue{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		CertificateData: cr.Spec.ForProvider.CertificateData,
+		DeleteProtection: cr.Spec.ForProvider.DeleteProtection,
+		Description: cr.Spec.ForProvider.Description,
+		Format: cr.Spec.ForProvider.Format,
+		Key: cr.Spec.ForProvider.Key,
+		KeyData: cr.Spec.ForProvider.KeyData,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.UpdateCertificateValue(ctx).UpdateCertificateValue(body).Execute()

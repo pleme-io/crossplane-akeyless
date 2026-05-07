@@ -165,6 +165,23 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.RotatedSecretCreateSplunk{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		Audience: cr.Spec.ForProvider.Audience,
+		AuthenticationCredentials: cr.Spec.ForProvider.AuthenticationCredentials,
+		AutoRotate: cr.Spec.ForProvider.AutoRotate,
+		Description: cr.Spec.ForProvider.Description,
+		ExpirationDate: cr.Spec.ForProvider.ExpirationDate,
+		HecToken: cr.Spec.ForProvider.HecToken,
+		HecTokenName: cr.Spec.ForProvider.HecTokenName,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
+		PasswordLength: cr.Spec.ForProvider.PasswordLength,
+		RotatedPassword: cr.Spec.ForProvider.RotatedPassword,
+		RotatedUsername: cr.Spec.ForProvider.RotatedUsername,
+		RotationInterval: cr.Spec.ForProvider.RotationInterval,
+		RotatorType: cr.Spec.ForProvider.RotatorType,
+		SplunkToken: cr.Spec.ForProvider.SplunkToken,
+		TargetName: cr.Spec.ForProvider.TargetName,
+		TokenOwner: cr.Spec.ForProvider.TokenOwner,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.RotatedSecretCreateSplunk(ctx).RotatedSecretCreateSplunk(body).Execute()
@@ -181,6 +198,18 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.RotatedSecretUpdateSplunk{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		Audience: cr.Spec.ForProvider.Audience,
+		AuthenticationCredentials: cr.Spec.ForProvider.AuthenticationCredentials,
+		AutoRotate: cr.Spec.ForProvider.AutoRotate,
+		Description: cr.Spec.ForProvider.Description,
+		ExpirationDate: cr.Spec.ForProvider.ExpirationDate,
+		HecToken: cr.Spec.ForProvider.HecToken,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
+		PasswordLength: cr.Spec.ForProvider.PasswordLength,
+		RotationInterval: cr.Spec.ForProvider.RotationInterval,
+		SplunkToken: cr.Spec.ForProvider.SplunkToken,
+		TokenOwner: cr.Spec.ForProvider.TokenOwner,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.RotatedSecretUpdateSplunk(ctx).RotatedSecretUpdateSplunk(body).Execute()

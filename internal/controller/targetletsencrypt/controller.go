@@ -165,6 +165,17 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.TargetCreateLetsEncrypt{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AcmeChallenge: cr.Spec.ForProvider.AcmeChallenge,
+		Description: cr.Spec.ForProvider.Description,
+		DnsTargetCreds: cr.Spec.ForProvider.DnsTargetCreds,
+		Email: cr.Spec.ForProvider.Email,
+		GcpProject: cr.Spec.ForProvider.GcpProject,
+		HostedZone: cr.Spec.ForProvider.HostedZone,
+		Key: cr.Spec.ForProvider.Key,
+		LetsEncryptUrl: cr.Spec.ForProvider.LetsEncryptUrl,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
+		ResourceGroup: cr.Spec.ForProvider.ResourceGroup,
+		Timeout: cr.Spec.ForProvider.Timeout,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.TargetCreateLetsEncrypt(ctx).TargetCreateLetsEncrypt(body).Execute()
@@ -181,6 +192,17 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.TargetUpdateLetsEncrypt{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AcmeChallenge: cr.Spec.ForProvider.AcmeChallenge,
+		Description: cr.Spec.ForProvider.Description,
+		DnsTargetCreds: cr.Spec.ForProvider.DnsTargetCreds,
+		Email: cr.Spec.ForProvider.Email,
+		GcpProject: cr.Spec.ForProvider.GcpProject,
+		HostedZone: cr.Spec.ForProvider.HostedZone,
+		Key: cr.Spec.ForProvider.Key,
+		LetsEncryptUrl: cr.Spec.ForProvider.LetsEncryptUrl,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
+		ResourceGroup: cr.Spec.ForProvider.ResourceGroup,
+		Timeout: cr.Spec.ForProvider.Timeout,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.TargetUpdateLetsEncrypt(ctx).TargetUpdateLetsEncrypt(body).Execute()

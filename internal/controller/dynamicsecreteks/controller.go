@@ -165,6 +165,20 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.DynamicSecretCreateEks{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		Description: cr.Spec.ForProvider.Description,
+		EksAccessKeyId: cr.Spec.ForProvider.EksAccessKeyId,
+		EksAssumeRole: cr.Spec.ForProvider.EksAssumeRole,
+		EksClusterCaCert: cr.Spec.ForProvider.EksClusterCaCert,
+		EksClusterEndpoint: cr.Spec.ForProvider.EksClusterEndpoint,
+		EksClusterName: cr.Spec.ForProvider.EksClusterName,
+		EksRegion: cr.Spec.ForProvider.EksRegion,
+		EksSecretAccessKey: cr.Spec.ForProvider.EksSecretAccessKey,
+		ProducerEncryptionKeyName: cr.Spec.ForProvider.ProducerEncryptionKeyName,
+		SecureAccessAllowPortForwading: cr.Spec.ForProvider.SecureAccessAllowPortForwading,
+		SecureAccessClusterEndpoint: cr.Spec.ForProvider.SecureAccessClusterEndpoint,
+		SecureAccessDelay: cr.Spec.ForProvider.SecureAccessDelay,
+		TargetName: cr.Spec.ForProvider.TargetName,
+		UserTtl: cr.Spec.ForProvider.UserTtl,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.DynamicSecretCreateEks(ctx).DynamicSecretCreateEks(body).Execute()
@@ -181,6 +195,20 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.DynamicSecretUpdateEks{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		Description: cr.Spec.ForProvider.Description,
+		EksAccessKeyId: cr.Spec.ForProvider.EksAccessKeyId,
+		EksAssumeRole: cr.Spec.ForProvider.EksAssumeRole,
+		EksClusterCaCert: cr.Spec.ForProvider.EksClusterCaCert,
+		EksClusterEndpoint: cr.Spec.ForProvider.EksClusterEndpoint,
+		EksClusterName: cr.Spec.ForProvider.EksClusterName,
+		EksRegion: cr.Spec.ForProvider.EksRegion,
+		EksSecretAccessKey: cr.Spec.ForProvider.EksSecretAccessKey,
+		ProducerEncryptionKeyName: cr.Spec.ForProvider.ProducerEncryptionKeyName,
+		SecureAccessAllowPortForwading: cr.Spec.ForProvider.SecureAccessAllowPortForwading,
+		SecureAccessClusterEndpoint: cr.Spec.ForProvider.SecureAccessClusterEndpoint,
+		SecureAccessDelay: cr.Spec.ForProvider.SecureAccessDelay,
+		TargetName: cr.Spec.ForProvider.TargetName,
+		UserTtl: cr.Spec.ForProvider.UserTtl,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.DynamicSecretUpdateEks(ctx).DynamicSecretUpdateEks(body).Execute()

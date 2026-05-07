@@ -165,6 +165,19 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.DynamicSecretCreateGoogleWorkspace{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AccessMode: cr.Spec.ForProvider.AccessMode,
+		AdminEmail: cr.Spec.ForProvider.AdminEmail,
+		Description: cr.Spec.ForProvider.Description,
+		FixedUserClaimKeyname: cr.Spec.ForProvider.FixedUserClaimKeyname,
+		GcpKey: cr.Spec.ForProvider.GcpKey,
+		GroupEmail: cr.Spec.ForProvider.GroupEmail,
+		GroupRole: cr.Spec.ForProvider.GroupRole,
+		ProducerEncryptionKeyName: cr.Spec.ForProvider.ProducerEncryptionKeyName,
+		RoleName: cr.Spec.ForProvider.RoleName,
+		RoleScope: cr.Spec.ForProvider.RoleScope,
+		SecureAccessDelay: cr.Spec.ForProvider.SecureAccessDelay,
+		TargetName: cr.Spec.ForProvider.TargetName,
+		UserTtl: cr.Spec.ForProvider.UserTtl,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.DynamicSecretCreateGoogleWorkspace(ctx).DynamicSecretCreateGoogleWorkspace(body).Execute()
@@ -181,6 +194,19 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.DynamicSecretUpdateGoogleWorkspace{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AccessMode: cr.Spec.ForProvider.AccessMode,
+		AdminEmail: cr.Spec.ForProvider.AdminEmail,
+		Description: cr.Spec.ForProvider.Description,
+		FixedUserClaimKeyname: cr.Spec.ForProvider.FixedUserClaimKeyname,
+		GcpKey: cr.Spec.ForProvider.GcpKey,
+		GroupEmail: cr.Spec.ForProvider.GroupEmail,
+		GroupRole: cr.Spec.ForProvider.GroupRole,
+		ProducerEncryptionKeyName: cr.Spec.ForProvider.ProducerEncryptionKeyName,
+		RoleName: cr.Spec.ForProvider.RoleName,
+		RoleScope: cr.Spec.ForProvider.RoleScope,
+		SecureAccessDelay: cr.Spec.ForProvider.SecureAccessDelay,
+		TargetName: cr.Spec.ForProvider.TargetName,
+		UserTtl: cr.Spec.ForProvider.UserTtl,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.DynamicSecretUpdateGoogleWorkspace(ctx).DynamicSecretUpdateGoogleWorkspace(body).Execute()

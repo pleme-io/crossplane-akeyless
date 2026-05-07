@@ -165,6 +165,15 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.TargetCreateWindows{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		Certificate: cr.Spec.ForProvider.Certificate,
+		ConnectionType: cr.Spec.ForProvider.ConnectionType,
+		Description: cr.Spec.ForProvider.Description,
+		Domain: cr.Spec.ForProvider.Domain,
+		Hostname: cr.Spec.ForProvider.Hostname,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
+		ParentTargetName: cr.Spec.ForProvider.ParentTargetName,
+		Port: cr.Spec.ForProvider.Port,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.TargetCreateWindows(ctx).TargetCreateWindows(body).Execute()
@@ -181,6 +190,15 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.TargetUpdateWindows{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		Certificate: cr.Spec.ForProvider.Certificate,
+		ConnectionType: cr.Spec.ForProvider.ConnectionType,
+		Description: cr.Spec.ForProvider.Description,
+		Domain: cr.Spec.ForProvider.Domain,
+		Hostname: cr.Spec.ForProvider.Hostname,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
+		ParentTargetName: cr.Spec.ForProvider.ParentTargetName,
+		Port: cr.Spec.ForProvider.Port,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.TargetUpdateWindows(ctx).TargetUpdateWindows(body).Execute()

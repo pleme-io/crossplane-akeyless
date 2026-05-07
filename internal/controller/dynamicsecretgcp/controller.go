@@ -165,6 +165,23 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.DynamicSecretCreateGcp{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AccessType: cr.Spec.ForProvider.AccessType,
+		CustomUsernameTemplate: cr.Spec.ForProvider.CustomUsernameTemplate,
+		Description: cr.Spec.ForProvider.Description,
+		FixedUserClaimKeyname: cr.Spec.ForProvider.FixedUserClaimKeyname,
+		GcpCredType: cr.Spec.ForProvider.GcpCredType,
+		GcpKey: cr.Spec.ForProvider.GcpKey,
+		GcpKeyAlgo: cr.Spec.ForProvider.GcpKeyAlgo,
+		GcpProjectId: cr.Spec.ForProvider.GcpProjectId,
+		GcpSaEmail: cr.Spec.ForProvider.GcpSaEmail,
+		GcpTokenScopes: cr.Spec.ForProvider.GcpTokenScopes,
+		ProducerEncryptionKeyName: cr.Spec.ForProvider.ProducerEncryptionKeyName,
+		RoleBinding: cr.Spec.ForProvider.RoleBinding,
+		RoleNames: cr.Spec.ForProvider.RoleNames,
+		SecureAccessDelay: cr.Spec.ForProvider.SecureAccessDelay,
+		ServiceAccountType: cr.Spec.ForProvider.ServiceAccountType,
+		TargetName: cr.Spec.ForProvider.TargetName,
+		UserTtl: cr.Spec.ForProvider.UserTtl,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.DynamicSecretCreateGcp(ctx).DynamicSecretCreateGcp(body).Execute()
@@ -181,6 +198,23 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.DynamicSecretUpdateGcp{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AccessType: cr.Spec.ForProvider.AccessType,
+		CustomUsernameTemplate: cr.Spec.ForProvider.CustomUsernameTemplate,
+		Description: cr.Spec.ForProvider.Description,
+		FixedUserClaimKeyname: cr.Spec.ForProvider.FixedUserClaimKeyname,
+		GcpCredType: cr.Spec.ForProvider.GcpCredType,
+		GcpKey: cr.Spec.ForProvider.GcpKey,
+		GcpKeyAlgo: cr.Spec.ForProvider.GcpKeyAlgo,
+		GcpProjectId: cr.Spec.ForProvider.GcpProjectId,
+		GcpSaEmail: cr.Spec.ForProvider.GcpSaEmail,
+		GcpTokenScopes: cr.Spec.ForProvider.GcpTokenScopes,
+		ProducerEncryptionKeyName: cr.Spec.ForProvider.ProducerEncryptionKeyName,
+		RoleBinding: cr.Spec.ForProvider.RoleBinding,
+		RoleNames: cr.Spec.ForProvider.RoleNames,
+		SecureAccessDelay: cr.Spec.ForProvider.SecureAccessDelay,
+		ServiceAccountType: cr.Spec.ForProvider.ServiceAccountType,
+		TargetName: cr.Spec.ForProvider.TargetName,
+		UserTtl: cr.Spec.ForProvider.UserTtl,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.DynamicSecretUpdateGcp(ctx).DynamicSecretUpdateGcp(body).Execute()

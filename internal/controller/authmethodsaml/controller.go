@@ -165,6 +165,13 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.AuthMethodCreateSAML{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AccessExpires: cr.Spec.ForProvider.AccessExpires,
+		Description: cr.Spec.ForProvider.Description,
+		ForceSubClaims: cr.Spec.ForProvider.ForceSubClaims,
+		IdpMetadataUrl: cr.Spec.ForProvider.IdpMetadataUrl,
+		IdpMetadataXmlData: cr.Spec.ForProvider.IdpMetadataXmlData,
+		JwtTtl: cr.Spec.ForProvider.JwtTtl,
+		UniqueIdentifier: cr.Spec.ForProvider.UniqueIdentifier,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.AuthMethodCreateSAML(ctx).AuthMethodCreateSAML(body).Execute()
@@ -181,6 +188,13 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.AuthMethodUpdateSAML{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AccessExpires: cr.Spec.ForProvider.AccessExpires,
+		Description: cr.Spec.ForProvider.Description,
+		ForceSubClaims: cr.Spec.ForProvider.ForceSubClaims,
+		IdpMetadataUrl: cr.Spec.ForProvider.IdpMetadataUrl,
+		IdpMetadataXmlData: cr.Spec.ForProvider.IdpMetadataXmlData,
+		JwtTtl: cr.Spec.ForProvider.JwtTtl,
+		UniqueIdentifier: cr.Spec.ForProvider.UniqueIdentifier,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.AuthMethodUpdateSAML(ctx).AuthMethodUpdateSAML(body).Execute()

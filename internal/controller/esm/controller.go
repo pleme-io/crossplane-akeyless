@@ -165,6 +165,10 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.EsmCreate{
 		EsmName: meta.GetExternalName(cr),
 		Token: &e.token,
+		BinaryValue: cr.Spec.ForProvider.BinaryValue,
+		Description: cr.Spec.ForProvider.Description,
+		SecretName: cr.Spec.ForProvider.SecretName,
+		Value: cr.Spec.ForProvider.Value,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.EsmCreate(ctx).EsmCreate(body).Execute()
@@ -181,6 +185,9 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.EsmUpdate{
 		EsmName: meta.GetExternalName(cr),
 		Token: &e.token,
+		BinaryValue: cr.Spec.ForProvider.BinaryValue,
+		Description: cr.Spec.ForProvider.Description,
+		Value: cr.Spec.ForProvider.Value,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.EsmUpdate(ctx).EsmUpdate(body).Execute()

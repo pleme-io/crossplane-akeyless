@@ -165,6 +165,26 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.DynamicSecretCreateLdap{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		ProviderType: cr.Spec.ForProvider.ProviderType,
+		BindDn: cr.Spec.ForProvider.BindDn,
+		BindDnPassword: cr.Spec.ForProvider.BindDnPassword,
+		CustomUsernameTemplate: cr.Spec.ForProvider.CustomUsernameTemplate,
+		Description: cr.Spec.ForProvider.Description,
+		ExternalUsername: cr.Spec.ForProvider.ExternalUsername,
+		FixedUserClaimKeyname: cr.Spec.ForProvider.FixedUserClaimKeyname,
+		GroupDn: cr.Spec.ForProvider.GroupDn,
+		HostProvider: cr.Spec.ForProvider.HostProvider,
+		LdapCaCert: cr.Spec.ForProvider.LdapCaCert,
+		LdapUrl: cr.Spec.ForProvider.LdapUrl,
+		PasswordLength: cr.Spec.ForProvider.PasswordLength,
+		ProducerEncryptionKeyName: cr.Spec.ForProvider.ProducerEncryptionKeyName,
+		SecureAccessDelay: cr.Spec.ForProvider.SecureAccessDelay,
+		SecureAccessRdGatewayServer: cr.Spec.ForProvider.SecureAccessRdGatewayServer,
+		TargetName: cr.Spec.ForProvider.TargetName,
+		TokenExpiration: cr.Spec.ForProvider.TokenExpiration,
+		UserAttribute: cr.Spec.ForProvider.UserAttribute,
+		UserDn: cr.Spec.ForProvider.UserDn,
+		UserTtl: cr.Spec.ForProvider.UserTtl,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.DynamicSecretCreateLdap(ctx).DynamicSecretCreateLdap(body).Execute()
@@ -181,6 +201,26 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.DynamicSecretUpdateLdap{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		ProviderType: cr.Spec.ForProvider.ProviderType,
+		BindDn: cr.Spec.ForProvider.BindDn,
+		BindDnPassword: cr.Spec.ForProvider.BindDnPassword,
+		CustomUsernameTemplate: cr.Spec.ForProvider.CustomUsernameTemplate,
+		Description: cr.Spec.ForProvider.Description,
+		ExternalUsername: cr.Spec.ForProvider.ExternalUsername,
+		FixedUserClaimKeyname: cr.Spec.ForProvider.FixedUserClaimKeyname,
+		GroupDn: cr.Spec.ForProvider.GroupDn,
+		HostProvider: cr.Spec.ForProvider.HostProvider,
+		LdapCaCert: cr.Spec.ForProvider.LdapCaCert,
+		LdapUrl: cr.Spec.ForProvider.LdapUrl,
+		PasswordLength: cr.Spec.ForProvider.PasswordLength,
+		ProducerEncryptionKeyName: cr.Spec.ForProvider.ProducerEncryptionKeyName,
+		SecureAccessDelay: cr.Spec.ForProvider.SecureAccessDelay,
+		SecureAccessRdGatewayServer: cr.Spec.ForProvider.SecureAccessRdGatewayServer,
+		TargetName: cr.Spec.ForProvider.TargetName,
+		TokenExpiration: cr.Spec.ForProvider.TokenExpiration,
+		UserAttribute: cr.Spec.ForProvider.UserAttribute,
+		UserDn: cr.Spec.ForProvider.UserDn,
+		UserTtl: cr.Spec.ForProvider.UserTtl,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.DynamicSecretUpdateLdap(ctx).DynamicSecretUpdateLdap(body).Execute()

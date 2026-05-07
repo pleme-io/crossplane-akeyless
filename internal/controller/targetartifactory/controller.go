@@ -165,6 +165,12 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.TargetCreateArtifactory{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		ArtifactoryAdminName: cr.Spec.ForProvider.ArtifactoryAdminName,
+		ArtifactoryAdminPwd: cr.Spec.ForProvider.ArtifactoryAdminPwd,
+		BaseUrl: cr.Spec.ForProvider.BaseUrl,
+		Description: cr.Spec.ForProvider.Description,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.TargetCreateArtifactory(ctx).TargetCreateArtifactory(body).Execute()
@@ -181,6 +187,12 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.TargetUpdateArtifactory{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		ArtifactoryAdminName: cr.Spec.ForProvider.ArtifactoryAdminName,
+		ArtifactoryAdminPwd: cr.Spec.ForProvider.ArtifactoryAdminPwd,
+		BaseUrl: cr.Spec.ForProvider.BaseUrl,
+		Description: cr.Spec.ForProvider.Description,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.TargetUpdateArtifactory(ctx).TargetUpdateArtifactory(body).Execute()

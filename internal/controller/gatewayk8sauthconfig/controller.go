@@ -165,6 +165,21 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.GatewayCreateK8SAuthConfig{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AccessId: cr.Spec.ForProvider.AccessId,
+		ClusterApiType: cr.Spec.ForProvider.ClusterApiType,
+		DisableIssuerValidation: cr.Spec.ForProvider.DisableIssuerValidation,
+		K8sAuthType: cr.Spec.ForProvider.K8sAuthType,
+		K8sCaCert: cr.Spec.ForProvider.K8sCaCert,
+		K8sClientCertificate: cr.Spec.ForProvider.K8sClientCertificate,
+		K8sClientKey: cr.Spec.ForProvider.K8sClientKey,
+		K8sHost: cr.Spec.ForProvider.K8sHost,
+		K8sIssuer: cr.Spec.ForProvider.K8sIssuer,
+		RancherApiKey: cr.Spec.ForProvider.RancherApiKey,
+		RancherClusterId: cr.Spec.ForProvider.RancherClusterId,
+		SigningKey: cr.Spec.ForProvider.SigningKey,
+		TokenExp: cr.Spec.ForProvider.TokenExp,
+		TokenReviewerJwt: cr.Spec.ForProvider.TokenReviewerJwt,
+		UseGwServiceAccount: cr.Spec.ForProvider.UseGwServiceAccount,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.GatewayCreateK8SAuthConfig(ctx).GatewayCreateK8SAuthConfig(body).Execute()
@@ -181,6 +196,21 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.GatewayUpdateK8SAuthConfig{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AccessId: cr.Spec.ForProvider.AccessId,
+		ClusterApiType: cr.Spec.ForProvider.ClusterApiType,
+		DisableIssuerValidation: cr.Spec.ForProvider.DisableIssuerValidation,
+		K8sAuthType: cr.Spec.ForProvider.K8sAuthType,
+		K8sCaCert: cr.Spec.ForProvider.K8sCaCert,
+		K8sClientCertificate: cr.Spec.ForProvider.K8sClientCertificate,
+		K8sClientKey: cr.Spec.ForProvider.K8sClientKey,
+		K8sHost: cr.Spec.ForProvider.K8sHost,
+		K8sIssuer: cr.Spec.ForProvider.K8sIssuer,
+		RancherApiKey: cr.Spec.ForProvider.RancherApiKey,
+		RancherClusterId: cr.Spec.ForProvider.RancherClusterId,
+		SigningKey: cr.Spec.ForProvider.SigningKey,
+		TokenExp: cr.Spec.ForProvider.TokenExp,
+		TokenReviewerJwt: cr.Spec.ForProvider.TokenReviewerJwt,
+		UseGwServiceAccount: cr.Spec.ForProvider.UseGwServiceAccount,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.GatewayUpdateK8SAuthConfig(ctx).GatewayUpdateK8SAuthConfig(body).Execute()

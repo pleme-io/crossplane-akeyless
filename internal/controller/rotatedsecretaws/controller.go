@@ -165,6 +165,22 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.RotatedSecretCreateAws{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		ApiId: cr.Spec.ForProvider.ApiId,
+		ApiKey: cr.Spec.ForProvider.ApiKey,
+		AuthenticationCredentials: cr.Spec.ForProvider.AuthenticationCredentials,
+		AutoRotate: cr.Spec.ForProvider.AutoRotate,
+		AwsRegion: cr.Spec.ForProvider.AwsRegion,
+		Description: cr.Spec.ForProvider.Description,
+		GraceRotation: cr.Spec.ForProvider.GraceRotation,
+		GraceRotationInterval: cr.Spec.ForProvider.GraceRotationInterval,
+		GraceRotationTiming: cr.Spec.ForProvider.GraceRotationTiming,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
+		PasswordLength: cr.Spec.ForProvider.PasswordLength,
+		RotateAfterDisconnect: cr.Spec.ForProvider.RotateAfterDisconnect,
+		RotationInterval: cr.Spec.ForProvider.RotationInterval,
+		RotatorType: cr.Spec.ForProvider.RotatorType,
+		TargetName: cr.Spec.ForProvider.TargetName,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.RotatedSecretCreateAws(ctx).RotatedSecretCreateAws(body).Execute()
@@ -181,6 +197,20 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.RotatedSecretUpdateAws{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		ApiId: cr.Spec.ForProvider.ApiId,
+		ApiKey: cr.Spec.ForProvider.ApiKey,
+		AuthenticationCredentials: cr.Spec.ForProvider.AuthenticationCredentials,
+		AutoRotate: cr.Spec.ForProvider.AutoRotate,
+		AwsRegion: cr.Spec.ForProvider.AwsRegion,
+		Description: cr.Spec.ForProvider.Description,
+		GraceRotation: cr.Spec.ForProvider.GraceRotation,
+		GraceRotationInterval: cr.Spec.ForProvider.GraceRotationInterval,
+		GraceRotationTiming: cr.Spec.ForProvider.GraceRotationTiming,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
+		PasswordLength: cr.Spec.ForProvider.PasswordLength,
+		RotateAfterDisconnect: cr.Spec.ForProvider.RotateAfterDisconnect,
+		RotationInterval: cr.Spec.ForProvider.RotationInterval,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.RotatedSecretUpdateAws(ctx).RotatedSecretUpdateAws(body).Execute()

@@ -165,6 +165,14 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.AuthMethodCreateGcp{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AccessExpires: cr.Spec.ForProvider.AccessExpires,
+		Audience: cr.Spec.ForProvider.Audience,
+		Description: cr.Spec.ForProvider.Description,
+		ForceSubClaims: cr.Spec.ForProvider.ForceSubClaims,
+		JwtTtl: cr.Spec.ForProvider.JwtTtl,
+		ServiceAccountCredsData: cr.Spec.ForProvider.ServiceAccountCredsData,
+		Type: cr.Spec.ForProvider.Type,
+		UniqueIdentifier: cr.Spec.ForProvider.UniqueIdentifier,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.AuthMethodCreateGcp(ctx).AuthMethodCreateGcp(body).Execute()
@@ -181,6 +189,14 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.AuthMethodUpdateGcp{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AccessExpires: cr.Spec.ForProvider.AccessExpires,
+		Audience: cr.Spec.ForProvider.Audience,
+		Description: cr.Spec.ForProvider.Description,
+		ForceSubClaims: cr.Spec.ForProvider.ForceSubClaims,
+		JwtTtl: cr.Spec.ForProvider.JwtTtl,
+		ServiceAccountCredsData: cr.Spec.ForProvider.ServiceAccountCredsData,
+		Type: cr.Spec.ForProvider.Type,
+		UniqueIdentifier: cr.Spec.ForProvider.UniqueIdentifier,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.AuthMethodUpdateGcp(ctx).AuthMethodUpdateGcp(body).Execute()

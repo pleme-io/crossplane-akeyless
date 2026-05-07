@@ -165,6 +165,13 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.TargetCreatePing{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AdministrativePort: cr.Spec.ForProvider.AdministrativePort,
+		AuthorizationPort: cr.Spec.ForProvider.AuthorizationPort,
+		Description: cr.Spec.ForProvider.Description,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
+		PingUrl: cr.Spec.ForProvider.PingUrl,
+		PrivilegedUser: cr.Spec.ForProvider.PrivilegedUser,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.TargetCreatePing(ctx).TargetCreatePing(body).Execute()
@@ -181,6 +188,13 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.TargetUpdatePing{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AdministrativePort: cr.Spec.ForProvider.AdministrativePort,
+		AuthorizationPort: cr.Spec.ForProvider.AuthorizationPort,
+		Description: cr.Spec.ForProvider.Description,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
+		PingUrl: cr.Spec.ForProvider.PingUrl,
+		PrivilegedUser: cr.Spec.ForProvider.PrivilegedUser,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.TargetUpdatePing(ctx).TargetUpdatePing(body).Execute()

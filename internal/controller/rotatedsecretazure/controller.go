@@ -165,6 +165,26 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.RotatedSecretCreateAzure{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		ApiId: cr.Spec.ForProvider.ApiId,
+		ApiKey: cr.Spec.ForProvider.ApiKey,
+		ApplicationId: cr.Spec.ForProvider.ApplicationId,
+		AuthenticationCredentials: cr.Spec.ForProvider.AuthenticationCredentials,
+		AutoRotate: cr.Spec.ForProvider.AutoRotate,
+		Description: cr.Spec.ForProvider.Description,
+		ExplicitlySetSa: cr.Spec.ForProvider.ExplicitlySetSa,
+		GraceRotation: cr.Spec.ForProvider.GraceRotation,
+		GraceRotationInterval: cr.Spec.ForProvider.GraceRotationInterval,
+		GraceRotationTiming: cr.Spec.ForProvider.GraceRotationTiming,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
+		PasswordLength: cr.Spec.ForProvider.PasswordLength,
+		ResourceGroupName: cr.Spec.ForProvider.ResourceGroupName,
+		ResourceName: cr.Spec.ForProvider.ResourceName,
+		RotateAfterDisconnect: cr.Spec.ForProvider.RotateAfterDisconnect,
+		RotationInterval: cr.Spec.ForProvider.RotationInterval,
+		RotatorType: cr.Spec.ForProvider.RotatorType,
+		StorageAccountKeyName: cr.Spec.ForProvider.StorageAccountKeyName,
+		TargetName: cr.Spec.ForProvider.TargetName,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.RotatedSecretCreateAzure(ctx).RotatedSecretCreateAzure(body).Execute()
@@ -181,6 +201,24 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.RotatedSecretUpdateAzure{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		ApiId: cr.Spec.ForProvider.ApiId,
+		ApiKey: cr.Spec.ForProvider.ApiKey,
+		ApplicationId: cr.Spec.ForProvider.ApplicationId,
+		AuthenticationCredentials: cr.Spec.ForProvider.AuthenticationCredentials,
+		AutoRotate: cr.Spec.ForProvider.AutoRotate,
+		Description: cr.Spec.ForProvider.Description,
+		ExplicitlySetSa: cr.Spec.ForProvider.ExplicitlySetSa,
+		GraceRotation: cr.Spec.ForProvider.GraceRotation,
+		GraceRotationInterval: cr.Spec.ForProvider.GraceRotationInterval,
+		GraceRotationTiming: cr.Spec.ForProvider.GraceRotationTiming,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
+		PasswordLength: cr.Spec.ForProvider.PasswordLength,
+		ResourceGroupName: cr.Spec.ForProvider.ResourceGroupName,
+		ResourceName: cr.Spec.ForProvider.ResourceName,
+		RotateAfterDisconnect: cr.Spec.ForProvider.RotateAfterDisconnect,
+		RotationInterval: cr.Spec.ForProvider.RotationInterval,
+		StorageAccountKeyName: cr.Spec.ForProvider.StorageAccountKeyName,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.RotatedSecretUpdateAzure(ctx).RotatedSecretUpdateAzure(body).Execute()

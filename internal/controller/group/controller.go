@@ -165,6 +165,9 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.CreateGroup{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		Description: cr.Spec.ForProvider.Description,
+		GroupAlias: cr.Spec.ForProvider.GroupAlias,
+		UserAssignment: cr.Spec.ForProvider.UserAssignment,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.CreateGroup(ctx).CreateGroup(body).Execute()
@@ -181,6 +184,9 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.UpdateGroup{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		Description: cr.Spec.ForProvider.Description,
+		GroupAlias: cr.Spec.ForProvider.GroupAlias,
+		UserAssignment: cr.Spec.ForProvider.UserAssignment,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.UpdateGroup(ctx).UpdateGroup(body).Execute()

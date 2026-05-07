@@ -165,6 +165,17 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.DynamicSecretCreateGitlab{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		Description: cr.Spec.ForProvider.Description,
+		GitlabAccessToken: cr.Spec.ForProvider.GitlabAccessToken,
+		GitlabAccessType: cr.Spec.ForProvider.GitlabAccessType,
+		GitlabCertificate: cr.Spec.ForProvider.GitlabCertificate,
+		GitlabRole: cr.Spec.ForProvider.GitlabRole,
+		GitlabTokenScopes: cr.Spec.ForProvider.GitlabTokenScopes,
+		GitlabUrl: cr.Spec.ForProvider.GitlabUrl,
+		GroupName: cr.Spec.ForProvider.GroupName,
+		InstallationOrganization: cr.Spec.ForProvider.InstallationOrganization,
+		TargetName: cr.Spec.ForProvider.TargetName,
+		Ttl: cr.Spec.ForProvider.Ttl,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.DynamicSecretCreateGitlab(ctx).DynamicSecretCreateGitlab(body).Execute()
@@ -181,6 +192,17 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.DynamicSecretUpdateGitlab{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		Description: cr.Spec.ForProvider.Description,
+		GitlabAccessToken: cr.Spec.ForProvider.GitlabAccessToken,
+		GitlabAccessType: cr.Spec.ForProvider.GitlabAccessType,
+		GitlabCertificate: cr.Spec.ForProvider.GitlabCertificate,
+		GitlabRole: cr.Spec.ForProvider.GitlabRole,
+		GitlabTokenScopes: cr.Spec.ForProvider.GitlabTokenScopes,
+		GitlabUrl: cr.Spec.ForProvider.GitlabUrl,
+		GroupName: cr.Spec.ForProvider.GroupName,
+		InstallationOrganization: cr.Spec.ForProvider.InstallationOrganization,
+		TargetName: cr.Spec.ForProvider.TargetName,
+		Ttl: cr.Spec.ForProvider.Ttl,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.DynamicSecretUpdateGitlab(ctx).DynamicSecretUpdateGitlab(body).Execute()

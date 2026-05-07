@@ -165,6 +165,11 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.EventForwarderCreateSlack{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		Description: cr.Spec.ForProvider.Description,
+		Every: cr.Spec.ForProvider.Every,
+		Key: cr.Spec.ForProvider.Key,
+		RunnerType: cr.Spec.ForProvider.RunnerType,
+		Url: cr.Spec.ForProvider.Url,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.EventForwarderCreateSlack(ctx).EventForwarderCreateSlack(body).Execute()
@@ -181,6 +186,9 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.EventForwarderUpdateSlack{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		Description: cr.Spec.ForProvider.Description,
+		Key: cr.Spec.ForProvider.Key,
+		Url: cr.Spec.ForProvider.Url,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.EventForwarderUpdateSlack(ctx).EventForwarderUpdateSlack(body).Execute()

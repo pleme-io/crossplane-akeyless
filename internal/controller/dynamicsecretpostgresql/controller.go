@@ -165,6 +165,21 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.DynamicSecretCreatePostgreSql{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		CreationStatements: cr.Spec.ForProvider.CreationStatements,
+		CustomUsernameTemplate: cr.Spec.ForProvider.CustomUsernameTemplate,
+		Description: cr.Spec.ForProvider.Description,
+		PasswordLength: cr.Spec.ForProvider.PasswordLength,
+		PostgresqlDbName: cr.Spec.ForProvider.PostgresqlDbName,
+		PostgresqlHost: cr.Spec.ForProvider.PostgresqlHost,
+		PostgresqlPassword: cr.Spec.ForProvider.PostgresqlPassword,
+		PostgresqlPort: cr.Spec.ForProvider.PostgresqlPort,
+		PostgresqlUsername: cr.Spec.ForProvider.PostgresqlUsername,
+		ProducerEncryptionKey: cr.Spec.ForProvider.ProducerEncryptionKey,
+		RevocationStatement: cr.Spec.ForProvider.RevocationStatement,
+		SecureAccessDelay: cr.Spec.ForProvider.SecureAccessDelay,
+		Ssl: cr.Spec.ForProvider.Ssl,
+		TargetName: cr.Spec.ForProvider.TargetName,
+		UserTtl: cr.Spec.ForProvider.UserTtl,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.DynamicSecretCreatePostgreSql(ctx).DynamicSecretCreatePostgreSql(body).Execute()
@@ -181,6 +196,21 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.DynamicSecretUpdatePostgreSql{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		CreationStatements: cr.Spec.ForProvider.CreationStatements,
+		CustomUsernameTemplate: cr.Spec.ForProvider.CustomUsernameTemplate,
+		Description: cr.Spec.ForProvider.Description,
+		PasswordLength: cr.Spec.ForProvider.PasswordLength,
+		PostgresqlDbName: cr.Spec.ForProvider.PostgresqlDbName,
+		PostgresqlHost: cr.Spec.ForProvider.PostgresqlHost,
+		PostgresqlPassword: cr.Spec.ForProvider.PostgresqlPassword,
+		PostgresqlPort: cr.Spec.ForProvider.PostgresqlPort,
+		PostgresqlUsername: cr.Spec.ForProvider.PostgresqlUsername,
+		ProducerEncryptionKey: cr.Spec.ForProvider.ProducerEncryptionKey,
+		RevocationStatement: cr.Spec.ForProvider.RevocationStatement,
+		SecureAccessDelay: cr.Spec.ForProvider.SecureAccessDelay,
+		Ssl: cr.Spec.ForProvider.Ssl,
+		TargetName: cr.Spec.ForProvider.TargetName,
+		UserTtl: cr.Spec.ForProvider.UserTtl,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.DynamicSecretUpdatePostgreSql(ctx).DynamicSecretUpdatePostgreSql(body).Execute()

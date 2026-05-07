@@ -165,6 +165,9 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.FolderCreate{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		Accessibility: cr.Spec.ForProvider.Accessibility,
+		Description: cr.Spec.ForProvider.Description,
+		Type: cr.Spec.ForProvider.Type,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.FolderCreate(ctx).FolderCreate(body).Execute()
@@ -181,6 +184,9 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.FolderUpdate{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		Accessibility: cr.Spec.ForProvider.Accessibility,
+		Description: cr.Spec.ForProvider.Description,
+		Type: cr.Spec.ForProvider.Type,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.FolderUpdate(ctx).FolderUpdate(body).Execute()

@@ -165,6 +165,19 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.DynamicSecretCreateHanaDb{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		CustomUsernameTemplate: cr.Spec.ForProvider.CustomUsernameTemplate,
+		Description: cr.Spec.ForProvider.Description,
+		HanaDbname: cr.Spec.ForProvider.HanaDbname,
+		HanadbCreateStatements: cr.Spec.ForProvider.HanadbCreateStatements,
+		HanadbHost: cr.Spec.ForProvider.HanadbHost,
+		HanadbPassword: cr.Spec.ForProvider.HanadbPassword,
+		HanadbPort: cr.Spec.ForProvider.HanadbPort,
+		HanadbRevocationStatements: cr.Spec.ForProvider.HanadbRevocationStatements,
+		HanadbUsername: cr.Spec.ForProvider.HanadbUsername,
+		PasswordLength: cr.Spec.ForProvider.PasswordLength,
+		ProducerEncryptionKeyName: cr.Spec.ForProvider.ProducerEncryptionKeyName,
+		TargetName: cr.Spec.ForProvider.TargetName,
+		UserTtl: cr.Spec.ForProvider.UserTtl,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.DynamicSecretCreateHanaDb(ctx).DynamicSecretCreateHanaDb(body).Execute()
@@ -181,6 +194,19 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.DynamicSecretUpdateHanaDb{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		CustomUsernameTemplate: cr.Spec.ForProvider.CustomUsernameTemplate,
+		Description: cr.Spec.ForProvider.Description,
+		HanaDbname: cr.Spec.ForProvider.HanaDbname,
+		HanadbCreateStatements: cr.Spec.ForProvider.HanadbCreateStatements,
+		HanadbHost: cr.Spec.ForProvider.HanadbHost,
+		HanadbPassword: cr.Spec.ForProvider.HanadbPassword,
+		HanadbPort: cr.Spec.ForProvider.HanadbPort,
+		HanadbRevocationStatements: cr.Spec.ForProvider.HanadbRevocationStatements,
+		HanadbUsername: cr.Spec.ForProvider.HanadbUsername,
+		PasswordLength: cr.Spec.ForProvider.PasswordLength,
+		ProducerEncryptionKeyName: cr.Spec.ForProvider.ProducerEncryptionKeyName,
+		TargetName: cr.Spec.ForProvider.TargetName,
+		UserTtl: cr.Spec.ForProvider.UserTtl,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.DynamicSecretUpdateHanaDb(ctx).DynamicSecretUpdateHanaDb(body).Execute()

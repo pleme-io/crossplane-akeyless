@@ -165,6 +165,16 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.TargetCreateEks{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		Description: cr.Spec.ForProvider.Description,
+		EksAccessKeyId: cr.Spec.ForProvider.EksAccessKeyId,
+		EksClusterCaCert: cr.Spec.ForProvider.EksClusterCaCert,
+		EksClusterEndpoint: cr.Spec.ForProvider.EksClusterEndpoint,
+		EksClusterName: cr.Spec.ForProvider.EksClusterName,
+		EksRegion: cr.Spec.ForProvider.EksRegion,
+		EksSecretAccessKey: cr.Spec.ForProvider.EksSecretAccessKey,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
+		UseGwCloudIdentity: cr.Spec.ForProvider.UseGwCloudIdentity,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.TargetCreateEks(ctx).TargetCreateEks(body).Execute()
@@ -181,6 +191,16 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.TargetUpdateEks{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		Description: cr.Spec.ForProvider.Description,
+		EksAccessKeyId: cr.Spec.ForProvider.EksAccessKeyId,
+		EksClusterCaCert: cr.Spec.ForProvider.EksClusterCaCert,
+		EksClusterEndpoint: cr.Spec.ForProvider.EksClusterEndpoint,
+		EksClusterName: cr.Spec.ForProvider.EksClusterName,
+		EksRegion: cr.Spec.ForProvider.EksRegion,
+		EksSecretAccessKey: cr.Spec.ForProvider.EksSecretAccessKey,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
+		UseGwCloudIdentity: cr.Spec.ForProvider.UseGwCloudIdentity,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.TargetUpdateEks(ctx).TargetUpdateEks(body).Execute()

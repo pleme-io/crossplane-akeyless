@@ -165,6 +165,19 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.DynamicSecretCreateRabbitMq{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		Description: cr.Spec.ForProvider.Description,
+		PasswordLength: cr.Spec.ForProvider.PasswordLength,
+		ProducerEncryptionKeyName: cr.Spec.ForProvider.ProducerEncryptionKeyName,
+		RabbitmqAdminPwd: cr.Spec.ForProvider.RabbitmqAdminPwd,
+		RabbitmqAdminUser: cr.Spec.ForProvider.RabbitmqAdminUser,
+		RabbitmqServerUri: cr.Spec.ForProvider.RabbitmqServerUri,
+		RabbitmqUserConfPermission: cr.Spec.ForProvider.RabbitmqUserConfPermission,
+		RabbitmqUserReadPermission: cr.Spec.ForProvider.RabbitmqUserReadPermission,
+		RabbitmqUserTags: cr.Spec.ForProvider.RabbitmqUserTags,
+		RabbitmqUserVhost: cr.Spec.ForProvider.RabbitmqUserVhost,
+		RabbitmqUserWritePermission: cr.Spec.ForProvider.RabbitmqUserWritePermission,
+		TargetName: cr.Spec.ForProvider.TargetName,
+		UserTtl: cr.Spec.ForProvider.UserTtl,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.DynamicSecretCreateRabbitMq(ctx).DynamicSecretCreateRabbitMq(body).Execute()
@@ -181,6 +194,19 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.DynamicSecretUpdateRabbitMq{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		Description: cr.Spec.ForProvider.Description,
+		PasswordLength: cr.Spec.ForProvider.PasswordLength,
+		ProducerEncryptionKeyName: cr.Spec.ForProvider.ProducerEncryptionKeyName,
+		RabbitmqAdminPwd: cr.Spec.ForProvider.RabbitmqAdminPwd,
+		RabbitmqAdminUser: cr.Spec.ForProvider.RabbitmqAdminUser,
+		RabbitmqServerUri: cr.Spec.ForProvider.RabbitmqServerUri,
+		RabbitmqUserConfPermission: cr.Spec.ForProvider.RabbitmqUserConfPermission,
+		RabbitmqUserReadPermission: cr.Spec.ForProvider.RabbitmqUserReadPermission,
+		RabbitmqUserTags: cr.Spec.ForProvider.RabbitmqUserTags,
+		RabbitmqUserVhost: cr.Spec.ForProvider.RabbitmqUserVhost,
+		RabbitmqUserWritePermission: cr.Spec.ForProvider.RabbitmqUserWritePermission,
+		TargetName: cr.Spec.ForProvider.TargetName,
+		UserTtl: cr.Spec.ForProvider.UserTtl,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.DynamicSecretUpdateRabbitMq(ctx).DynamicSecretUpdateRabbitMq(body).Execute()

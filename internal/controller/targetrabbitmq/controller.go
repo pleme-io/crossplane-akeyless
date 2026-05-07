@@ -165,6 +165,12 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.TargetCreateRabbitMq{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		Description: cr.Spec.ForProvider.Description,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
+		RabbitmqServerPassword: cr.Spec.ForProvider.RabbitmqServerPassword,
+		RabbitmqServerUri: cr.Spec.ForProvider.RabbitmqServerUri,
+		RabbitmqServerUser: cr.Spec.ForProvider.RabbitmqServerUser,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.TargetCreateRabbitMq(ctx).TargetCreateRabbitMq(body).Execute()
@@ -181,6 +187,12 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.TargetUpdateRabbitMq{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		Description: cr.Spec.ForProvider.Description,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
+		RabbitmqServerPassword: cr.Spec.ForProvider.RabbitmqServerPassword,
+		RabbitmqServerUri: cr.Spec.ForProvider.RabbitmqServerUri,
+		RabbitmqServerUser: cr.Spec.ForProvider.RabbitmqServerUser,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.TargetUpdateRabbitMq(ctx).TargetUpdateRabbitMq(body).Execute()

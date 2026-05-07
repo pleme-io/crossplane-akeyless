@@ -165,6 +165,22 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.RotatedSecretCreateCustom{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AuthenticationCredentials: cr.Spec.ForProvider.AuthenticationCredentials,
+		AutoRotate: cr.Spec.ForProvider.AutoRotate,
+		CustomPayload: cr.Spec.ForProvider.CustomPayload,
+		Description: cr.Spec.ForProvider.Description,
+		EnablePasswordPolicy: cr.Spec.ForProvider.EnablePasswordPolicy,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
+		PasswordLength: cr.Spec.ForProvider.PasswordLength,
+		RotateAfterDisconnect: cr.Spec.ForProvider.RotateAfterDisconnect,
+		RotationInterval: cr.Spec.ForProvider.RotationInterval,
+		TargetName: cr.Spec.ForProvider.TargetName,
+		TimeoutSec: cr.Spec.ForProvider.TimeoutSec,
+		UseCapitalLetters: cr.Spec.ForProvider.UseCapitalLetters,
+		UseLowerLetters: cr.Spec.ForProvider.UseLowerLetters,
+		UseNumbers: cr.Spec.ForProvider.UseNumbers,
+		UseSpecialCharacters: cr.Spec.ForProvider.UseSpecialCharacters,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.RotatedSecretCreateCustom(ctx).RotatedSecretCreateCustom(body).Execute()
@@ -181,6 +197,21 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.RotatedSecretUpdateCustom{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AuthenticationCredentials: cr.Spec.ForProvider.AuthenticationCredentials,
+		AutoRotate: cr.Spec.ForProvider.AutoRotate,
+		CustomPayload: cr.Spec.ForProvider.CustomPayload,
+		Description: cr.Spec.ForProvider.Description,
+		EnablePasswordPolicy: cr.Spec.ForProvider.EnablePasswordPolicy,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
+		PasswordLength: cr.Spec.ForProvider.PasswordLength,
+		RotateAfterDisconnect: cr.Spec.ForProvider.RotateAfterDisconnect,
+		RotationInterval: cr.Spec.ForProvider.RotationInterval,
+		TimeoutSec: cr.Spec.ForProvider.TimeoutSec,
+		UseCapitalLetters: cr.Spec.ForProvider.UseCapitalLetters,
+		UseLowerLetters: cr.Spec.ForProvider.UseLowerLetters,
+		UseNumbers: cr.Spec.ForProvider.UseNumbers,
+		UseSpecialCharacters: cr.Spec.ForProvider.UseSpecialCharacters,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.RotatedSecretUpdateCustom(ctx).RotatedSecretUpdateCustom(body).Execute()

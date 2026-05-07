@@ -165,6 +165,16 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.DynamicSecretCreateArtifactory{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		ArtifactoryAdminName: cr.Spec.ForProvider.ArtifactoryAdminName,
+		ArtifactoryAdminPwd: cr.Spec.ForProvider.ArtifactoryAdminPwd,
+		ArtifactoryTokenAudience: cr.Spec.ForProvider.ArtifactoryTokenAudience,
+		ArtifactoryTokenScope: cr.Spec.ForProvider.ArtifactoryTokenScope,
+		BaseUrl: cr.Spec.ForProvider.BaseUrl,
+		CustomUsernameTemplate: cr.Spec.ForProvider.CustomUsernameTemplate,
+		Description: cr.Spec.ForProvider.Description,
+		ProducerEncryptionKeyName: cr.Spec.ForProvider.ProducerEncryptionKeyName,
+		TargetName: cr.Spec.ForProvider.TargetName,
+		UserTtl: cr.Spec.ForProvider.UserTtl,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.DynamicSecretCreateArtifactory(ctx).DynamicSecretCreateArtifactory(body).Execute()
@@ -181,6 +191,16 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.DynamicSecretUpdateArtifactory{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		ArtifactoryAdminName: cr.Spec.ForProvider.ArtifactoryAdminName,
+		ArtifactoryAdminPwd: cr.Spec.ForProvider.ArtifactoryAdminPwd,
+		ArtifactoryTokenAudience: cr.Spec.ForProvider.ArtifactoryTokenAudience,
+		ArtifactoryTokenScope: cr.Spec.ForProvider.ArtifactoryTokenScope,
+		BaseUrl: cr.Spec.ForProvider.BaseUrl,
+		CustomUsernameTemplate: cr.Spec.ForProvider.CustomUsernameTemplate,
+		Description: cr.Spec.ForProvider.Description,
+		ProducerEncryptionKeyName: cr.Spec.ForProvider.ProducerEncryptionKeyName,
+		TargetName: cr.Spec.ForProvider.TargetName,
+		UserTtl: cr.Spec.ForProvider.UserTtl,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.DynamicSecretUpdateArtifactory(ctx).DynamicSecretUpdateArtifactory(body).Execute()

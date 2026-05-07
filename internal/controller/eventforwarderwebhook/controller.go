@@ -165,6 +165,16 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.EventForwarderCreateWebhook{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AuthToken: cr.Spec.ForProvider.AuthToken,
+		AuthType: cr.Spec.ForProvider.AuthType,
+		ClientCertData: cr.Spec.ForProvider.ClientCertData,
+		Description: cr.Spec.ForProvider.Description,
+		Every: cr.Spec.ForProvider.Every,
+		Key: cr.Spec.ForProvider.Key,
+		PrivateKeyData: cr.Spec.ForProvider.PrivateKeyData,
+		RunnerType: cr.Spec.ForProvider.RunnerType,
+		ServerCertificates: cr.Spec.ForProvider.ServerCertificates,
+		Url: cr.Spec.ForProvider.Url,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.EventForwarderCreateWebhook(ctx).EventForwarderCreateWebhook(body).Execute()
@@ -181,6 +191,14 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.EventForwarderUpdateWebhook{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		AuthToken: cr.Spec.ForProvider.AuthToken,
+		AuthType: cr.Spec.ForProvider.AuthType,
+		ClientCertData: cr.Spec.ForProvider.ClientCertData,
+		Description: cr.Spec.ForProvider.Description,
+		Key: cr.Spec.ForProvider.Key,
+		PrivateKeyData: cr.Spec.ForProvider.PrivateKeyData,
+		ServerCertificates: cr.Spec.ForProvider.ServerCertificates,
+		Url: cr.Spec.ForProvider.Url,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.EventForwarderUpdateWebhook(ctx).EventForwarderUpdateWebhook(body).Execute()

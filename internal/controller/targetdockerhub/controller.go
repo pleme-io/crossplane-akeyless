@@ -165,6 +165,11 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.TargetCreateDockerhub{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		Description: cr.Spec.ForProvider.Description,
+		DockerhubPassword: cr.Spec.ForProvider.DockerhubPassword,
+		DockerhubUsername: cr.Spec.ForProvider.DockerhubUsername,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.TargetCreateDockerhub(ctx).TargetCreateDockerhub(body).Execute()
@@ -181,6 +186,11 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.TargetUpdateDockerhub{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		Description: cr.Spec.ForProvider.Description,
+		DockerhubPassword: cr.Spec.ForProvider.DockerhubPassword,
+		DockerhubUsername: cr.Spec.ForProvider.DockerhubUsername,
+		Key: cr.Spec.ForProvider.Key,
+		MaxVersions: cr.Spec.ForProvider.MaxVersions,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.TargetUpdateDockerhub(ctx).TargetUpdateDockerhub(body).Execute()

@@ -165,6 +165,21 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.DynamicSecretCreateSnowflake{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		Account: cr.Spec.ForProvider.Account,
+		AccountPassword: cr.Spec.ForProvider.AccountPassword,
+		AccountUsername: cr.Spec.ForProvider.AccountUsername,
+		AuthMode: cr.Spec.ForProvider.AuthMode,
+		CustomUsernameTemplate: cr.Spec.ForProvider.CustomUsernameTemplate,
+		DbName: cr.Spec.ForProvider.DbName,
+		Description: cr.Spec.ForProvider.Description,
+		KeyAlgo: cr.Spec.ForProvider.KeyAlgo,
+		PasswordLength: cr.Spec.ForProvider.PasswordLength,
+		PrivateKey: cr.Spec.ForProvider.PrivateKey,
+		PrivateKeyPassphrase: cr.Spec.ForProvider.PrivateKeyPassphrase,
+		Role: cr.Spec.ForProvider.Role,
+		TargetName: cr.Spec.ForProvider.TargetName,
+		UserTtl: cr.Spec.ForProvider.UserTtl,
+		Warehouse: cr.Spec.ForProvider.Warehouse,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.DynamicSecretCreateSnowflake(ctx).DynamicSecretCreateSnowflake(body).Execute()
@@ -181,6 +196,21 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.DynamicSecretUpdateSnowflake{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		Account: cr.Spec.ForProvider.Account,
+		AccountPassword: cr.Spec.ForProvider.AccountPassword,
+		AccountUsername: cr.Spec.ForProvider.AccountUsername,
+		AuthMode: cr.Spec.ForProvider.AuthMode,
+		CustomUsernameTemplate: cr.Spec.ForProvider.CustomUsernameTemplate,
+		DbName: cr.Spec.ForProvider.DbName,
+		Description: cr.Spec.ForProvider.Description,
+		KeyAlgo: cr.Spec.ForProvider.KeyAlgo,
+		PasswordLength: cr.Spec.ForProvider.PasswordLength,
+		PrivateKey: cr.Spec.ForProvider.PrivateKey,
+		PrivateKeyPassphrase: cr.Spec.ForProvider.PrivateKeyPassphrase,
+		Role: cr.Spec.ForProvider.Role,
+		TargetName: cr.Spec.ForProvider.TargetName,
+		UserTtl: cr.Spec.ForProvider.UserTtl,
+		Warehouse: cr.Spec.ForProvider.Warehouse,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.DynamicSecretUpdateSnowflake(ctx).DynamicSecretUpdateSnowflake(body).Execute()

@@ -165,6 +165,18 @@ func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.DynamicSecretCreateGke{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		Description: cr.Spec.ForProvider.Description,
+		GkeAccountKey: cr.Spec.ForProvider.GkeAccountKey,
+		GkeClusterCert: cr.Spec.ForProvider.GkeClusterCert,
+		GkeClusterEndpoint: cr.Spec.ForProvider.GkeClusterEndpoint,
+		GkeClusterName: cr.Spec.ForProvider.GkeClusterName,
+		GkeServiceAccountEmail: cr.Spec.ForProvider.GkeServiceAccountEmail,
+		ProducerEncryptionKeyName: cr.Spec.ForProvider.ProducerEncryptionKeyName,
+		SecureAccessAllowPortForwading: cr.Spec.ForProvider.SecureAccessAllowPortForwading,
+		SecureAccessClusterEndpoint: cr.Spec.ForProvider.SecureAccessClusterEndpoint,
+		SecureAccessDelay: cr.Spec.ForProvider.SecureAccessDelay,
+		TargetName: cr.Spec.ForProvider.TargetName,
+		UserTtl: cr.Spec.ForProvider.UserTtl,
 	}
 	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.DynamicSecretCreateGke(ctx).DynamicSecretCreateGke(body).Execute()
@@ -181,6 +193,18 @@ func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.DynamicSecretUpdateGke{
 		Name: meta.GetExternalName(cr),
 		Token: &e.token,
+		Description: cr.Spec.ForProvider.Description,
+		GkeAccountKey: cr.Spec.ForProvider.GkeAccountKey,
+		GkeClusterCert: cr.Spec.ForProvider.GkeClusterCert,
+		GkeClusterEndpoint: cr.Spec.ForProvider.GkeClusterEndpoint,
+		GkeClusterName: cr.Spec.ForProvider.GkeClusterName,
+		GkeServiceAccountEmail: cr.Spec.ForProvider.GkeServiceAccountEmail,
+		ProducerEncryptionKeyName: cr.Spec.ForProvider.ProducerEncryptionKeyName,
+		SecureAccessAllowPortForwading: cr.Spec.ForProvider.SecureAccessAllowPortForwading,
+		SecureAccessClusterEndpoint: cr.Spec.ForProvider.SecureAccessClusterEndpoint,
+		SecureAccessDelay: cr.Spec.ForProvider.SecureAccessDelay,
+		TargetName: cr.Spec.ForProvider.TargetName,
+		UserTtl: cr.Spec.ForProvider.UserTtl,
 	}
 	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
 	_, _, err := e.client.V2API.DynamicSecretUpdateGke(ctx).DynamicSecretUpdateGke(body).Execute()
