@@ -1,0 +1,6 @@
+.forge-gen-out/
+.direnv/
+result
+result-*
+*.test
+*.out

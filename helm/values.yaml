@@ -1,0 +1,18 @@
+image:
+  repository: ghcr.io/pleme-io/crossplane-akeyless
+  tag: ''
+  pullPolicy: IfNotPresent
+replicas: 1
+serviceAccount:
+  create: true
+  name: ''
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+leaderElection:
+  enabled: true
+pollInterval: 60s
