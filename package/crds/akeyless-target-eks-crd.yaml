@@ -30,6 +30,11 @@ spec:
         properties:
           spec:
             properties:
+              deletionPolicy:
+                enum:
+                - Orphan
+                - Delete
+                type: string
               forProvider:
                 properties:
                   description:
@@ -72,6 +77,61 @@ spec:
                 - eks_cluster_name
                 - eks_secret_access_key
                 - name
+                type: object
+              managementPolicies:
+                items:
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                properties:
+                  name:
+                    type: string
+                  policy:
+                    properties:
+                      resolution:
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              publishConnectionDetailsTo:
+                properties:
+                  configRef:
+                    properties:
+                      name:
+                        type: string
+                    type: object
+                  metadata:
+                    type: object
+                  name:
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                properties:
+                  name:
+                    type: string
+                  namespace:
+                    type: string
+                required:
+                - name
+                - namespace
                 type: object
             required:
             - forProvider

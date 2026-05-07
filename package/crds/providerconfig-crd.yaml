@@ -20,8 +20,25 @@ spec:
         properties:
           spec:
             properties:
+              apiGateway:
+                description: URL of the upstream API endpoint (e.g. https://api.staging.akeyless.dev). Optional; defaults to the SDK's compiled-in production endpoint.
+                type: string
               credentials:
                 properties:
+                  env:
+                    properties:
+                      name:
+                        type: string
+                    required:
+                    - name
+                    type: object
+                  fs:
+                    properties:
+                      path:
+                        type: string
+                    required:
+                    - path
+                    type: object
                   secretRef:
                     properties:
                       key:
@@ -39,6 +56,8 @@ spec:
                     enum:
                     - None
                     - Secret
+                    - Environment
+                    - Filesystem
                     type: string
                 required:
                 - source
