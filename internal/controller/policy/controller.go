@@ -7,7 +7,9 @@ import (
 	"errors"
 	"time"
 
+	xpv1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 	"github.com/crossplane/crossplane-runtime/pkg/logging"
+	"github.com/crossplane/crossplane-runtime/pkg/meta"
 	"github.com/crossplane/crossplane-runtime/pkg/reconciler/managed"
 	"github.com/crossplane/crossplane-runtime/pkg/resource"
 	akeyless "github.com/pleme-io/akeyless-go"
@@ -72,50 +74,83 @@ func (c *connector) Connect(ctx context.Context, mg resource.Managed) (managed.E
 	}, nil
 }
 
-// Observe — STUB. Body-mapping pending M3.2 graduation for resources whose
-// SDK body shape requires composite keys / mixed-per-CRUD identifiers.
-// Returns an empty ExternalObservation so the reconciler stays idle.
+// Observe queries the upstream provider for the resource's current state.
+// The returned ExternalObservation tells the managed-resource reconciler
+// (a) whether the resource exists upstream and (b) whether its observed
+// state matches the declared spec.
 func (e *external) Observe(ctx context.Context, mg resource.Managed) (managed.ExternalObservation, error) {
-	_, ok := mg.(*v1alpha1.Policy)
+	cr, ok := mg.(*v1alpha1.Policy)
 	if !ok {
 		return managed.ExternalObservation{}, errors.New("expected *v1alpha1.Policy")
 	}
 
-	// Stub: body-mapping pending M3.2 graduation — returns ResourceExists=false
-	// so the reconciler stays idle for resources with composite-key shapes.
-	return managed.ExternalObservation{}, nil
+	body := akeyless.PoliciesGet{
+		Id: meta.GetExternalName(cr),
+		Token: &e.token,
+	}
+	_, _, err := e.client.V2API.PoliciesGet(ctx).PoliciesGet(body).Execute()
+	if err != nil {
+		// TODO controller-iter-2: distinguish 404 (NotFound → ResourceExists=false)
+		// from real errors; today every read error short-circuits the reconcile.
+		return managed.ExternalObservation{}, err
+	}
+
+	cr.SetConditions(xpv1.Available())
+	// ResourceUpToDate=true short-circuits the spec↔atProvider diff;
+	// structural diff lands in controller-iter-2.
+	return managed.ExternalObservation{
+		ResourceExists: true,
+		ResourceUpToDate: true,
+	}, nil
 }
 
-// Create — STUB. Body-mapping pending M3.2 graduation.
+// Create provisions the resource upstream.
 func (e *external) Create(ctx context.Context, mg resource.Managed) (managed.ExternalCreation, error) {
-	_, ok := mg.(*v1alpha1.Policy)
+	cr, ok := mg.(*v1alpha1.Policy)
 	if !ok {
 		return managed.ExternalCreation{}, errors.New("expected *v1alpha1.Policy")
 	}
 
-	// Stub: body-mapping pending M3.2 graduation.
-	return managed.ExternalCreation{}, nil
+	body := akeyless.PolicyCreateKeys{
+		Path: meta.GetExternalName(cr),
+		Token: &e.token,
+	}
+	// TODO controller-iter-2: map cr.Spec.ForProvider fields → body fields
+	_, _, err := e.client.V2API.PolicyCreateKeys(ctx).PolicyCreateKeys(body).Execute()
+	return managed.ExternalCreation{}, err
 }
 
-// Update — STUB. Body-mapping pending M3.2 graduation.
+// Update reconciles the upstream resource against the declared spec.
 func (e *external) Update(ctx context.Context, mg resource.Managed) (managed.ExternalUpdate, error) {
-	_, ok := mg.(*v1alpha1.Policy)
+	cr, ok := mg.(*v1alpha1.Policy)
 	if !ok {
 		return managed.ExternalUpdate{}, errors.New("expected *v1alpha1.Policy")
 	}
 
-	// Stub: body-mapping pending M3.2 graduation.
-	return managed.ExternalUpdate{}, nil
+	body := akeyless.PolicyUpdateKeys{
+		Id: meta.GetExternalName(cr),
+		Token: &e.token,
+	}
+	// TODO controller-iter-2: map mutable cr.Spec.ForProvider fields → body fields
+	_, _, err := e.client.V2API.PolicyUpdateKeys(ctx).PolicyUpdateKeys(body).Execute()
+	return managed.ExternalUpdate{}, err
 }
 
-// Delete — STUB. Body-mapping pending M3.2 graduation.
+// Delete removes the upstream resource. Idempotent on NotFound.
+// Signature follows crossplane-runtime v1.18+: returns (ExternalDelete, error).
 func (e *external) Delete(ctx context.Context, mg resource.Managed) (managed.ExternalDelete, error) {
-	_, ok := mg.(*v1alpha1.Policy)
+	cr, ok := mg.(*v1alpha1.Policy)
 	if !ok {
 		return managed.ExternalDelete{}, errors.New("expected *v1alpha1.Policy")
 	}
-	// Stub: body-mapping pending M3.2 graduation.
-	return managed.ExternalDelete{}, nil
+
+	body := akeyless.PoliciesDelete{
+		Id: meta.GetExternalName(cr),
+		Token: &e.token,
+	}
+	_, _, err := e.client.V2API.PoliciesDelete(ctx).PoliciesDelete(body).Execute()
+	// TODO controller-iter-2: swallow 404 so deletion is idempotent.
+	return managed.ExternalDelete{}, err
 }
 
 // Disconnect releases any per-cluster client resources. The akeyless SDK
