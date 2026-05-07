@@ -4,7 +4,10 @@ package kmipenvironment
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
+	"fmt"
+	"net/http"
 	"time"
 
 	xpv1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
@@ -18,6 +21,16 @@ import (
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 )
+
+// akeylessCredentials is the JSON shape the controller expects from the
+// ProviderConfig's referenced Secret. Both akeyless's snake_case and the
+// akeyless-CLI's hyphenated variants are accepted.
+type akeylessCredentials struct {
+	AccessID string `json:"access_id,omitempty"`
+	AccessKey string `json:"access_key,omitempty"`
+	AccessIDDash string `json:"access-id,omitempty"`
+	AccessKeyDash string `json:"access-key,omitempty"`
+}
 
 // external is the per-cluster reconciler that owns the SDK client and
 // the token resolved from the bound ProviderConfig.
@@ -68,9 +81,42 @@ func (c *connector) Connect(ctx context.Context, mg resource.Managed) (managed.E
 		// TODO goast-slice-2: emit cfg.Servers via structured SliceLit
 		cfg.Servers = []akeyless.ServerConfiguration{{URL: pc.Spec.APIGateway}}
 	}
+
+	// Decode the access-id + access-key from the credentials Secret.
+	// Both keys are required: /auth exchanges them for a session token.
+	akCreds := akeylessCredentials{}
+	if err := json.Unmarshal(creds, &akCreds); err != nil {
+		return nil, fmt.Errorf("akeyless credentials must be JSON {\"access_id\":\"...\",\"access_key\":\"...\"}: %w", err)
+	}
+	accessID := akCreds.AccessID
+	if accessID == "" {
+		accessID = akCreds.AccessIDDash
+	}
+	accessKey := akCreds.AccessKey
+	if accessKey == "" {
+		accessKey = akCreds.AccessKeyDash
+	}
+	if accessID == "" || accessKey == "" {
+		return nil, errors.New("akeyless credentials missing access_id or access_key")
+	}
+
+	apiClient := akeyless.NewAPIClient(cfg)
+	accessType := "access_key"
+	authOut, _, err := apiClient.V2API.Auth(ctx).Auth(akeyless.Auth{
+		AccessId: &accessID,
+		AccessKey: &accessKey,
+		AccessType: &accessType,
+	}).Execute()
+	if err != nil {
+		return nil, fmt.Errorf("akeyless /auth exchange failed: %w", err)
+	}
+	if authOut == nil || authOut.Token == nil || *authOut.Token == "" {
+		return nil, errors.New("akeyless /auth returned empty session token")
+	}
+
 	return &external{
-		client: akeyless.NewAPIClient(cfg),
-		token: string(creds),
+		client: apiClient,
+		token: *authOut.Token,
 	}, nil
 }
 
@@ -87,10 +133,15 @@ func (e *external) Observe(ctx context.Context, mg resource.Managed) (managed.Ex
 	body := akeyless.KmipDescribeServer{
 		Token: &e.token,
 	}
-	_, _, err := e.client.V2API.KmipDescribeServer(ctx).KmipDescribeServer(body).Execute()
+	_, resp, err := e.client.V2API.KmipDescribeServer(ctx).KmipDescribeServer(body).Execute()
 	if err != nil {
-		// TODO controller-iter-2: distinguish 404 (NotFound → ResourceExists=false)
-		// from real errors; today every read error short-circuits the reconcile.
+		// Observed an error. If the upstream API reports 404 the resource
+		// is absent and the reconciler should advance to Create.
+		if resp != nil && resp.StatusCode == http.StatusNotFound {
+			return managed.ExternalObservation{
+				ResourceExists: false,
+			}, nil
+		}
 		return managed.ExternalObservation{}, err
 	}
 
@@ -141,8 +192,10 @@ func (e *external) Delete(ctx context.Context, mg resource.Managed) (managed.Ext
 	body := akeyless.KmipDeleteServer{
 		Token: &e.token,
 	}
-	_, _, err := e.client.V2API.KmipDeleteServer(ctx).KmipDeleteServer(body).Execute()
-	// TODO controller-iter-2: swallow 404 so deletion is idempotent.
+	_, resp, err := e.client.V2API.KmipDeleteServer(ctx).KmipDeleteServer(body).Execute()
+	if err != nil && resp != nil && resp.StatusCode == http.StatusNotFound {
+		return managed.ExternalDelete{}, nil
+	}
 	return managed.ExternalDelete{}, err
 }
 
