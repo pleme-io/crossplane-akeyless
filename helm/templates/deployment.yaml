@@ -6,7 +6,7 @@ metadata:
     app.kubernetes.io/name: '{{ .Chart.Name }}'
     app.kubernetes.io/managed-by: '{{ .Release.Service }}'
 spec:
-  replicas: '{{ .Values.replicas }}'
+  replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
       app.kubernetes.io/name: '{{ .Chart.Name }}'
@@ -23,4 +23,5 @@ spec:
         args:
         - --leader-election={{ .Values.leaderElection.enabled }}
         - --poll={{ .Values.pollInterval }}
-        resources: '{{- toYaml .Values.resources | nindent 12 }}'
+        resources:
+          {{- toYaml .Values.resources | nindent 10 }}
