@@ -1,8 +1,8 @@
 {
   description = "Auto-generated Crossplane provider for Akeyless (regenerated via iac-forge --backend crossplane from akeyless-terraform-resources TOML specs + akeyless OpenAPI 3.0 spec)";
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
-    substrate = { url = "github:pleme-io/substrate"; inputs.nixpkgs.follows = "nixpkgs"; };
+    nixpkgs.follows = "substrate/nixpkgs";
+    substrate = { url = "github:pleme-io/substrate";};
     flake-utils.url = "github:numtide/flake-utils";
   };
   outputs = inputs: (import "${inputs.substrate}/lib/repo-flake.nix" {
