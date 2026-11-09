@@ -1,12 +1,11 @@
 # crossplane-akeyless
 
 > **★★★ CSE / Knowable Construction.** This repo operates under
-> **Constructive Substrate Engineering** — canonical specification at
-> [`pleme-io/theory/CONSTRUCTIVE-SUBSTRATE-ENGINEERING.md`](https://github.com/pleme-io/theory/blob/main/CONSTRUCTIVE-SUBSTRATE-ENGINEERING.md).
+> **Constructive Substrate Engineering**.
 > The Compounding Directive (operational rules: solve once,
 > load-bearing fixes only, idiom-first, models stay current, direction
 > beats velocity) is in the org-level pleme-io/CLAUDE.md ★★★ section.
-> Read both before non-trivial changes.
+> Read it before non-trivial changes.
 
 Auto-generated Crossplane provider for Akeyless. 119 managed-resource
 Kinds + ProviderConfig, 727 artifacts (601 .go), 100% `go build ./...`
@@ -60,9 +59,7 @@ structs serialized via `serde_yaml_ng`. Helm templates flow through
 `serde_yaml_ng::Value` trees with template directives as opaque
 string scalars. **Zero `format!()` of Go or YAML syntax** at any
 substrate layer — this is the substrate-hygiene-reset directed
-2026-05-06 (org-level pleme-io/CLAUDE.md ★★★ section + the
-[Constructive Substrate Engineering](https://github.com/pleme-io/theory/blob/main/CONSTRUCTIVE-SUBSTRATE-ENGINEERING.md)
-spec).
+2026-05-06 (org-level pleme-io/CLAUDE.md ★★★ section).
 
 Hand-edits to generated files are reverted on the next regeneration.
 If you need to change behavior, change the TOML spec, the OpenAPI
